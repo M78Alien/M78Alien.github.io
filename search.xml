@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>小迪安全 Day03基础入门-搭建安全拓展</title>
+      <link href="/2023/08/30/%E5%B0%8F%E8%BF%AA%E5%AE%89%E5%85%A8%20Day03%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8-%E6%90%AD%E5%BB%BA%E5%AE%89%E5%85%A8%E6%8B%93%E5%B1%95/"/>
+      <url>/2023/08/30/%E5%B0%8F%E8%BF%AA%E5%AE%89%E5%85%A8%20Day03%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8-%E6%90%AD%E5%BB%BA%E5%AE%89%E5%85%A8%E6%8B%93%E5%B1%95/</url>
+      
+        <content type="html"><![CDATA[<h1 id="搭建安全拓展"><a href="#搭建安全拓展" class="headerlink" title="搭建安全拓展"></a>搭建安全拓展</h1><h2 id="常见搭建平台脚本"><a href="#常见搭建平台脚本" class="headerlink" title="常见搭建平台脚本"></a>常见搭建平台脚本</h2><ul><li><code>ASP</code>、<code>PHP</code>、<code>ASPX</code>、<code>JSP</code>、<code>PY</code>、<code>JAVAWEB</code>等环境<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-08-29%20194303.png" alt="Windows Server2003 IIS"></li></ul><h2 id="域名IP目录解析安全问题"><a href="#域名IP目录解析安全问题" class="headerlink" title="域名IP目录解析安全问题"></a>域名IP目录解析安全问题</h2><p>通过域名访问，直接进入到网站绝对目录内，通过IP访问，则可能进入到上一级目录，存在安全问题。</p><h2 id="常见文件后缀解析对应安全"><a href="#常见文件后缀解析对应安全" class="headerlink" title="常见文件后缀解析对应安全"></a>常见文件后缀解析对应安全</h2><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-08-29%20210609.png" alt="后缀解析"><br>不同扩展名对应指定可执行文件路径，可以不同扩展名指定相同可执行文件。但是如果没有指定，那解析时就会出问题。</p><h2 id="常见安全测试中的安全防护"><a href="#常见安全测试中的安全防护" class="headerlink" title="常见安全测试中的安全防护"></a>常见安全测试中的安全防护</h2><h3 id="身份验证方法"><a href="#身份验证方法" class="headerlink" title="身份验证方法"></a>身份验证方法</h3><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-08-29%20211614.png"><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-08-29%20211709.png"><br>通过身份验证限制，需要用户名和密码才能进入站点，不允许匿名访问。</p><h3 id="IP地址和域名限制"><a href="#IP地址和域名限制" class="headerlink" title="IP地址和域名限制"></a>IP地址和域名限制</h3><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-08-29%20212144.png"><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-08-29%20213112.png"><br>设置限制IP地址或者域名，以设定访问权限。</p><h2 id="Web后门与用户及文件权限"><a href="#Web后门与用户及文件权限" class="headerlink" title="Web后门与用户及文件权限"></a>Web后门与用户及文件权限</h2><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-08-29%20214430.png"><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-08-29%20215034.png"></p><p>匿名登录的用户会出现在列表当中。<br>通过设置权限，可以限制后门访问文件。</p><h2 id="演示实例"><a href="#演示实例" class="headerlink" title="演示实例"></a>演示实例</h2><ul><li>基于中间件的简要识别<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-08-29%202158031.png"><br>在审查元素当中，可以看到response headers，在Server中可以判断出是IIS6.0。</li></ul><ul><li>基于中间件的安全漏洞<br>通过查阅资料等，就可以知道这个平台有哪些漏洞。</li><li>基于中间件的靶场使用<br><a href="https://vulhub.org/">https://vulhub.org/</a></li></ul><h3 id="演示Apache-HTTPD-多后缀解析漏洞"><a href="#演示Apache-HTTPD-多后缀解析漏洞" class="headerlink" title="演示Apache HTTPD 多后缀解析漏洞"></a>演示Apache HTTPD 多后缀解析漏洞</h3><ul><li>第一步，首先在Ubuntu系统当中<a href="https://m78alien.github.io/2023/08/29/%E5%9C%A8Ubuntu%E6%90%AD%E5%BB%BAvulhub%E6%BC%8F%E6%B4%9E%E9%9D%B6%E5%9C%BA/">安装好docker环境</a>，并下载文件</li><li>第二步，在vulhub网站找到想做的环境，<a href="https://vulhub.org/#/environments/httpd/apache_parsing_vulnerability/">https://vulhub.org/#/environments/httpd/apache_parsing_vulnerability/</a><br>建议先去网站看看漏洞内容的描述，Apache HTTPD 支持一个文件拥有多个后缀，并为不同后缀执行不同的指令。在有多个后缀的情况下，只要一个文件含有<code>.php</code>后缀的文件即将被识别成PHP文件，没必要是最后一个后缀。利用这个特性，将会造成一个可以绕过上传白名单的解析漏洞。<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-08-30%20212552.png"></li><li>第三步，在Ubuntu终端当中，打开到<code>vulhub-master</code>文件夹，进入到指定的文件路径中<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-08-30%20212953.png"></li><li>第四步，搭建环境<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker-compose build</span><br><span class="line">sudo docker-compose up -d</span><br></pre></td></tr></table></figure><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-08-30%20213201.png"></li><li>第五步，在物理机浏览器中，输入虚拟机的IP地址以打开网站<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-08-30%20213749.png"></li><li>第六步，创建一个文件<code>1.php.jpg</code>，通过notepad++打开，并键入以下内容，电脑将这个文件识别为jpg图片<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">phpinfo</span>();<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></li><li>第七步，在网站当中选择该文件，并提交<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-08-30%20214038.png"></li><li>第八步，在网址栏IP后输入&#x2F;uploadfiles&#x2F;1.php.jpg，发现打开的是PHP文件，而非jpg文件，因此可以通过这个方法，造成一个可以绕过上传白名单的解析漏洞。<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-08-30%20214218.png"></li><li>第九步，最后键入以下指令，关闭环境<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker-compose down</span><br></pre></td></tr></table></figure><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-08-30%20214924.png"></li></ul><hr><p>笔记内容参考自<a href="https://www.yuque.com/weiker/xiaodi">小迪安全</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络安全 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 网络安全 </tag>
+            
+            <tag> 小迪安全 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>在Ubuntu搭建vulhub漏洞靶场</title>
       <link href="/2023/08/29/%E5%9C%A8Ubuntu%E6%90%AD%E5%BB%BAvulhub%E6%BC%8F%E6%B4%9E%E9%9D%B6%E5%9C%BA/"/>
       <url>/2023/08/29/%E5%9C%A8Ubuntu%E6%90%AD%E5%BB%BAvulhub%E6%BC%8F%E6%B4%9E%E9%9D%B6%E5%9C%BA/</url>
@@ -91,7 +118,7 @@
       <link href="/2023/08/25/%E6%9C%89%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84/"/>
       <url>/2023/08/25/%E6%9C%89%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84/</url>
       
-        <content type="html"><![CDATA[<h1 id="有关于我的"><a href="#有关于我的" class="headerlink" title="有关于我的"></a>有关于我的</h1><hr><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E6%A2%A6%E6%AF%94%E4%BC%98%E6%96%AF.jpg" alt="Alien"></p><blockquote><p>永远相信美好的事情即将发生，因为追求源于热爱！</p></blockquote><h3 id="关于Alien"><a href="#关于Alien" class="headerlink" title="关于Alien"></a>关于Alien</h3><p>你好，我叫Alien，是个在校大学生，开发者，2021年开始学习相关开发知识。</p><ul><li><strong>就读院校：</strong> 东莞理工学院（是本科！！！）</li><li><strong>本科专业：</strong> 网络空间安全</li><li><strong>个人爱好：</strong> 听歌、看电影、奥特曼、游戏</li></ul><h3 id="细说个人爱好"><a href="#细说个人爱好" class="headerlink" title="细说个人爱好"></a>细说个人爱好</h3><p>喜欢的音乐人主要是周杰伦、林俊杰、陈奕迅、五月天、张杰、Zard坂井泉水（我女神）、久石让（他的音乐真的很好听）、Radwimps、米津玄师，平时没事就听歌，可以说是个终身爱好了。<br>喜欢的电影有幽灵公主（强烈推荐）、哈尔的移动城堡、天空之城。（很不巧，都是宫崎骏的）<br>游戏玩的不多，像云顶之弈这种比较多人玩，比较喜欢单机的游戏，比如极限竞速：地平线、塞尔达传说：王国之泪、GTA5。<br>应该没有人不喜欢奥特曼吧！（\狗头）</p><h3 id="怎样能够联系到我呢？"><a href="#怎样能够联系到我呢？" class="headerlink" title="怎样能够联系到我呢？"></a>怎样能够联系到我呢？</h3><p>邮箱：<a href="mailto:&#49;&#x31;&#x39;&#x33;&#49;&#x33;&#51;&#x31;&#48;&#53;&#x40;&#113;&#113;&#x2e;&#x63;&#111;&#109;">&#49;&#x31;&#x39;&#x33;&#49;&#x33;&#51;&#x31;&#48;&#53;&#x40;&#113;&#113;&#x2e;&#x63;&#111;&#109;</a><br>Github：<a href="https://github.com/M78Alien">M78Alien</a><br>B站：<a href="https://space.bilibili.com/360390916?spm_id_from=333.1007.0.0">Alien船长大人</a></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="有关于我的"><a href="#有关于我的" class="headerlink" title="有关于我的"></a>有关于我的</h1><hr><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E6%A2%A6%E6%AF%94%E4%BC%98%E6%96%AF.jpg" alt="Alien"></p><blockquote><p>永远相信美好的事情即将发生，因为追求源于热爱！</p></blockquote><h3 id="关于Alien"><a href="#关于Alien" class="headerlink" title="关于Alien"></a>关于Alien</h3><p>你好，我叫Alien，是个在校大学生，开发者，2021年开始学习相关开发知识。</p><ul><li><strong>就读院校：</strong> 东莞理工学院（是本科！！！）</li><li><strong>本科专业：</strong> 网络空间安全</li><li><strong>个人爱好：</strong> 听歌、看电影、奥特曼、游戏</li></ul><h3 id="细说个人爱好"><a href="#细说个人爱好" class="headerlink" title="细说个人爱好"></a>细说个人爱好</h3><p>喜欢的音乐人主要是周杰伦、林俊杰、陈奕迅、五月天、张杰、Zard坂井泉水（我女神）、久石让（他的音乐真的很好听）、Radwimps、米津玄师，平时没事就听歌，可以说是个终身爱好了。<br>喜欢的电影有幽灵公主（强烈推荐）、哈尔的移动城堡、天空之城。（很不巧，都是宫崎骏的）<br>游戏玩的不多，像云顶之弈这种比较多人玩，比较喜欢单机的游戏，比如极限竞速：地平线、塞尔达传说：王国之泪、GTA5。<br>应该没有人不喜欢奥特曼吧！（\狗头）</p><h3 id="怎样能够联系到我呢？"><a href="#怎样能够联系到我呢？" class="headerlink" title="怎样能够联系到我呢？"></a>怎样能够联系到我呢？</h3><p>邮箱：<a href="mailto:&#49;&#49;&#57;&#x33;&#x31;&#x33;&#51;&#49;&#48;&#53;&#x40;&#113;&#113;&#x2e;&#x63;&#x6f;&#x6d;">&#49;&#49;&#57;&#x33;&#x31;&#x33;&#51;&#49;&#48;&#53;&#x40;&#113;&#113;&#x2e;&#x63;&#x6f;&#x6d;</a><br>Github：<a href="https://github.com/M78Alien">M78Alien</a><br>B站：<a href="https://space.bilibili.com/360390916?spm_id_from=333.1007.0.0">Alien船长大人</a></p>]]></content>
       
       
       <categories>
@@ -106,19 +133,6 @@
             <tag> 个人 </tag>
             
         </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Hello World</title>
-      <link href="/2023/08/24/hello-world/"/>
-      <url>/2023/08/24/hello-world/</url>
-      
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-      
-      
       
     </entry>
     
