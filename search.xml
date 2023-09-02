@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>小迪安全 Day08信息收集-架构，搭建，WAF等</title>
+      <link href="/2023/09/02/%E5%B0%8F%E8%BF%AA%E5%AE%89%E5%85%A8%20Day08%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-%E6%9E%B6%E6%9E%84%EF%BC%8C%E6%90%AD%E5%BB%BA%EF%BC%8CWAF%E7%AD%89/"/>
+      <url>/2023/09/02/%E5%B0%8F%E8%BF%AA%E5%AE%89%E5%85%A8%20Day08%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-%E6%9E%B6%E6%9E%84%EF%BC%8C%E6%90%AD%E5%BB%BA%EF%BC%8CWAF%E7%AD%89/</url>
+      
+        <content type="html"><![CDATA[<ul><li>在安全测试中，信息收集是非常重要的一个环节，此环节的信息将影响到后续的成功几率，掌握信息的多少将决定发现漏洞机会大小，换言之决定着是否能完成目标的测试任务。也可以很直接的跟大家说:渗透测试的思路就是从信息收集这里开始，你与大牛的差距也是从这里开始的!<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86.png"></li></ul><h1 id="站点搭建分析"><a href="#站点搭建分析" class="headerlink" title="站点搭建分析"></a>站点搭建分析</h1><h2 id="搭建习惯-目录型站点"><a href="#搭建习惯-目录型站点" class="headerlink" title="搭建习惯-目录型站点"></a>搭建习惯-目录型站点</h2><ul><li>简单的理解就是主站上面存在其他的cms程序</li><li>例如：</li><li>学生网站的上面通过后台扫描探针发现有一个bbs的目录一点击发现是一个bbs的论坛网站如：<code>www.xxx.com/bbs</code></li><li>我们把这个成为目录型网站、可以有两种找到漏洞的思路一个是主站的漏洞另外的一个是bbs上面的漏洞</li></ul><h2 id="搭建习惯-端口类站点"><a href="#搭建习惯-端口类站点" class="headerlink" title="搭建习惯-端口类站点"></a>搭建习惯-端口类站点</h2><ul><li>有的站点不是使用的是默认的站点80而是其他的端口，可以使用shodan这种工具去收集端口</li></ul><h2 id="搭建习惯-子域名站点"><a href="#搭建习惯-子域名站点" class="headerlink" title="搭建习惯-子域名站点"></a>搭建习惯-子域名站点</h2><ul><li>现在的主流网站都是采用的这种模式且子域名和网站之间很有可能是不在同一台的服务器上面。</li></ul><h2 id="搭建习惯-类似域名站点"><a href="#搭建习惯-类似域名站点" class="headerlink" title="搭建习惯-类似域名站点"></a>搭建习惯-类似域名站点</h2><ul><li>有些公司由于业务的发展将原来的域名弃用、选择了其他的域名但是我们访问他的旧的域名还是能够访问、有的是二级域名的更换而有的是顶级域名的更换</li><li>可以通过他的旧的域名找到一些突破口</li><li>例如：京东的网站是jd.com 那么他就有可能是采用了jd.net jd.cn等域名我们采用社工的方式去尝试获取他的相关域名信息</li></ul><h2 id="搭建习惯-旁注-c段站点"><a href="#搭建习惯-旁注-c段站点" class="headerlink" title="搭建习惯-旁注,c段站点"></a>搭建习惯-旁注,c段站点</h2><ul><li>旁注：同一个服务器上面存在多个站点、但是你要攻击的是A网站由于各种原因不能完成安全测试。就通过测试B网站进入服务器然后在攻击A网站最终实现目的。</li><li>C段：不同的服务器上面存在不同的网站，通过扫描发现与你渗透测试的是同一个网段最终拿下服务器、然后通过内网渗透的方式拿下渗透服务器。</li><li>在线工具：<a href="https://www.webscan.cc/">https://www.webscan.cc/</a></li><li>通过旁注查询可以发现同一个服务器上面有两个站点可以通过对另外的一个站点进行突破。</li></ul><h2 id="搭建习惯-搭建软件特征站点"><a href="#搭建习惯-搭建软件特征站点" class="headerlink" title="搭建习惯-搭建软件特征站点"></a>搭建习惯-搭建软件特征站点</h2><ul><li>有的网站是借助于第三方的集成搭建工具实现例如：PHPstudy、宝塔等环境</li><li>这样的集成环境搭建的危害就是泄露了详细的版本信息。</li><li>phpstudy搭建了之后在默认的站点安装了phpmyadmin有的网站没有做安全性直接可以通过用户名：root密码：root 登录进入</li></ul><h1 id="WAF防护分析"><a href="#WAF防护分析" class="headerlink" title="WAF防护分析"></a>WAF防护分析</h1><h2 id="什么是WAF应用"><a href="#什么是WAF应用" class="headerlink" title="什么是WAF应用"></a>什么是WAF应用</h2><ul><li>Web应用防护系统（也称为：网站应用级入侵防御系统。英文：Web Application Firewall，简称： WAF）。利用国际上公认的一种说法：Web应用防火墙是通过执行一系列针对HTTP&#x2F;HTTPS的安全策略来专门为Web应用提供保护的一款产品。</li></ul><h2 id="如何快速识别WAF"><a href="#如何快速识别WAF" class="headerlink" title="如何快速识别WAF"></a>如何快速识别WAF</h2><h3 id="采用工具wafwoof"><a href="#采用工具wafwoof" class="headerlink" title="采用工具wafwoof"></a>采用工具wafwoof</h3><ul><li>获取地址：<a href="https://codeload.github.com/EnableSecurity/wafw00f/zip/refs/heads/master">https://codeload.github.com/EnableSecurity/wafw00f/zip/refs/heads/master</a></li><li>安装之前一定要有python的环境不然安装不上<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-09-02%20221934.png"></li><li>wafw00f的缺点判断的不是特别的准确存在误报或识别不出的情况。</li></ul><h3 id="检查元素"><a href="#检查元素" class="headerlink" title="检查元素"></a>检查元素</h3><ul><li>在有些网站的请求信息当中有的网站没有做安全信息上面留下了waf的相关信息<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/waf%E6%B5%8B%E8%AF%95.png"></li></ul><h3 id="使用nmap指纹检测"><a href="#使用nmap指纹检测" class="headerlink" title="使用nmap指纹检测"></a>使用nmap指纹检测</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nmap --script==http-waf-fingerprint</span><br><span class="line">nmap --script=http-waf-detec</span><br></pre></td></tr></table></figure><h2 id="识别wAF对于安全测试的意义"><a href="#识别wAF对于安全测试的意义" class="headerlink" title="识别wAF对于安全测试的意义"></a>识别wAF对于安全测试的意义</h2><ul><li>对于一个网站要是使用了waf而渗透人员没有识别直接使用工具进行扫描有可能会导致waf将你的ip地址拉入黑名单而不能访问。而识别waf在于有针对性行的绕过各个厂商的waf可能存在着不同的绕过思路。</li></ul><hr><p>笔记参考自<a href="https://www.yuque.com/weiker/xiaodi">小迪安全</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络安全 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 网络安全 </tag>
+            
+            <tag> 小迪安全 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>小迪安全 Day07信息收集-CDN绕过方法</title>
       <link href="/2023/09/02/%E5%B0%8F%E8%BF%AA%E5%AE%89%E5%85%A8%20Day07%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-CDN%E7%BB%95%E8%BF%87%E6%96%B9%E6%B3%95/"/>
       <url>/2023/09/02/%E5%B0%8F%E8%BF%AA%E5%AE%89%E5%85%A8%20Day07%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-CDN%E7%BB%95%E8%BF%87%E6%96%B9%E6%B3%95/</url>
@@ -226,7 +253,7 @@
       <link href="/2023/08/25/%E6%9C%89%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84/"/>
       <url>/2023/08/25/%E6%9C%89%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84/</url>
       
-        <content type="html"><![CDATA[<h1 id="有关于我的"><a href="#有关于我的" class="headerlink" title="有关于我的"></a>有关于我的</h1><hr><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E6%A2%A6%E6%AF%94%E4%BC%98%E6%96%AF.jpg" alt="Alien"></p><blockquote><p>永远相信美好的事情即将发生，因为追求源于热爱！</p></blockquote><h3 id="关于Alien"><a href="#关于Alien" class="headerlink" title="关于Alien"></a>关于Alien</h3><p>你好，我叫Alien，是个在校大学生，开发者，2021年开始学习相关开发知识。</p><ul><li><strong>就读院校：</strong> 东莞理工学院（是本科！！！）</li><li><strong>本科专业：</strong> 网络空间安全</li><li><strong>个人爱好：</strong> 听歌、看电影、奥特曼、游戏</li></ul><h3 id="细说个人爱好"><a href="#细说个人爱好" class="headerlink" title="细说个人爱好"></a>细说个人爱好</h3><p>喜欢的音乐人主要是周杰伦、林俊杰、陈奕迅、五月天、张杰、Zard坂井泉水（我女神）、久石让（他的音乐真的很好听）、Radwimps、米津玄师，平时没事就听歌，可以说是个终身爱好了。<br>喜欢的电影有幽灵公主（强烈推荐）、哈尔的移动城堡、天空之城。（很不巧，都是宫崎骏的）<br>游戏玩的不多，像云顶之弈这种比较多人玩，比较喜欢单机的游戏，比如极限竞速：地平线、塞尔达传说：王国之泪、GTA5。<br>应该没有人不喜欢奥特曼吧！（\狗头）</p><h3 id="怎样能够联系到我呢？"><a href="#怎样能够联系到我呢？" class="headerlink" title="怎样能够联系到我呢？"></a>怎样能够联系到我呢？</h3><p>邮箱：<a href="mailto:&#x31;&#x31;&#x39;&#x33;&#x31;&#x33;&#51;&#x31;&#x30;&#x35;&#64;&#113;&#113;&#x2e;&#x63;&#x6f;&#x6d;">&#x31;&#x31;&#x39;&#x33;&#x31;&#x33;&#51;&#x31;&#x30;&#x35;&#64;&#113;&#113;&#x2e;&#x63;&#x6f;&#x6d;</a><br>Github：<a href="https://github.com/M78Alien">M78Alien</a><br>B站：<a href="https://space.bilibili.com/360390916?spm_id_from=333.1007.0.0">Alien船长大人</a></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="有关于我的"><a href="#有关于我的" class="headerlink" title="有关于我的"></a>有关于我的</h1><hr><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E6%A2%A6%E6%AF%94%E4%BC%98%E6%96%AF.jpg" alt="Alien"></p><blockquote><p>永远相信美好的事情即将发生，因为追求源于热爱！</p></blockquote><h3 id="关于Alien"><a href="#关于Alien" class="headerlink" title="关于Alien"></a>关于Alien</h3><p>你好，我叫Alien，是个在校大学生，开发者，2021年开始学习相关开发知识。</p><ul><li><strong>就读院校：</strong> 东莞理工学院（是本科！！！）</li><li><strong>本科专业：</strong> 网络空间安全</li><li><strong>个人爱好：</strong> 听歌、看电影、奥特曼、游戏</li></ul><h3 id="细说个人爱好"><a href="#细说个人爱好" class="headerlink" title="细说个人爱好"></a>细说个人爱好</h3><p>喜欢的音乐人主要是周杰伦、林俊杰、陈奕迅、五月天、张杰、Zard坂井泉水（我女神）、久石让（他的音乐真的很好听）、Radwimps、米津玄师，平时没事就听歌，可以说是个终身爱好了。<br>喜欢的电影有幽灵公主（强烈推荐）、哈尔的移动城堡、天空之城。（很不巧，都是宫崎骏的）<br>游戏玩的不多，像云顶之弈这种比较多人玩，比较喜欢单机的游戏，比如极限竞速：地平线、塞尔达传说：王国之泪、GTA5。<br>应该没有人不喜欢奥特曼吧！（\狗头）</p><h3 id="怎样能够联系到我呢？"><a href="#怎样能够联系到我呢？" class="headerlink" title="怎样能够联系到我呢？"></a>怎样能够联系到我呢？</h3><p>邮箱：<a href="mailto:&#49;&#49;&#x39;&#x33;&#49;&#x33;&#51;&#x31;&#x30;&#53;&#x40;&#113;&#113;&#46;&#x63;&#111;&#109;">&#49;&#49;&#x39;&#x33;&#49;&#x33;&#51;&#x31;&#x30;&#53;&#x40;&#113;&#113;&#46;&#x63;&#111;&#109;</a><br>Github：<a href="https://github.com/M78Alien">M78Alien</a><br>B站：<a href="https://space.bilibili.com/360390916?spm_id_from=333.1007.0.0">Alien船长大人</a></p>]]></content>
       
       
       <categories>
