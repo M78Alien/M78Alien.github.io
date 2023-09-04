@@ -4,9 +4,38 @@
   
     
     <entry>
-      <title>pikachu环境搭建</title>
-      <link href="/2023/09/03/pikachu%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
-      <url>/2023/09/03/pikachu%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+      <title>BurpSuite安装教程</title>
+      <link href="/2023/09/04/BurpSuite%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"/>
+      <url>/2023/09/04/BurpSuite%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</url>
+      
+        <content type="html"><![CDATA[<ul><li>Burp Suite 是用于攻击web 应用程序的集成平台，包含了许多工具。Burp Suite为这些工具设计了许多接口，以加快攻击应用程序的过程。所有工具都共享一个请求，并能处理对应的HTTP 消息、持久性、认证、代理、日志、警报。</li></ul><h1 id="下载BurpSuite"><a href="#下载BurpSuite" class="headerlink" title="下载BurpSuite"></a>下载BurpSuite</h1><ul><li>这里我在网上找到的资源，是百度网盘下载的，如果觉得下载太慢可以自行搜索其他资源</li><li>网盘链接：<a href="https://pan.baidu.com/s/11lrFGT0aGCd4BQcAJrL55w">https://pan.baidu.com/s/11lrFGT0aGCd4BQcAJrL55w</a></li><li>提取码：w5lg<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230904204902.png" alt="image.png"></li><li>文件目录，不建议在中文目录下</li></ul><h1 id="安装jdk"><a href="#安装jdk" class="headerlink" title="安装jdk"></a>安装jdk</h1><ul><li>这个资源包提供了配套的jdk，我们可以直接使用这个jdk安装就行</li><li>如果电脑本身就有Java的也可以安装，因为原有的Java版本不一定适配</li><li>由于Java环境配置特别麻烦，所以我直接给个<a href="https://www.runoob.com/java/java-environment-setup.html">非常详细的教程</a>吧，直接跳到配置环境变量那里</li><li>配置完成在<code>cmd</code>中键入<code>java -version</code>，就可以看见以下内容，说明安装配置成功<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230904205305.png" alt="image.png"></li></ul><h1 id="安装BurpSuite"><a href="#安装BurpSuite" class="headerlink" title="安装BurpSuite"></a>安装BurpSuite</h1><ul><li>首先右键资源包内的<code>burp-loader-keygen.jar</code>，使用Java打开<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230904205549.png" alt="image.png"></li><li>点击<code>运行薄荷.vbs</code>，弹出来一个窗口<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230904210557.png" alt="image.png"></li></ul><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230904205855.png" alt="image.png"></p><ul><li>将大窗口<code>license</code>内的内容复制到小窗口内，点击Next<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230904210022.png" alt="image.png"></li><li>然后点击<code>Manual activation(手动激活)</code><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230904210127.png" alt="image.png"></li><li>将小窗口第二栏的内容复制到大窗口的第二栏</li><li>大窗口第三栏会出现内容，复制粘贴到小窗口的第三栏</li><li>点击Next就安装完成了</li><li>再次打开<code>运行薄荷.vbs</code>就可以看到<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230904210641.png" alt="image.png"></li><li>以后允许就打开这个</li><li>但是很难找所以可以给它创建一个快捷方式</li></ul><h1 id="浏览器配置"><a href="#浏览器配置" class="headerlink" title="浏览器配置"></a>浏览器配置</h1><ul><li>这里我选择的是火狐浏览器firefox<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230904212717.png" alt="image.png"></li><li>按照这个内容设置</li><li>其他浏览器的方法可以在网上找找，都差不多</li></ul><h1 id="CA证书"><a href="#CA证书" class="headerlink" title="CA证书"></a>CA证书</h1><ul><li>使用Burp Suite做安全测试时，要抓取HTTPS的包的话，是需要有Burp Suite的CA证书的，否则浏览器不支持。</li><li>使用BP导出CA证书<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230904212913.png" alt="image.png"></li><li>输入以下内容就可以<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230904212947.png" alt="image.png"></li><li>在burpsuite同级目录下就会出现证书文件<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230904213029.png" alt="image.png"></li><li>打开火狐浏览器，设置内搜索<code>证书</code><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230904213118.png" alt="image.png"></li><li>点击<code>导入...</code>，选择刚刚导出的证书即可<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230904213303.png" alt="image.png"></li><li>这样就算安装完成了</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 工具使用 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 网络安全 </tag>
+            
+            <tag> 工具 </tag>
+            
+            <tag> burpsuite </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Pikachu环境搭建</title>
+      <link href="/2023/09/03/Pikachu%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+      <url>/2023/09/03/Pikachu%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
       
         <content type="html"><![CDATA[<ul><li>Pikachu是一个带有漏洞的Web应用系统，在这里包含了常见的web安全漏洞。 如果你是一个Web渗透测试学习人员且正发愁没有合适的靶场进行练习，那么Pikachu可能正合你意。</li></ul><h1 id="第一步安装phpstudy"><a href="#第一步安装phpstudy" class="headerlink" title="第一步安装phpstudy"></a>第一步安装phpstudy</h1><ul><li>在<a href="https://www.xp.cn/download.html">phpstudy官网</a>下载安装<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230903215830.png" alt="image.png"></li><li>这里只需要使用到Mysql和apache，所以打开这两个就可以了。</li><li>如果出现MySQL无法打开的情况，可以试试改变MySQL的连接端口，可能是电脑已存在MySQL并占用了默认的3306端口</li><li>测试一下是否开启成功，在浏览器打开<code>localhost/index.php</code><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230903222109.png" alt="image.png"></li><li>出现以上页面则启动成功</li></ul><h1 id="第二步下载pikachu"><a href="#第二步下载pikachu" class="headerlink" title="第二步下载pikachu"></a>第二步下载pikachu</h1><ul><li>在GitHub当中下载<a href="https://github.com/zhuifengshaonianhanlu/pikachu">pikachu</a><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230903220438.png" alt="image.png"></li></ul><h1 id="第三步搭建pikachu"><a href="#第三步搭建pikachu" class="headerlink" title="第三步搭建pikachu"></a>第三步搭建pikachu</h1><ul><li>在phpstudy中，左栏选择网站</li><li>在网站中创建一个127.0.0.1的网站</li><li>然后将下载的<code>pikachu.zip</code>压缩包解压到<code>phpstudy_pro/WWW/127.0.0.1</code>下</li><li>然后打开<code>pikachu-master/inc/conf.inc.php</code>文件<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230903220851.png" alt="image.png"></li><li>按照指示修改内容</li></ul><h1 id="第四步pikachu！启动！"><a href="#第四步pikachu！启动！" class="headerlink" title="第四步pikachu！启动！"></a>第四步pikachu！启动！</h1><ul><li>在浏览器打开<code>127.0.0.1/pikachu-master</code><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230903221106.png" alt="image.png"></li><li>可以看见pikachu已经成功打开了，但是还需要初始化</li><li>浏览器地址加上<code>/install.php</code><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230903221252.png" alt="image.png"></li><li>点击<code>安装/初始化</code>就可以了</li></ul><h1 id="补充-我遇到的问题"><a href="#补充-我遇到的问题" class="headerlink" title="补充-我遇到的问题"></a>补充-我遇到的问题</h1><ol><li>一开始我将<code>pikachu-master</code>直接放在了WWW下，导致一直打不开页面，记得是放在<code>127.0.0.1</code>下</li><li>之后就是网站可以打开了，但是使用里面的内容会出现<code>数据连接失败，请仔细检查inc/config.inc.php的配置解决方法</code>，只是因为没有初始化就直接开始使用的情况，当时搞了好久才发现问题。</li></ol>]]></content>
       
@@ -282,7 +311,7 @@
       <link href="/2023/08/25/%E6%9C%89%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84/"/>
       <url>/2023/08/25/%E6%9C%89%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84/</url>
       
-        <content type="html"><![CDATA[<h1 id="有关于我的"><a href="#有关于我的" class="headerlink" title="有关于我的"></a>有关于我的</h1><hr><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E6%A2%A6%E6%AF%94%E4%BC%98%E6%96%AF.jpg" alt="Alien"></p><blockquote><p>永远相信美好的事情即将发生，因为追求源于热爱！</p></blockquote><h3 id="关于Alien"><a href="#关于Alien" class="headerlink" title="关于Alien"></a>关于Alien</h3><p>你好，我叫Alien，是个在校大学生，开发者，2021年开始学习相关开发知识。</p><ul><li><strong>就读院校：</strong> 东莞理工学院（是本科！！！）</li><li><strong>本科专业：</strong> 网络空间安全</li><li><strong>个人爱好：</strong> 听歌、看电影、奥特曼、游戏</li></ul><h3 id="细说个人爱好"><a href="#细说个人爱好" class="headerlink" title="细说个人爱好"></a>细说个人爱好</h3><p>喜欢的音乐人主要是周杰伦、林俊杰、陈奕迅、五月天、张杰、Zard坂井泉水（我女神）、久石让（他的音乐真的很好听）、Radwimps、米津玄师，平时没事就听歌，可以说是个终身爱好了。<br>喜欢的电影有幽灵公主（强烈推荐）、哈尔的移动城堡、天空之城。（很不巧，都是宫崎骏的）<br>游戏玩的不多，像云顶之弈这种比较多人玩，比较喜欢单机的游戏，比如极限竞速：地平线、塞尔达传说：王国之泪、GTA5。<br>应该没有人不喜欢奥特曼吧！（\狗头）</p><h3 id="怎样能够联系到我呢？"><a href="#怎样能够联系到我呢？" class="headerlink" title="怎样能够联系到我呢？"></a>怎样能够联系到我呢？</h3><p>邮箱：<a href="mailto:&#x31;&#x31;&#57;&#x33;&#49;&#51;&#51;&#x31;&#48;&#x35;&#x40;&#113;&#x71;&#x2e;&#99;&#x6f;&#109;">&#x31;&#x31;&#57;&#x33;&#49;&#51;&#51;&#x31;&#48;&#x35;&#x40;&#113;&#x71;&#x2e;&#99;&#x6f;&#109;</a><br>Github：<a href="https://github.com/M78Alien">M78Alien</a><br>B站：<a href="https://space.bilibili.com/360390916?spm_id_from=333.1007.0.0">Alien船长大人</a></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="有关于我的"><a href="#有关于我的" class="headerlink" title="有关于我的"></a>有关于我的</h1><hr><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E6%A2%A6%E6%AF%94%E4%BC%98%E6%96%AF.jpg" alt="Alien"></p><blockquote><p>永远相信美好的事情即将发生，因为追求源于热爱！</p></blockquote><h3 id="关于Alien"><a href="#关于Alien" class="headerlink" title="关于Alien"></a>关于Alien</h3><p>你好，我叫Alien，是个在校大学生，开发者，2021年开始学习相关开发知识。</p><ul><li><strong>就读院校：</strong> 东莞理工学院（是本科！！！）</li><li><strong>本科专业：</strong> 网络空间安全</li><li><strong>个人爱好：</strong> 听歌、看电影、奥特曼、游戏</li></ul><h3 id="细说个人爱好"><a href="#细说个人爱好" class="headerlink" title="细说个人爱好"></a>细说个人爱好</h3><p>喜欢的音乐人主要是周杰伦、林俊杰、陈奕迅、五月天、张杰、Zard坂井泉水（我女神）、久石让（他的音乐真的很好听）、Radwimps、米津玄师，平时没事就听歌，可以说是个终身爱好了。<br>喜欢的电影有幽灵公主（强烈推荐）、哈尔的移动城堡、天空之城。（很不巧，都是宫崎骏的）<br>游戏玩的不多，像云顶之弈这种比较多人玩，比较喜欢单机的游戏，比如极限竞速：地平线、塞尔达传说：王国之泪、GTA5。<br>应该没有人不喜欢奥特曼吧！（\狗头）</p><h3 id="怎样能够联系到我呢？"><a href="#怎样能够联系到我呢？" class="headerlink" title="怎样能够联系到我呢？"></a>怎样能够联系到我呢？</h3><p>邮箱：<a href="mailto:&#49;&#49;&#x39;&#x33;&#x31;&#51;&#51;&#49;&#48;&#53;&#x40;&#113;&#x71;&#46;&#x63;&#111;&#x6d;">&#49;&#49;&#x39;&#x33;&#x31;&#51;&#51;&#49;&#48;&#53;&#x40;&#113;&#x71;&#46;&#x63;&#111;&#x6d;</a><br>Github：<a href="https://github.com/M78Alien">M78Alien</a><br>B站：<a href="https://space.bilibili.com/360390916?spm_id_from=333.1007.0.0">Alien船长大人</a></p>]]></content>
       
       
       <categories>
