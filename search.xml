@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>Sqli-labs安装教程</title>
+      <link href="/2023/09/07/Sqli-labs%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"/>
+      <url>/2023/09/07/Sqli-labs%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Sqli-labs简介"><a href="#Sqli-labs简介" class="headerlink" title="Sqli-labs简介"></a>Sqli-labs简介</h1><ul><li>Sqli-labs 是一个印度程序员写的，用来学习 sql 注入的一个游戏教程。</li><li>Sqli-labs是一个帮你总结大部分SQL注入漏洞类型的靶场，学习SQL注入漏洞原理，复现SQL注入漏洞必备靶场环境。</li></ul><h1 id="Sqli-labs下载"><a href="#Sqli-labs下载" class="headerlink" title="Sqli-labs下载"></a>Sqli-labs下载</h1><ul><li>这里提供Github的项目地址：<a href="https://github.com/Audi-1/sqli-labs">https://github.com/Audi-1/sqli-labs</a></li><li>如果打不开就打开代理</li></ul><h1 id="Sqli-labs安装"><a href="#Sqli-labs安装" class="headerlink" title="Sqli-labs安装"></a>Sqli-labs安装</h1><ul><li>首先，需要安装apache+mysql+php的环境，建议在Windows当中安装phpstudy进行搭建</li><li>将下载好的源码压缩包，解压到phpstudy&#x2F;WWW目录下，如果出现文件重复是否替换的提示，选择是就可以了。<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230907143540.png" alt="image.png"></li></ul><h1 id="Sqli-labs配置"><a href="#Sqli-labs配置" class="headerlink" title="Sqli-labs配置"></a>Sqli-labs配置</h1><ul><li>在<code>WWW/sqli-labs-master/sql-connections</code>文件夹当中，找到<code>db-creds.inc</code>文件，使用notepad++打开编辑<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230907143811.png" alt="image.png"></li><li>在<code>user</code>和<code>pass</code>两项中填写数据库的账户和密码，默认账户和密码都是<code>root</code><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230907143932.png" alt="image.png"></li><li>如果不知道账户密码的，在phpstudy的数据库一栏中查看<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230907144145.png" alt="image.png"></li><li>在浏览器输入<a href="http://localhost/sqli-labs-master/">http://localhost/sqli-labs-master/</a>就可以打开靶场了<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230907144403.png" alt="image.png"></li><li>点击<code>Setup/reset Database for labs</code>开始自动配置，显示以下画面则是安装成功了<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230907144531.png" alt="image.png"></li><li>接下来就可以开始进入关卡了</li></ul><h1 id="安装时遇到的问题"><a href="#安装时遇到的问题" class="headerlink" title="安装时遇到的问题"></a>安装时遇到的问题</h1><ul><li>这是我遇到的问题，内容翻译的意思就是有无法识别的字符<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/2fea01f4fbdf21ca933eeefa5f9a5e6.png" alt="2fea01f4fbdf21ca933eeefa5f9a5e6.png"></li><li>出现这个情况可能是字符集不适配，我们在phpstudy首页，现在mysql的配置，将字符集设置为<code>utf8</code><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230907144911.png" alt="image.png"></li><li>如果问题仍然没有解决，可以尝试降低php的版本，建议安装5.4.45版本，在phpstudy软件管理当中下载相应版本，然后在网站栏对应的网站点击管理更换php的版本<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230907145141.png" alt="image.png"></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 工具使用 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 网络安全 </tag>
+            
+            <tag> 工具 </tag>
+            
+            <tag> SQL注入 </tag>
+            
+            <tag> Sqli-labs </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Day12WEB漏洞-SQL注入之简要SQL注入</title>
       <link href="/2023/09/06/%E5%B0%8F%E8%BF%AA%E5%AE%89%E5%85%A8%20Day12WEB%E6%BC%8F%E6%B4%9E-SQL%E6%B3%A8%E5%85%A5%E4%B9%8B%E7%AE%80%E8%A6%81SQL%E6%B3%A8%E5%85%A5/"/>
       <url>/2023/09/06/%E5%B0%8F%E8%BF%AA%E5%AE%89%E5%85%A8%20Day12WEB%E6%BC%8F%E6%B4%9E-SQL%E6%B3%A8%E5%85%A5%E4%B9%8B%E7%AE%80%E8%A6%81SQL%E6%B3%A8%E5%85%A5/</url>
@@ -367,7 +398,7 @@
       <link href="/2023/08/25/%E6%9C%89%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84/"/>
       <url>/2023/08/25/%E6%9C%89%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84/</url>
       
-        <content type="html"><![CDATA[<h1 id="有关于我的"><a href="#有关于我的" class="headerlink" title="有关于我的"></a>有关于我的</h1><hr><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E6%A2%A6%E6%AF%94%E4%BC%98%E6%96%AF.jpg" alt="Alien"></p><blockquote><p>永远相信美好的事情即将发生，因为追求源于热爱！</p></blockquote><h3 id="关于Alien"><a href="#关于Alien" class="headerlink" title="关于Alien"></a>关于Alien</h3><p>你好，我叫Alien，是个在校大学生，开发者，2021年开始学习相关开发知识。</p><ul><li><strong>就读院校：</strong> 东莞理工学院（是本科！！！）</li><li><strong>本科专业：</strong> 网络空间安全</li><li><strong>个人爱好：</strong> 听歌、看电影、奥特曼、游戏</li></ul><h3 id="细说个人爱好"><a href="#细说个人爱好" class="headerlink" title="细说个人爱好"></a>细说个人爱好</h3><p>喜欢的音乐人主要是周杰伦、林俊杰、陈奕迅、五月天、张杰、Zard坂井泉水（我女神）、久石让（他的音乐真的很好听）、Radwimps、米津玄师，平时没事就听歌，可以说是个终身爱好了。<br>喜欢的电影有幽灵公主（强烈推荐）、哈尔的移动城堡、天空之城。（很不巧，都是宫崎骏的）<br>游戏玩的不多，像云顶之弈这种比较多人玩，比较喜欢单机的游戏，比如极限竞速：地平线、塞尔达传说：王国之泪、GTA5。<br>应该没有人不喜欢奥特曼吧！（\狗头）</p><h3 id="怎样能够联系到我呢？"><a href="#怎样能够联系到我呢？" class="headerlink" title="怎样能够联系到我呢？"></a>怎样能够联系到我呢？</h3><p>邮箱：<a href="mailto:&#x31;&#x31;&#57;&#51;&#49;&#x33;&#51;&#49;&#48;&#53;&#64;&#113;&#113;&#46;&#99;&#111;&#109;">&#x31;&#x31;&#57;&#51;&#49;&#x33;&#51;&#49;&#48;&#53;&#64;&#113;&#113;&#46;&#99;&#111;&#109;</a><br>Github：<a href="https://github.com/M78Alien">M78Alien</a><br>B站：<a href="https://space.bilibili.com/360390916?spm_id_from=333.1007.0.0">Alien船长大人</a></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="有关于我的"><a href="#有关于我的" class="headerlink" title="有关于我的"></a>有关于我的</h1><hr><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E6%A2%A6%E6%AF%94%E4%BC%98%E6%96%AF.jpg" alt="Alien"></p><blockquote><p>永远相信美好的事情即将发生，因为追求源于热爱！</p></blockquote><h3 id="关于Alien"><a href="#关于Alien" class="headerlink" title="关于Alien"></a>关于Alien</h3><p>你好，我叫Alien，是个在校大学生，开发者，2021年开始学习相关开发知识。</p><ul><li><strong>就读院校：</strong> 东莞理工学院（是本科！！！）</li><li><strong>本科专业：</strong> 网络空间安全</li><li><strong>个人爱好：</strong> 听歌、看电影、奥特曼、游戏</li></ul><h3 id="细说个人爱好"><a href="#细说个人爱好" class="headerlink" title="细说个人爱好"></a>细说个人爱好</h3><p>喜欢的音乐人主要是周杰伦、林俊杰、陈奕迅、五月天、张杰、Zard坂井泉水（我女神）、久石让（他的音乐真的很好听）、Radwimps、米津玄师，平时没事就听歌，可以说是个终身爱好了。<br>喜欢的电影有幽灵公主（强烈推荐）、哈尔的移动城堡、天空之城。（很不巧，都是宫崎骏的）<br>游戏玩的不多，像云顶之弈这种比较多人玩，比较喜欢单机的游戏，比如极限竞速：地平线、塞尔达传说：王国之泪、GTA5。<br>应该没有人不喜欢奥特曼吧！（\狗头）</p><h3 id="怎样能够联系到我呢？"><a href="#怎样能够联系到我呢？" class="headerlink" title="怎样能够联系到我呢？"></a>怎样能够联系到我呢？</h3><p>邮箱：<a href="mailto:&#49;&#x31;&#x39;&#x33;&#49;&#51;&#51;&#x31;&#x30;&#53;&#64;&#x71;&#x71;&#46;&#99;&#x6f;&#109;">&#49;&#x31;&#x39;&#x33;&#49;&#51;&#51;&#x31;&#x30;&#53;&#64;&#x71;&#x71;&#46;&#99;&#x6f;&#109;</a><br>Github：<a href="https://github.com/M78Alien">M78Alien</a><br>B站：<a href="https://space.bilibili.com/360390916?spm_id_from=333.1007.0.0">Alien船长大人</a></p>]]></content>
       
       
       <categories>
