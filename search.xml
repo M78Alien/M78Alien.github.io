@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>Mysql注入的注入类型（2）</title>
+      <link href="/2023/09/22/Mysql%E6%B3%A8%E5%85%A5%E7%9A%84%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B%EF%BC%882%EF%BC%89/"/>
+      <url>/2023/09/22/Mysql%E6%B3%A8%E5%85%A5%E7%9A%84%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B%EF%BC%882%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<h1 id="加解密注入"><a href="#加解密注入" class="headerlink" title="加解密注入"></a>加解密注入</h1><ul><li>数据包当中的cookie内容经过了加密，可以将sql语句进行加密，然后注入</li><li>以sqli-labs-less21为例<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230922225650.png" alt="image.png"></li><li>在用户名密码栏当中输入admin<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230922225719.png" alt="image.png"></li><li>会回显我们的cookie数据<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230922225935.png" alt="image.png"></li><li>通过抓包工具可以看到cookie数据内容被加密了，加密方式为base64编码<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230922230631.png" alt="image.png"></li><li>解密得到admin原文，我们在后面加个单引号测试是否存在漏洞<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230922230916.png" alt="image.png"><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230922230938.png" alt="image.png"></li><li>可以看出，我们可以在后面加上单引号和后括号进行注入<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230922231807.png" alt="image.png"></li><li>将报错注入到cookie当中，然后进行加密<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230922231847.png" alt="image.png"></li><li>可以看到注入成功了</li></ul><h1 id="二次注入"><a href="#二次注入" class="headerlink" title="二次注入"></a>二次注入</h1><ul><li>二次注入是指已存储（数据库、文件）的用户输入被读取后再次进入到 SQL 查询语句中导致的注入。</li><li>二次注入是sql注入的一种，但是比普通sql注入利用更加困难，利用门槛更高。普通注入数据直接进入到 SQL 查询中，而二次注入则是输入数据经处理后存储，取出后，再次进入到 SQL 查询。</li></ul><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><ul><li>在第一次进行数据库插入数据的时候，使用了<code>get_magic_quotes_gpc</code>对其中的特殊字符进行了转义，但是存入数据库时还是原来的数据，数据中带有<code>&#39;</code>或者<code>#</code>，然后下次使用再拼凑sql语句中，形成二次注入</li></ul><h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><ul><li>以sqli-labs-less24为例<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230922232516.png" alt="image.png"></li><li>我们没有用户名和密码，所有我们通过注册账户的方式，将干扰符号注入进去</li><li>我们猜测存在admin用户，所有我们注册admin’#<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230922232641.png" alt="image.png"><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230922232655.png" alt="image.png"></li><li>通过查询可以知道我们的账户注册成功了<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230922232832.png" alt="image.png"></li><li>成功登录之后，进入到更改密码的界面，我们直接将密码改为<code>111111</code><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230922232929.png" alt="image.png"></li><li>此时我们发现，我们将<code>admin</code>的密码改了，说明二次注入成功</li><li>原因时代码在执行的过程中，将<code>&#39;#</code>进行了转义，没有对注册造成干扰，但是在第二次调用的时候没有进行过滤，造成二次注入。</li></ul><h1 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h1><h2 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h2><ul><li>堆叠查询可以执行多条语句，多条语句之间以分号隔开。</li><li>堆叠注入就是利用在一条查询语句结束之后，在语句末尾加入分号之后再插入恶意的SQL语句，就可以达到攻击者的意图。</li></ul><h2 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h2><ul><li>以sqli-labs-less38为例</li><li>在语句中加个分号<code>;</code>，在后面加入需要注入的恶意语句</li><li><code>?id=1&#39;; insert into users(id,username,password) values (38,&#39;less38&#39;,&#39;mima&#39;)--+</code><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230922234158.png" alt="image.png"></li><li>用于在数据库当中插入自定义的用户名和密码<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20230922234356.png" alt="image.png"></li><li>可以看到已经注入成功了</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络安全 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 网络安全 </tag>
+            
+            <tag> SQL注入 </tag>
+            
+            <tag> MYSQL注入 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Mysql注入的注入类型</title>
       <link href="/2023/09/21/Mysql%E6%B3%A8%E5%85%A5%E7%9A%84%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B/"/>
       <url>/2023/09/21/Mysql%E6%B3%A8%E5%85%A5%E7%9A%84%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B/</url>
@@ -569,7 +598,7 @@
       <link href="/2023/08/25/%E6%9C%89%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84/"/>
       <url>/2023/08/25/%E6%9C%89%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84/</url>
       
-        <content type="html"><![CDATA[<h1 id="有关于我的"><a href="#有关于我的" class="headerlink" title="有关于我的"></a>有关于我的</h1><hr><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E6%A2%A6%E6%AF%94%E4%BC%98%E6%96%AF.jpg" alt="Alien"></p><blockquote><p>永远相信美好的事情即将发生，因为追求源于热爱！</p></blockquote><h3 id="关于Alien"><a href="#关于Alien" class="headerlink" title="关于Alien"></a>关于Alien</h3><p>你好，我叫Alien，是个在校大学生，开发者，2021年开始学习相关开发知识。</p><ul><li><strong>就读院校：</strong> 东莞理工学院（是本科！！！）</li><li><strong>本科专业：</strong> 网络空间安全</li><li><strong>个人爱好：</strong> 听歌、看电影、奥特曼、游戏</li></ul><h3 id="细说个人爱好"><a href="#细说个人爱好" class="headerlink" title="细说个人爱好"></a>细说个人爱好</h3><p>喜欢的音乐人主要是周杰伦、林俊杰、陈奕迅、五月天、张杰、Zard坂井泉水（我女神）、久石让（他的音乐真的很好听）、Radwimps、米津玄师，平时没事就听歌，可以说是个终身爱好了。<br>喜欢的电影有幽灵公主（强烈推荐）、哈尔的移动城堡、天空之城。（很不巧，都是宫崎骏的）<br>游戏玩的不多，像云顶之弈这种比较多人玩，比较喜欢单机的游戏，比如极限竞速：地平线、塞尔达传说：王国之泪、GTA5。<br>应该没有人不喜欢奥特曼吧！（\狗头）</p><h3 id="怎样能够联系到我呢？"><a href="#怎样能够联系到我呢？" class="headerlink" title="怎样能够联系到我呢？"></a>怎样能够联系到我呢？</h3><p>邮箱：<a href="mailto:&#49;&#x31;&#x39;&#51;&#49;&#x33;&#51;&#49;&#x30;&#53;&#x40;&#113;&#x71;&#46;&#99;&#x6f;&#x6d;">&#49;&#x31;&#x39;&#51;&#49;&#x33;&#51;&#49;&#x30;&#53;&#x40;&#113;&#x71;&#46;&#99;&#x6f;&#x6d;</a><br>Github：<a href="https://github.com/M78Alien">M78Alien</a><br>B站：<a href="https://space.bilibili.com/360390916?spm_id_from=333.1007.0.0">Alien船长大人</a></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="有关于我的"><a href="#有关于我的" class="headerlink" title="有关于我的"></a>有关于我的</h1><hr><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E6%A2%A6%E6%AF%94%E4%BC%98%E6%96%AF.jpg" alt="Alien"></p><blockquote><p>永远相信美好的事情即将发生，因为追求源于热爱！</p></blockquote><h3 id="关于Alien"><a href="#关于Alien" class="headerlink" title="关于Alien"></a>关于Alien</h3><p>你好，我叫Alien，是个在校大学生，开发者，2021年开始学习相关开发知识。</p><ul><li><strong>就读院校：</strong> 东莞理工学院（是本科！！！）</li><li><strong>本科专业：</strong> 网络空间安全</li><li><strong>个人爱好：</strong> 听歌、看电影、奥特曼、游戏</li></ul><h3 id="细说个人爱好"><a href="#细说个人爱好" class="headerlink" title="细说个人爱好"></a>细说个人爱好</h3><p>喜欢的音乐人主要是周杰伦、林俊杰、陈奕迅、五月天、张杰、Zard坂井泉水（我女神）、久石让（他的音乐真的很好听）、Radwimps、米津玄师，平时没事就听歌，可以说是个终身爱好了。<br>喜欢的电影有幽灵公主（强烈推荐）、哈尔的移动城堡、天空之城。（很不巧，都是宫崎骏的）<br>游戏玩的不多，像云顶之弈这种比较多人玩，比较喜欢单机的游戏，比如极限竞速：地平线、塞尔达传说：王国之泪、GTA5。<br>应该没有人不喜欢奥特曼吧！（\狗头）</p><h3 id="怎样能够联系到我呢？"><a href="#怎样能够联系到我呢？" class="headerlink" title="怎样能够联系到我呢？"></a>怎样能够联系到我呢？</h3><p>邮箱：<a href="mailto:&#49;&#49;&#57;&#51;&#49;&#x33;&#51;&#x31;&#x30;&#x35;&#64;&#113;&#113;&#46;&#99;&#111;&#109;">&#49;&#49;&#57;&#51;&#49;&#x33;&#51;&#x31;&#x30;&#x35;&#64;&#113;&#113;&#46;&#99;&#111;&#109;</a><br>Github：<a href="https://github.com/M78Alien">M78Alien</a><br>B站：<a href="https://space.bilibili.com/360390916?spm_id_from=333.1007.0.0">Alien船长大人</a></p>]]></content>
       
       
       <categories>
