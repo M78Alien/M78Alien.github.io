@@ -1,0 +1,387 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Web漏洞文件上传 | Alien's Blog</title><meta name="author" content="Alien"><meta name="copyright" content="Alien"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="什么是文件上传漏洞 文件上传漏洞是web系统中常见的一种功能，通过文件上传能实现上传图片、视频，以及其他类型的文件，但是随着web中包含的功能越来越多，潜在的网络安全风险也就越大。 如果恶意用户上传了可执行的文件或者脚本，就会导致网站被其控制甚至会使其服务器沦陷，以至于引发恶意的网络安全事件。  文件上传漏洞原理 文件上传漏洞是指用户通过界面上的上传功能上传了一个可执行的脚本文件，而WEB端的系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web漏洞文件上传">
+<meta property="og:url" content="http://example.com/2023/10/08/Web%E6%BC%8F%E6%B4%9E%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/index.html">
+<meta property="og:site_name" content="Alien&#39;s Blog">
+<meta property="og:description" content="什么是文件上传漏洞 文件上传漏洞是web系统中常见的一种功能，通过文件上传能实现上传图片、视频，以及其他类型的文件，但是随着web中包含的功能越来越多，潜在的网络安全风险也就越大。 如果恶意用户上传了可执行的文件或者脚本，就会导致网站被其控制甚至会使其服务器沦陷，以至于引发恶意的网络安全事件。  文件上传漏洞原理 文件上传漏洞是指用户通过界面上的上传功能上传了一个可执行的脚本文件，而WEB端的系统">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg">
+<meta property="article:published_time" content="2023-10-08T14:09:00.000Z">
+<meta property="article:modified_time" content="2023-10-09T14:18:54.665Z">
+<meta property="article:author" content="Alien">
+<meta property="article:tag" content="网络安全">
+<meta property="article:tag" content="文件上传漏洞">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg"><link rel="shortcut icon" href="/img/ultra_icon.png"><link rel="canonical" href="http://example.com/2023/10/08/Web%E6%BC%8F%E6%B4%9E%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/pluginsSrc/@fancyapps/ui/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Web漏洞文件上传',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-10-09 22:18:54'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/my.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" onerror="onerror=null;src='/img/程序员.png'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-edit"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/contact/"><i class="fa-fw fas fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-lightbulb"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230825160648.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Alien's Blog"><span class="site-name">Alien's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-edit"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/contact/"><i class="fa-fw fas fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-lightbulb"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Web漏洞文件上传</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-08T14:09:00.000Z" title="发表于 2023-10-08 22:09:00">2023-10-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-10-09T14:18:54.665Z" title="更新于 2023-10-09 22:18:54">2023-10-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title="Web漏洞文件上传"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="什么是文件上传漏洞"><a href="#什么是文件上传漏洞" class="headerlink" title="什么是文件上传漏洞"></a>什么是文件上传漏洞</h1><ul>
+<li>文件上传漏洞是web系统中常见的一种功能，通过文件上传能实现上传图片、视频，以及其他类型的文件，但是随着web中包含的功能越来越多，潜在的网络安全风险也就越大。</li>
+<li>如果恶意用户上传了可执行的文件或者脚本，就会导致网站被其控制甚至会使其服务器沦陷，以至于引发恶意的网络安全事件。</li>
+</ul>
+<h1 id="文件上传漏洞原理"><a href="#文件上传漏洞原理" class="headerlink" title="文件上传漏洞原理"></a>文件上传漏洞原理</h1><ul>
+<li>文件上传漏洞是指用户通过界面上的上传功能上传了一个可执行的脚本文件，而WEB端的系统并未对其进行检测或者检测的逻辑做的不够好。</li>
+<li>通常来说文件上传功能是没有问题的，主要是服务器如何对上传的文件如何进行处理。</li>
+<li>若WEB未对用户上传的文件进行有效的审查，若存在恶意用户对其上传一句话木马，从而实现控制WEB网站的目的。</li>
+</ul>
+<h1 id="什么是webshell"><a href="#什么是webshell" class="headerlink" title="什么是webshell"></a>什么是webshell</h1><ul>
+<li>Webshell是一种网页后门，通常用asp、jsp或者php编写。</li>
+<li>WebShell的常见的功能有执行系统命令、窃取用户数据、删除web页面、修改主页等。黑客在入侵了一个网站后，常常在将这些asp或php木马后门文件放置在网站服务器的web目录中，与正常的网页文件混在一起。</li>
+</ul>
+<h2 id="Webshell的分类"><a href="#Webshell的分类" class="headerlink" title="Webshell的分类"></a>Webshell的分类</h2><table>
+<thead>
+<tr>
+<th><strong>分类</strong></th>
+<th><strong>体量</strong></th>
+<th><strong>特点</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>大马</td>
+<td>体积大，包含很多功能</td>
+<td>通常会包含调用系统的关键函数，所以通常会加密代码用来隐藏。</td>
+</tr>
+<tr>
+<td>小马</td>
+<td>体积小，通常只包含文件上传功能</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>一句话木马</td>
+<td>代码极短（只有一行）</td>
+<td>使用方便，可以单独作为一个文件，也可以插入其他正常文件中；变形多，难以查杀。</td>
+</tr>
+</tbody></table>
+<h1 id="文件上传实战思路"><a href="#文件上传实战思路" class="headerlink" title="文件上传实战思路"></a>文件上传实战思路</h1><ul>
+<li>文件上传和文件执行是两个东西</li>
+<li>漏洞分类：解析漏洞、cms漏洞、其他漏洞（编辑器漏洞、cve漏洞、安全修复）</li>
+<li>思路：如果有一个网站，要从文件上传的方向开始</li>
+<li>第一步：先看中间件，看是否存在解析漏洞&#x2F;CMS&#x2F;编辑器漏洞&#x2F;CVE&#x2F;</li>
+<li>如果有，如何找：</li>
+<li>字典扫描：扫描会员中心，文件上传的位置</li>
+<li>找到后，如何利用：</li>
+<li>验证&#x2F;绕过</li>
+</ul>
+<h1 id="文件上传绕过分类"><a href="#文件上传绕过分类" class="headerlink" title="文件上传绕过分类"></a>文件上传绕过分类</h1><h2 id="JS类防护"><a href="#JS类防护" class="headerlink" title="JS类防护"></a>JS类防护</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ul>
+<li>JS防护就是将上传的文件进行一个格式的验证，但是JS类的防护是用户可以控制的，所有前端的所有验证都是不安全的。</li>
+</ul>
+<h3 id="实例upload-labs-Pass01"><a href="#实例upload-labs-Pass01" class="headerlink" title="实例upload-labs-Pass01"></a>实例upload-labs-Pass01</h3><ul>
+<li>通过禁用界面JS处理，可以禁用JS防护</li>
+<li>在火狐安装插件javascript switcher，可以一键禁用JS处理<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231008225253.png" alt="image.png"></li>
+<li>在upload下就可以看到我们上传的文件<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231008225334.png" alt="image.png"></li>
+</ul>
+<h2 id="黑名单"><a href="#黑名单" class="headerlink" title="黑名单"></a>黑名单</h2><ul>
+<li>黑名单就是服务端明确不让上传的格式后缀，例如：rar、php、zip等。</li>
+</ul>
+<h3 id="特殊解析后缀"><a href="#特殊解析后缀" class="headerlink" title="特殊解析后缀"></a>特殊解析后缀</h3><h4 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li>特殊解析后缀绕过是由于黑名单过滤规则不严谨，在某些特定的情况下的后缀也能够被当作php文件进行解析，例如PHP2、php3、php4、phtml、pht等情况。</li>
+<li>可以使用phtml、php3、php4、php5，当然前提是apache服务器，同时在配置文件夹中需要有将AddType application&#x2F;x-httpd-php .php .phtml .phps .php1 .php4 .pht 这样的一段话前面的注释删除，重启phpstudy让其生效。</li>
+</ul>
+<h4 id="实例upload-labs-Pass03"><a href="#实例upload-labs-Pass03" class="headerlink" title="实例upload-labs-Pass03"></a>实例upload-labs-Pass03</h4><ul>
+<li>禁止<code>.asp</code>、<code>.aspx</code>、<code>.php</code>、<code>.jsp</code>类型进行上传</li>
+<li>将php文件后缀改为phtml进行绕过，实现文件上传<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231008230836.png" alt="image.png"></li>
+</ul>
+<h3 id="htaccess解析"><a href="#htaccess解析" class="headerlink" title=".htaccess解析"></a>.htaccess解析</h3><h4 id="基本概念-2"><a href="#基本概念-2" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li>.htaccess文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置</li>
+<li>通过htaccess文件，可以实现:网页301重定向、自定义404页面、改变文件扩展名、允许&#x2F;阻止特定的用户或者目录的访问、禁止目录列表、配置默认文档等功能。</li>
+</ul>
+<h4 id="实例upload-labs-Pass04"><a href="#实例upload-labs-Pass04" class="headerlink" title="实例upload-labs-Pass04"></a>实例upload-labs-Pass04</h4><ul>
+<li>通过源码得知第三关使用的phtml被限制了，并且设定了更多的特殊解析后缀，所以使用特殊解析后缀已经无法绕过了<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231008231355.png" alt="image.png"></li>
+<li>这里就可以使用到<code> .htaccess</code>进行绕过测试。</li>
+<li>创建一个 <code>.htaccess</code>文件，使用notepad++编辑<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231008232814.png" alt="image.png"></li>
+<li>然后将<code>.htaccess</code>文件上传，再将php文件改为<code>.jpg</code>文件上传<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009104431.png" alt="image.png"><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009104445.png" alt="image.png"></li>
+<li>可以看到已经成功上传文件了<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009104909.png" alt="image.png"></li>
+</ul>
+<h3 id="大小写绕过"><a href="#大小写绕过" class="headerlink" title="大小写绕过"></a>大小写绕过</h3><h4 id="基本概念-3"><a href="#基本概念-3" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li>后缀大小写是通过服务端未将后缀进行统一的格式转换，导致可以上传PHP的文件，同时由于Windows系统对后缀大小写并不敏感，所以当在写PHP的改成Php就会被当作PHP进行解析。</li>
+</ul>
+<h4 id="实例upload-labs-Pass05"><a href="#实例upload-labs-Pass05" class="headerlink" title="实例upload-labs-Pass05"></a>实例upload-labs-Pass05</h4><ul>
+<li>通过源码可知，其未对大小写进行限制，我们可以对php后缀进行大小写变形<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009105223.png" alt="image.png"></li>
+<li>上传文件<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009105402.png" alt="image.png"></li>
+</ul>
+<h3 id="点绕过"><a href="#点绕过" class="headerlink" title="点绕过"></a>点绕过</h3><h4 id="基本概念-4"><a href="#基本概念-4" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li>点绕过其实就是利用了Windows对文件和文件名的限制，当将点放在结尾的时候，就会触发操作系统的命名规范问题，所以在生成文件的时候，添加在结尾的点就会被去除。</li>
+</ul>
+<h4 id="实例upload-labs-Pass07"><a href="#实例upload-labs-Pass07" class="headerlink" title="实例upload-labs-Pass07"></a>实例upload-labs-Pass07</h4><ul>
+<li>通过源码发现，本关并未对结尾点进行检测。</li>
+<li>那么这里就可以通过在后缀加上点进行绕过，触发操作系统的命名规范，就会将结尾的点去除<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009111050.png" alt="image.png"></li>
+<li>burp抓包在结尾加个点就可以绕过<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009111203.png" alt="image.png"></li>
+<li>可以看见成功上传了<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009111305.png" alt="image.png"></li>
+</ul>
+<h4 id="实例upload-labs-Pass09"><a href="#实例upload-labs-Pass09" class="headerlink" title="实例upload-labs-Pass09"></a>实例upload-labs-Pass09</h4><ul>
+<li>通过源码发现，加一个点会被过滤</li>
+<li>但是只是过滤一次，所有可以加两个点<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009111429.png" alt="image.png"></li>
+<li>只需要与Pass07相同的方法，结尾加两个点即可</li>
+</ul>
+<h3 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h3><h4 id="基本概念-5"><a href="#基本概念-5" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li>其实空格绕过和点绕过是一样的，都是利用操作系统的特性来进行解析绕过。</li>
+</ul>
+<h4 id="实例upload-labs-Pass06"><a href="#实例upload-labs-Pass06" class="headerlink" title="实例upload-labs-Pass06"></a>实例upload-labs-Pass06</h4><ul>
+<li>通过源码发现，没有对结尾空格进行限制，所有我们可以在结尾加空格进行绕过<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009111938.png" alt="image.png"></li>
+<li>成功绕过<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009112000.png" alt="image.png"></li>
+</ul>
+<h3 id="DATA绕过"><a href="#DATA绕过" class="headerlink" title="::$DATA绕过"></a>::$DATA绕过</h3><h4 id="基本概念-6"><a href="#基本概念-6" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li>在window的时候如果文件名+<code>::$DATA</code>会把<code>::$DATA</code>之后的数据当成文件流处理,不会检测后缀名，且保持<code>::$DATA</code>之前的文件名，他的目的就是不检查后缀名</li>
+</ul>
+<h4 id="实例upload-labs-Pass08"><a href="#实例upload-labs-Pass08" class="headerlink" title="实例upload-labs-Pass08"></a>实例upload-labs-Pass08</h4><ul>
+<li>通过源码可知，没有为<code>::$DATA</code>的检测<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009112905.png" alt="image.png"></li>
+<li>在文件结尾加<code>::$DATA</code>就可以绕过<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009113123.png" alt="image.png"><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009113158.png" alt="image.png"></li>
+</ul>
+<h3 id="双后缀名绕过"><a href="#双后缀名绕过" class="headerlink" title="双后缀名绕过"></a>双后缀名绕过</h3><h4 id="基本概念-7"><a href="#基本概念-7" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li>服务端可能存在将后缀替换为空的情况，但是这就存在一种可能就是在编辑过滤的时候只过滤了一次，所以就出现了可以通过双写就绕过的可能。</li>
+</ul>
+<h4 id="实例upload-labs-Pass10"><a href="#实例upload-labs-Pass10" class="headerlink" title="实例upload-labs-Pass10"></a>实例upload-labs-Pass10</h4><ul>
+<li>通过源码可以知道，上传指定的文件后缀，会被替换成空，但是只替换一次<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009150200.png" alt="image.png"></li>
+<li>那么就可以通过双后缀的方式绕过</li>
+<li>由于过滤是从左往右，例如p<strong>php</strong>hp会被过滤成php<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009150658.png" alt="image.png"><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009150752.png" alt="image.png"></li>
+</ul>
+<h2 id="白名单"><a href="#白名单" class="headerlink" title="白名单"></a>白名单</h2><ul>
+<li>白名单就是服务端明确可以上传的格式后缀，例如：jpg、png、jpeg等。</li>
+</ul>
+<h3 id="MIME绕过"><a href="#MIME绕过" class="headerlink" title="MIME绕过"></a>MIME绕过</h3><h4 id="基本概念-8"><a href="#基本概念-8" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li>服务端MIME类型检测是通过检查http中包含的Content-Type字段中的值来判断上传文件是否合法的。</li>
+<li>利用Burp抓包，将报文中的Content-Type改成允许的类型<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: image/gif（gif图像）</span><br><span class="line">Content-Type: image/jpg（jpg图像）</span><br><span class="line">Content-Type: image/png（png图像）</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="实例upload-labs-Pass02"><a href="#实例upload-labs-Pass02" class="headerlink" title="实例upload-labs-Pass02"></a>实例upload-labs-Pass02</h4><ul>
+<li>通过源码可知，采用了<code>content-type</code>进行后端验证<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009151320.png" alt="image.png"></li>
+<li>我们可以通过burp抓包对其<code>content-type</code>进行修改<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009152042.png" alt="image.png"><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009152057.png" alt="image.png"></li>
+</ul>
+<h3 id="00截断"><a href="#00截断" class="headerlink" title="%00截断"></a>%00截断</h3><h4 id="基本概念-9"><a href="#基本概念-9" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li>%00不是代表空格，而是null，一个空字符，当程序执行到%00后，那么后面的数据就会停止，意思就是误当作结束符，把后面的数据直接忽略了，这就会导致漏洞产生。</li>
+<li>在文件上传后，利用%00截断，在文件扩展名验证的时候，就会取文件的扩展名进行验证，但是在最后保存在本地的时候，%00就会截断文件名，只保存%00之前的内容。</li>
+<li>%00只能用于php版本低于5.3的。这里我们需要把phpstudy切换一下版本,把magic_quotes_gpc关闭，以phpstudy为例。其他选项菜单—php扩展及设置—参数开关设置—把magic_quotes_gpc关闭。</li>
+</ul>
+<h2 id="内容及其他"><a href="#内容及其他" class="headerlink" title="内容及其他"></a>内容及其他</h2><h3 id="文件头检测"><a href="#文件头检测" class="headerlink" title="文件头检测"></a>文件头检测</h3><h4 id="基本概念-10"><a href="#基本概念-10" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li>图片的格式在防护中通常是不会使用后缀进行判断的依据，文件头是文件开头的一段二进制码，不同类型的图片也就会有不同的二进制头。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">JPEG (jpg)，文件头：FF D8 FF E1  </span><br><span class="line">PNG (png)，文件头：89 50 4E 47  </span><br><span class="line">GIF (gif)，文件头：47 49 46 38</span><br></pre></td></tr></table></figure>
+<img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009153123.png" alt="image.png"></li>
+</ul>
+<h4 id="实例upload-labs-Pass13"><a href="#实例upload-labs-Pass13" class="headerlink" title="实例upload-labs-Pass13"></a>实例upload-labs-Pass13</h4><ul>
+<li>制作木马图</li>
+<li>在创建一个图片，和php文件，使用指令<code>copy 1.png/b + p13.php/a 2.png</code>进行合并<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009153856.png" alt="image.png"><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009153909.png" alt="image.png"></li>
+<li>上传合并后的图片，这个图片当中就包含了php语句<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009153956.png" alt="image.png"><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009155428.png" alt="image.png"></li>
+</ul>
+<h3 id="二次渲染"><a href="#二次渲染" class="headerlink" title="二次渲染"></a>二次渲染</h3><h4 id="基本概念-11"><a href="#基本概念-11" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li>二次渲染就是在我们上传的图片后，网站会对图片进行二次处理，比如对图片的尺寸、格式、以及网站对图片进行定义的一些要求等进行处理，并且服务器会对里面的内容进行二次替换更新，在处理完后，会生成一个合规的图片在网站上显示出来。</li>
+</ul>
+<h4 id="实例upload-labs-Pass16"><a href="#实例upload-labs-Pass16" class="headerlink" title="实例upload-labs-Pass16"></a>实例upload-labs-Pass16</h4><ul>
+<li>通过源码可知，会重新渲染图片，就是说我们上传的图片不会被保存，而是只有图片信息被提取</li>
+<li>准备一个gif图片（最好是，因为比较容易），制作成图片马<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009220037.png" alt="image.png"></li>
+<li>上传图片马<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009220114.png" alt="image.png"></li>
+<li>将上传的图片马与后台保存的进行对比</li>
+<li>使用<strong>Beyond Compare 4</strong>工具对比<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009220244.png" alt="image.png"></li>
+<li>发现图片文件前面大部分二次渲染的时候被过滤了，所以我们可以将php语句放在前部分，这样就不会被过滤了，然后保存<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009220427.png" alt="image.png"></li>
+<li>然后再将该文件进行上传<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009220523.png" alt="image.png"></li>
+<li>然后再次对比我们会发现，插入的php语句没有被过滤<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231009220856.png" alt="image.png"></li>
+</ul>
+<h3 id="条件竞争"><a href="#条件竞争" class="headerlink" title="条件竞争"></a>条件竞争</h3><h4 id="基本概念-12"><a href="#基本概念-12" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li>条件竞争就是在源代码中是存在校验的，但是校验是在文件上传后，才开始校验，也就是文件先上传至服务器中，然后服务器会对该文件进行校验，当符合的时候则会对文件进行重命名，当文件不符合要求的时候就对将文件进行删除。</li>
+<li>而我们则需要在服务器对文件删除前进行访问，由于文件在访问过程中，服务器是无法删除的，所以就可以利用这个节点实现条件竞争。</li>
+</ul>
+<h3 id="突破getimagesize函数"><a href="#突破getimagesize函数" class="headerlink" title="突破getimagesize函数"></a>突破getimagesize函数</h3><h4 id="基本概念-13"><a href="#基本概念-13" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li><code>getimagesize</code>函数是用于获取图像大小及相关信息，成功返回一个数组，失败则返回false产生一条e_warning级的错误信息。</li>
+<li>通过对图片及代码进行合成图片马，这个时候<code>getimagesize</code>函数既可以获取图片信息，文件后缀php也能够被解析成脚本文件，从而绕过<code>getimagesize</code>函数的限制。</li>
+</ul>
+<h4 id="实例upload-labs-Pass14"><a href="#实例upload-labs-Pass14" class="headerlink" title="实例upload-labs-Pass14"></a>实例upload-labs-Pass14</h4><ul>
+<li>本关存有getimagesize函数，这个函数的意思是：会对目标文件的16进制去进行一个读取，去读取头几个字符串是不是符合图片的要求的。</li>
+<li>使用办法和第十三关是一样的，前提都是需要存在相关的漏洞。</li>
+</ul>
+<h3 id="突破exit-imagetype-函数"><a href="#突破exit-imagetype-函数" class="headerlink" title="突破exit_imagetype()函数"></a>突破exit_imagetype()函数</h3><h4 id="基本概念-14"><a href="#基本概念-14" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li>服务器exit_imagetype()函数检测上传图片类型是否为白名单图片格式来验证上传文件合法性。可以通过制作图片马绕过，再配合文件包含漏洞解析文件来获取服务器配置信息。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Alien</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2023/10/08/Web%E6%BC%8F%E6%B4%9E%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">http://example.com/2023/10/08/Web%E6%BC%8F%E6%B4%9E%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Alien's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><a class="post-meta__tags" href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/">文件上传漏洞</a></div><div class="post_share"><div class="social-share" data-image="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" data-sites="twitter,wechat,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/09/22/Mysql%E6%B3%A8%E5%85%A5%E7%9A%84%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B%EF%BC%882%EF%BC%89/" title="Mysql注入的注入类型（2）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Mysql注入的注入类型（2）</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/09/04/BurpSuite%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" title="BurpSuite安装教程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-04</div><div class="title">BurpSuite安装教程</div></div></a></div><div><a href="/2023/09/21/Mysql%E6%B3%A8%E5%85%A5%E7%9A%84%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B/" title="Mysql注入的注入类型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-21</div><div class="title">Mysql注入的注入类型</div></div></a></div><div><a href="/2023/09/22/Mysql%E6%B3%A8%E5%85%A5%E7%9A%84%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B%EF%BC%882%EF%BC%89/" title="Mysql注入的注入类型（2）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-22</div><div class="title">Mysql注入的注入类型（2）</div></div></a></div><div><a href="/2023/09/03/Pikachu%E9%9D%B6%E5%9C%BA%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="Pikachu靶场环境搭建"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-03</div><div class="title">Pikachu靶场环境搭建</div></div></a></div><div><a href="/2023/09/07/Sqli-labs%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" title="Sqli-labs安装教程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-07</div><div class="title">Sqli-labs安装教程</div></div></a></div><div><a href="/2023/08/29/%E5%9C%A8Ubuntu%E6%90%AD%E5%BB%BAvulhub%E6%BC%8F%E6%B4%9E%E9%9D%B6%E5%9C%BA/" title="在Ubuntu搭建vulhub漏洞靶场"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-29</div><div class="title">在Ubuntu搭建vulhub漏洞靶场</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" onerror="this.onerror=null;this.src='/img/%E7%A8%8B%E5%BA%8F%E5%91%98.png'" alt="avatar"/></div><div class="author-info__name">Alien</div><div class="author-info__description">M78来的程序员</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M78Alien"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到Alien的专属空间</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.</span> <span class="toc-text">什么是文件上传漏洞</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">文件上传漏洞原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFwebshell"><span class="toc-number">3.</span> <span class="toc-text">什么是webshell</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Webshell%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">3.1.</span> <span class="toc-text">Webshell的分类</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AE%9E%E6%88%98%E6%80%9D%E8%B7%AF"><span class="toc-number">4.</span> <span class="toc-text">文件上传实战思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%BB%95%E8%BF%87%E5%88%86%E7%B1%BB"><span class="toc-number">5.</span> <span class="toc-text">文件上传绕过分类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JS%E7%B1%BB%E9%98%B2%E6%8A%A4"><span class="toc-number">5.1.</span> <span class="toc-text">JS类防护</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">5.1.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8Bupload-labs-Pass01"><span class="toc-number">5.1.2.</span> <span class="toc-text">实例upload-labs-Pass01</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BB%91%E5%90%8D%E5%8D%95"><span class="toc-number">5.2.</span> <span class="toc-text">黑名单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E8%A7%A3%E6%9E%90%E5%90%8E%E7%BC%80"><span class="toc-number">5.2.1.</span> <span class="toc-text">特殊解析后缀</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-1"><span class="toc-number">5.2.1.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8Bupload-labs-Pass03"><span class="toc-number">5.2.1.2.</span> <span class="toc-text">实例upload-labs-Pass03</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#htaccess%E8%A7%A3%E6%9E%90"><span class="toc-number">5.2.2.</span> <span class="toc-text">.htaccess解析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-2"><span class="toc-number">5.2.2.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8Bupload-labs-Pass04"><span class="toc-number">5.2.2.2.</span> <span class="toc-text">实例upload-labs-Pass04</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E5%B0%8F%E5%86%99%E7%BB%95%E8%BF%87"><span class="toc-number">5.2.3.</span> <span class="toc-text">大小写绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-3"><span class="toc-number">5.2.3.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8Bupload-labs-Pass05"><span class="toc-number">5.2.3.2.</span> <span class="toc-text">实例upload-labs-Pass05</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%82%B9%E7%BB%95%E8%BF%87"><span class="toc-number">5.2.4.</span> <span class="toc-text">点绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-4"><span class="toc-number">5.2.4.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8Bupload-labs-Pass07"><span class="toc-number">5.2.4.2.</span> <span class="toc-text">实例upload-labs-Pass07</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8Bupload-labs-Pass09"><span class="toc-number">5.2.4.3.</span> <span class="toc-text">实例upload-labs-Pass09</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E6%A0%BC%E7%BB%95%E8%BF%87"><span class="toc-number">5.2.5.</span> <span class="toc-text">空格绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-5"><span class="toc-number">5.2.5.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8Bupload-labs-Pass06"><span class="toc-number">5.2.5.2.</span> <span class="toc-text">实例upload-labs-Pass06</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DATA%E7%BB%95%E8%BF%87"><span class="toc-number">5.2.6.</span> <span class="toc-text">::$DATA绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-6"><span class="toc-number">5.2.6.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8Bupload-labs-Pass08"><span class="toc-number">5.2.6.2.</span> <span class="toc-text">实例upload-labs-Pass08</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E5%90%8E%E7%BC%80%E5%90%8D%E7%BB%95%E8%BF%87"><span class="toc-number">5.2.7.</span> <span class="toc-text">双后缀名绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-7"><span class="toc-number">5.2.7.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8Bupload-labs-Pass10"><span class="toc-number">5.2.7.2.</span> <span class="toc-text">实例upload-labs-Pass10</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BD%E5%90%8D%E5%8D%95"><span class="toc-number">5.3.</span> <span class="toc-text">白名单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MIME%E7%BB%95%E8%BF%87"><span class="toc-number">5.3.1.</span> <span class="toc-text">MIME绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-8"><span class="toc-number">5.3.1.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8Bupload-labs-Pass02"><span class="toc-number">5.3.1.2.</span> <span class="toc-text">实例upload-labs-Pass02</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#00%E6%88%AA%E6%96%AD"><span class="toc-number">5.3.2.</span> <span class="toc-text">%00截断</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-9"><span class="toc-number">5.3.2.1.</span> <span class="toc-text">基本概念</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E5%8F%8A%E5%85%B6%E4%BB%96"><span class="toc-number">5.4.</span> <span class="toc-text">内容及其他</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B4%E6%A3%80%E6%B5%8B"><span class="toc-number">5.4.1.</span> <span class="toc-text">文件头检测</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-10"><span class="toc-number">5.4.1.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8Bupload-labs-Pass13"><span class="toc-number">5.4.1.2.</span> <span class="toc-text">实例upload-labs-Pass13</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E6%AC%A1%E6%B8%B2%E6%9F%93"><span class="toc-number">5.4.2.</span> <span class="toc-text">二次渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-11"><span class="toc-number">5.4.2.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8Bupload-labs-Pass16"><span class="toc-number">5.4.2.2.</span> <span class="toc-text">实例upload-labs-Pass16</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89"><span class="toc-number">5.4.3.</span> <span class="toc-text">条件竞争</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-12"><span class="toc-number">5.4.3.1.</span> <span class="toc-text">基本概念</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AA%81%E7%A0%B4getimagesize%E5%87%BD%E6%95%B0"><span class="toc-number">5.4.4.</span> <span class="toc-text">突破getimagesize函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-13"><span class="toc-number">5.4.4.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8Bupload-labs-Pass14"><span class="toc-number">5.4.4.2.</span> <span class="toc-text">实例upload-labs-Pass14</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AA%81%E7%A0%B4exit-imagetype-%E5%87%BD%E6%95%B0"><span class="toc-number">5.4.5.</span> <span class="toc-text">突破exit_imagetype()函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-14"><span class="toc-number">5.4.5.1.</span> <span class="toc-text">基本概念</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/08/Web%E6%BC%8F%E6%B4%9E%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" title="Web漏洞文件上传">Web漏洞文件上传</a><time datetime="2023-10-08T14:09:00.000Z" title="发表于 2023-10-08 22:09:00">2023-10-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/22/Mysql%E6%B3%A8%E5%85%A5%E7%9A%84%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B%EF%BC%882%EF%BC%89/" title="Mysql注入的注入类型（2）">Mysql注入的注入类型（2）</a><time datetime="2023-09-22T14:43:00.000Z" title="发表于 2023-09-22 22:43:00">2023-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/21/Mysql%E6%B3%A8%E5%85%A5%E7%9A%84%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B/" title="Mysql注入的注入类型">Mysql注入的注入类型</a><time datetime="2023-09-21T14:29:00.000Z" title="发表于 2023-09-21 22:29:00">2023-09-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/21/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7-SQLMap/" title="渗透测试工具-sqlmap">渗透测试工具-sqlmap</a><time datetime="2023-09-21T12:39:00.000Z" title="发表于 2023-09-21 20:39:00">2023-09-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/13/DES%E5%8A%A0%E5%AF%86%E5%8E%9F%E7%90%86/" title="DES加密原理">DES加密原理</a><time datetime="2023-09-13T13:54:00.000Z" title="发表于 2023-09-13 21:54:00">2023-09-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Alien</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/@fancyapps/ui/dist/fancybox/fancybox.umd.js"></script><div class="js-pjax"><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://alien-api-1193133105-qqcom.vercel.app/',
+      region: 'ap-shanghai',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://alien-api-1193133105-qqcom.vercel.app/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.textContent = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('/pluginsSrc/twikoo/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><script data-pjax defer src="/js/my.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
