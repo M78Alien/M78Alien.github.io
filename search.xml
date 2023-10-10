@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>XSS跨站脚本攻击漏洞</title>
+      <link href="/2023/10/10/XSS%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%E6%BC%8F%E6%B4%9E/"/>
+      <url>/2023/10/10/XSS%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%E6%BC%8F%E6%B4%9E/</url>
+      
+        <content type="html"><![CDATA[<h1 id="XSS介绍"><a href="#XSS介绍" class="headerlink" title="XSS介绍"></a>XSS介绍</h1><h2 id="什么是跨站脚本攻击"><a href="#什么是跨站脚本攻击" class="headerlink" title="什么是跨站脚本攻击"></a>什么是跨站脚本攻击</h2><ul><li>跨站脚本攻击（Cross-site scripting，XSS）是一种常见的网络安全漏洞，攻击者通过在受害网站注入恶意脚本代码，使得其他用户访问该网站时执行这些恶意代码，从而达到攻击的目的。</li></ul><h2 id="有什么危害"><a href="#有什么危害" class="headerlink" title="有什么危害"></a>有什么危害</h2><ul><li>获取用户信息：(如浏览器信息、ip地址、cookie信息等）</li><li>钓鱼：(利用xss漏洞构造出一个登录框，骗取用户账户密码，提示登录过期，模拟一个网站的登录框，将用户名、密码发送到攻击者服务器）</li><li>注入木马或广告链接：(有些在主站注入非法网站的链接，对公司的声誉有一定的影响)·</li><li>后台增删改网站数据等操作：(配合CSR漏洞，骗取用户点击，利用s模拟浏览器发包）</li><li>xss蠕虫(微博蠕虫：只要看过某人的微博就是自动关注某人；贴吧蠕虫：看过某个帖子就是自动回复这个帖子)</li></ul><h1 id="XSS分类"><a href="#XSS分类" class="headerlink" title="XSS分类"></a>XSS分类</h1><h2 id="反射型XXS"><a href="#反射型XXS" class="headerlink" title="反射型XXS"></a>反射型XXS</h2><ul><li>反射型XSS，又称<strong>非持久型XSS</strong>，攻击相对于受害者而言是一次性的，具体表现在受害者点击了含有的恶意JavaScript脚本的url，恶意代码并没有保存在目标网站，而Web应用程序只是不加处理的把该恶意脚本“反射”回受害者的浏览器而使受害者的浏览器执行相应的脚本。<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231010231118.png" alt="image.png"></li></ul><h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol><li>即时性。不经过服务器存储，直接通过 HTTP 的 GET 和 POST 请求就能完成一次攻击，拿到用户隐私数据；</li><li>攻击者需要诱骗点击；</li><li>反馈率低，所以较难发现和响应修复；</li><li>盗取用户敏感保密信息。</li></ol><h2 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h2><ul><li>存储型XSS，又称<strong>持续型XSS</strong>，是指应用程序通过Web请求获取不可信赖的数据，在未检验数据是否存在XSS代码的情况下，便将其存入数据库。当下一次从数据库中获取该数据时程序也未对其进行过滤，页面再次执行XSS代码持续攻击用户。存储型XSS漏洞大多出现在留言板、评论区，用户提交了包含XSS代码的留言到数据库，当目标用户查询留言时，那些留言的内容会从服务器解析之后加载出来。<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231010231135.png" alt="image.png"></li></ul><h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h3><ol><li>持久性，植入在数据库中；</li><li>危害面广，甚至可以让用户机器变成 DDoS 攻击的肉鸡；</li><li>盗取用户敏感私密信息。</li></ol><h2 id="DOM型"><a href="#DOM型" class="headerlink" title="DOM型"></a>DOM型</h2><ul><li>DOM，全称Document Object Model，是一个平台和语言都中立的接口，可以使程序和脚本能够动态访问和更新文档的内容、结构以及样式，DOM-XSS简单理解就是不与后台服务器产生数据交互，是一种通过DOM操作前端代码输出的时候产生的问题。<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231010231149.png" alt="image.png"></li></ul><h1 id="XSS防御"><a href="#XSS防御" class="headerlink" title="XSS防御"></a>XSS防御</h1><h2 id="对输入和URL参数进行过滤-白名单和黑名单"><a href="#对输入和URL参数进行过滤-白名单和黑名单" class="headerlink" title="对输入和URL参数进行过滤(白名单和黑名单)"></a>对输入和URL参数进行过滤(白名单和黑名单)</h2><p>检查用户输入的数据中是否包含一些特殊字符，如&lt;、&gt;、’、“等，发现存在特殊字符，将这些特殊字符过滤或者编码。</p><h2 id="HTML实体编码"><a href="#HTML实体编码" class="headerlink" title="HTML实体编码"></a>HTML实体编码</h2><p>字符串js编码转换成实体html编码的方法（防范XSS攻击）<br><a href="https://www.cnblogs.com/dearxinli/p/5466286.html">https://www.cnblogs.com/dearxinli/p/5466286.html</a></p><h2 id="对输出内容进行编码"><a href="#对输出内容进行编码" class="headerlink" title="对输出内容进行编码"></a>对输出内容进行编码</h2><p>在变量输出到HTML页面时，可以使用编码或转义的方式来防御XSS攻击。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络安全 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 网络安全 </tag>
+            
+            <tag> XSS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Web漏洞文件上传（2）</title>
       <link href="/2023/10/10/Web%E6%BC%8F%E6%B4%9E%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%EF%BC%882%EF%BC%89/"/>
       <url>/2023/10/10/Web%E6%BC%8F%E6%B4%9E%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%EF%BC%882%EF%BC%89/</url>
@@ -652,7 +679,7 @@
       <link href="/2023/08/25/%E6%9C%89%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84/"/>
       <url>/2023/08/25/%E6%9C%89%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84/</url>
       
-        <content type="html"><![CDATA[<h1 id="有关于我的"><a href="#有关于我的" class="headerlink" title="有关于我的"></a>有关于我的</h1><hr><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E6%A2%A6%E6%AF%94%E4%BC%98%E6%96%AF.jpg" alt="Alien"></p><blockquote><p>永远相信美好的事情即将发生，因为追求源于热爱！</p></blockquote><h3 id="关于Alien"><a href="#关于Alien" class="headerlink" title="关于Alien"></a>关于Alien</h3><p>你好，我叫Alien，是个在校大学生，开发者，2021年开始学习相关开发知识。</p><ul><li><strong>就读院校：</strong> 东莞理工学院（是本科！！！）</li><li><strong>本科专业：</strong> 网络空间安全</li><li><strong>个人爱好：</strong> 听歌、看电影、奥特曼、游戏</li></ul><h3 id="细说个人爱好"><a href="#细说个人爱好" class="headerlink" title="细说个人爱好"></a>细说个人爱好</h3><p>喜欢的音乐人主要是周杰伦、林俊杰、陈奕迅、五月天、张杰、Zard坂井泉水（我女神）、久石让（他的音乐真的很好听）、Radwimps、米津玄师，平时没事就听歌，可以说是个终身爱好了。<br>喜欢的电影有幽灵公主（强烈推荐）、哈尔的移动城堡、天空之城。（很不巧，都是宫崎骏的）<br>游戏玩的不多，像云顶之弈这种比较多人玩，比较喜欢单机的游戏，比如极限竞速：地平线、塞尔达传说：王国之泪、GTA5。<br>应该没有人不喜欢奥特曼吧！（\狗头）</p><h3 id="怎样能够联系到我呢？"><a href="#怎样能够联系到我呢？" class="headerlink" title="怎样能够联系到我呢？"></a>怎样能够联系到我呢？</h3><p>邮箱：<a href="mailto:&#49;&#x31;&#x39;&#x33;&#x31;&#x33;&#51;&#49;&#x30;&#53;&#x40;&#x71;&#113;&#46;&#99;&#111;&#x6d;">&#49;&#x31;&#x39;&#x33;&#x31;&#x33;&#51;&#49;&#x30;&#53;&#x40;&#x71;&#113;&#46;&#99;&#111;&#x6d;</a><br>Github：<a href="https://github.com/M78Alien">M78Alien</a><br>B站：<a href="https://space.bilibili.com/360390916?spm_id_from=333.1007.0.0">Alien船长大人</a></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="有关于我的"><a href="#有关于我的" class="headerlink" title="有关于我的"></a>有关于我的</h1><hr><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E6%A2%A6%E6%AF%94%E4%BC%98%E6%96%AF.jpg" alt="Alien"></p><blockquote><p>永远相信美好的事情即将发生，因为追求源于热爱！</p></blockquote><h3 id="关于Alien"><a href="#关于Alien" class="headerlink" title="关于Alien"></a>关于Alien</h3><p>你好，我叫Alien，是个在校大学生，开发者，2021年开始学习相关开发知识。</p><ul><li><strong>就读院校：</strong> 东莞理工学院（是本科！！！）</li><li><strong>本科专业：</strong> 网络空间安全</li><li><strong>个人爱好：</strong> 听歌、看电影、奥特曼、游戏</li></ul><h3 id="细说个人爱好"><a href="#细说个人爱好" class="headerlink" title="细说个人爱好"></a>细说个人爱好</h3><p>喜欢的音乐人主要是周杰伦、林俊杰、陈奕迅、五月天、张杰、Zard坂井泉水（我女神）、久石让（他的音乐真的很好听）、Radwimps、米津玄师，平时没事就听歌，可以说是个终身爱好了。<br>喜欢的电影有幽灵公主（强烈推荐）、哈尔的移动城堡、天空之城。（很不巧，都是宫崎骏的）<br>游戏玩的不多，像云顶之弈这种比较多人玩，比较喜欢单机的游戏，比如极限竞速：地平线、塞尔达传说：王国之泪、GTA5。<br>应该没有人不喜欢奥特曼吧！（\狗头）</p><h3 id="怎样能够联系到我呢？"><a href="#怎样能够联系到我呢？" class="headerlink" title="怎样能够联系到我呢？"></a>怎样能够联系到我呢？</h3><p>邮箱：<a href="mailto:&#49;&#x31;&#x39;&#x33;&#x31;&#51;&#51;&#49;&#x30;&#x35;&#x40;&#x71;&#x71;&#46;&#x63;&#111;&#x6d;">&#49;&#x31;&#x39;&#x33;&#x31;&#51;&#51;&#49;&#x30;&#x35;&#x40;&#x71;&#x71;&#46;&#x63;&#111;&#x6d;</a><br>Github：<a href="https://github.com/M78Alien">M78Alien</a><br>B站：<a href="https://space.bilibili.com/360390916?spm_id_from=333.1007.0.0">Alien船长大人</a></p>]]></content>
       
       
       <categories>
