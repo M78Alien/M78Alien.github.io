@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>CSRF跨站域请求伪造攻击</title>
+      <link href="/2023/10/13/CSRF%E8%B7%A8%E7%AB%99%E5%9F%9F%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%E6%94%BB%E5%87%BB/"/>
+      <url>/2023/10/13/CSRF%E8%B7%A8%E7%AB%99%E5%9F%9F%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%E6%94%BB%E5%87%BB/</url>
+      
+        <content type="html"><![CDATA[<h1 id="CSRF简介"><a href="#CSRF简介" class="headerlink" title="CSRF简介"></a>CSRF简介</h1><ul><li>CSRF（Cross Site Request Forgery，跨站域请求伪造），也被称为 “One Click Attack” 或者 Session Riding，通常缩写为 CSRF 或者 XSRF 。</li><li>尽管听起来像跨站脚本（XSS），但它与XSS非常不同，并且攻击方式几乎相左。XSS 利用站点内的信任用户，而 CSRF 则通过伪装成来自受信任用户的请求来利用受信任的网站。</li></ul><h1 id="CSRF原理"><a href="#CSRF原理" class="headerlink" title="CSRF原理"></a>CSRF原理</h1><ul><li>首先是存在CSRF漏洞的网站A，以及存在恶意攻击代码的网站B，还有受网站A信任的用户C</li></ul><ol><li>用户C通过浏览器正常访问网站A，</li><li>通过验证在浏览器生成cookie信息</li><li>用户C在没有登出网站A的情况下，访问网站B</li><li>网站B返回给用户一些攻击性代码，并请求访问网站A</li><li>这样网站B就在用户不知情的情况下，利用浏览器保存的cookie信息对网站A进行访问请求，导致网站B的恶意代码能够在网站A被信任执行</li></ol><ul><li>需要满足两个条件：</li></ul><ol><li>登录受信任网站A，并生成cookie</li><li>不登出网站A的情况下，访问网站B</li></ol><h1 id="CSRF危害"><a href="#CSRF危害" class="headerlink" title="CSRF危害"></a>CSRF危害</h1><ul><li>你不能保证你登录了一个网站后，不再打开一个 tab 页面并访问另外的网站。</li><li>你不能保证你关闭浏览器了后，你本地的 Cookie 立刻过期，你上次的会话已经结束。（事实上，关闭浏览器不能结束一个会话，但大多数人都会错误的认为关闭浏览器就等于退出登录&#x2F;结束会话了…）</li><li>上面所谓的攻击网站，可能是一个存在其他漏洞的可信任的经常被人访问的网站。</li><li>攻击者盗用用户身份进行恶意行为，包括以他人名义发送邮件，盗取账户，购买商品等等</li><li>更重要的是个人隐私的泄露以及财产安全</li></ul><h1 id="CSRF攻击类型"><a href="#CSRF攻击类型" class="headerlink" title="CSRF攻击类型"></a>CSRF攻击类型</h1><h2 id="GET型"><a href="#GET型" class="headerlink" title="GET型"></a>GET型</h2><ul><li>通过GET请求进行修改</li><li>比如用户修改邮箱是通过GET请求修改的，例如<code>/user.php?id=1&amp;email=123@163.com</code></li><li>意思是用户id为1的用户需要修改邮箱为<code>123@163.com</code></li><li>那么恶意网站当中有一段代码内容，例如<code>&lt;img src=/user.php?id=1&amp;email=abc@163.com&gt;</code></li><li>那么，只需要用户在打开修改邮箱的同时打开了这个恶意网站，那么浏览器就会带上用户的cookie信息向修改邮箱的网站发出GET请求，导致该用户的邮箱被修改成了<code>abc@163.com</code></li></ul><h2 id="POST型"><a href="#POST型" class="headerlink" title="POST型"></a>POST型</h2><ul><li>POST型相较于GET型来说，危害没那么大，通常是使用一个自动提交表单</li><li>例如在购买商品时，网站会处理购买时用户余额的扣除，会在一个地址内进行，如<code>/coures/user/handler/25332/buy.php</code></li><li>通过提交表单在buy.php当中处理扣除信息<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">/coures/user/handler/25332/buy</span> <span class="attr">method</span>=<span class="string">POST</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;xx&quot;</span> <span class="attr">value</span>=<span class="string">&quot;xx&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"> <span class="variable language_">document</span>.<span class="property">forms</span>[<span class="number">0</span>].<span class="title function_">submit</span>(); </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span> </span><br></pre></td></tr></table></figure></li><li>访问该页面，表单会自动提交，相当于模拟用户提交一次POST</li></ul><h1 id="CSRF防御"><a href="#CSRF防御" class="headerlink" title="CSRF防御"></a>CSRF防御</h1><h2 id="验证HTTP-Referer字段"><a href="#验证HTTP-Referer字段" class="headerlink" title="验证HTTP Referer字段"></a>验证HTTP Referer字段</h2><ul><li>根据 HTTP 协议，在 HTTP 头中有一个字段叫 Referer，它记录了该 HTTP 请求的来源地址 。</li><li>在通常情况下，访问一个安全受限页面的请求来自于同一个网站，比如需要访问<code> http://bank.example/withdraw?account=bob&amp;amount=1000000&amp;for=Mallory</code>，用户必须先登陆 <code>bank.example</code>，然后通过点击页面上的按钮来触发转账事件。</li><li>因此，要防御 CSRF 攻击，网站只需要对于每一个转账请求验证其 Referer 值，如果是以 bank.example 开头的域名，则说明该请求是来自银行网站自己的请求，是合法的。如果 Referer 是其他网站的话，则有可能是黑客的 CSRF 攻击，拒绝该请求。</li></ul><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul><li>这种方法的显而易见的好处就是简单易行，网站的普通开发人员不需要操心 CSRF 的漏洞，只需要在最后给所有安全敏感的请求统一增加一个拦截器来检查 Referer 的值就可以。</li></ul><h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ol><li>然而，这种方法并非万无一失。Referer 的值是由浏览器提供的，虽然 HTTP 协议上有明确的要求，但是每个浏览器对于 Referer 的具体实现可能有差别，并不能保证浏览器自身没有安全漏洞。使用验证 Referer 值的方法，就是把安全性都依赖于第三方（即浏览器）来保障，从理论上来讲，这样并不安全。事实上，对于某些浏览器，比如 IE6 或 FF2，目前已经有一些方法可以 篡改 Referer 值 。如果网站支持IE6 浏览器，黑客完全可以把用户浏览器的 Referer 值设为以 bank.example 域名开头的地址，这样就可以通过验证，从而进行 CSRF 攻击。</li><li>即便是使用最新的浏览器，黑客无法篡改 Referer 值，这种方法仍然有问题。因为 Referer 值会记录下用户的访问来源，有些用户认为这样会侵犯到他们自己的隐私权，特别是有些组织担心 Referer 值会把组织内网中的某些信息泄露到外网中。因此，用户自己可以设置浏览器使其在发送请求时不再提供 Referer。当他们正常访问银行网站时，网站会因为请求没有 Referer 值而认为是 CSRF 攻击，拒绝合法用户的访问。</li></ol><h2 id="在请求地址中添加-token-并验证"><a href="#在请求地址中添加-token-并验证" class="headerlink" title="在请求地址中添加 token 并验证"></a>在请求地址中添加 token 并验证</h2><ul><li>CSRF 攻击之所以能够成功，是因为黑客可以完全伪造用户的请求，该请求中所有的用户验证信息都是存在于 cookie 中，因此黑客可以在不知道这些验证信息的情况下直接利用用户自己的 cookie 来通过安全验证。</li><li>要抵御 CSRF，关键在于<strong>在请求中放入黑客所不能伪造的信息，并且该信息不存在于 cookie 之中</strong>。可以在 HTTP 请求中以参数的形式加入一个随机产生的 token（令牌），并在服务器端建立一个拦截器来验证这个 token，如果请求中没有 token 或者 token 内容不正确，则认为可能是 CSRF 攻击而拒绝该请求。</li></ul><h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><ul><li>这种方法要比检查 Referer 要安全一些，token 可以在用户登陆后产生并放于 session 之中，然后在每次请求时把 token 从 session 中拿出，与请求中的 token 进行比对，但这种方法的难点在于如何把 token 以参数的形式加入请求。对于 GET 请求，token 将附在请求地址之后，这样 URL 就变成<code> http://url?csrftoken=tokenvalue</code>。 而对于 POST 请求来说，要在 form 的最后加上 ，这样就把 token 以参数的形式加入请求了。</li></ul><h3 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h3><ol><li>但是，在一个网站中，可以接受请求的地方非常多，要对于每一个请求都加上 token 是很<strong>麻烦</strong>的，并且很容易漏掉，通常使用的方法就是在每次页面加载时，使用 javascript 遍历整个 dom 树，对于 dom 中所有的 a 和 form 标签后加入 token。这样可以解决大部分的请求，但是对于在页面加载之后动态生成的 html 代码，这种方法就没有作用，还需要程序员在编码时手动添加 token。</li><li>该方法还有一个缺点是难以保证 token 本身的安全。特别是在一些论坛之类支持用户自己发表内容的网站，黑客可以在上面发布自己个人网站的地址。由于系统也会在这个地址后面加上 token，黑客可以在自己的网站上得到这个 token，并马上就可以发动 CSRF 攻击。为了避免这一点，系统可以在添加 token 的时候增加一个判断，如果这个链接是链到自己本站的，就在后面添加 token，如果是通向外网则不加。不过，即使这个 csrftoken 不以参数的形式附加在请求之中，黑客的网站也同样可以通过 Referer 来得到这个 token 值以发动 CSRF 攻击。这也是一些用户喜欢手动关闭浏览器 Referer 功能的原因。</li></ol><h2 id="在-HTTP-头中自定义属性并验证"><a href="#在-HTTP-头中自定义属性并验证" class="headerlink" title="在 HTTP 头中自定义属性并验证"></a>在 HTTP 头中自定义属性并验证</h2><ul><li>这种方法也是使用 token 并进行验证，和上一种方法不同的是，这里并不是把 token 以参数的形式置于 HTTP 请求之中，而是把它放到 HTTP 头中自定义的属性里。通过 XMLHttpRequest 这个类，可以一次性给所有该类请求加上 csrftoken 这个 HTTP 头属性，并把 token 值放入其中。这样解决了上种方法在请求中加入 token 的不便，同时，通过 XMLHttpRequest 请求的地址不会被记录到浏览器的地址栏，也不用担心 token 会透过 Referer 泄露到其他网站中去。</li></ul><h3 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h3><ol><li>然而这种方法的局限性非常大。XMLHttpRequest 请求通常用于 Ajax 方法中对于页面局部的异步刷新，并非所有的请求都适合用这个类来发起，而且通过该类请求得到的页面不能被浏览器所记录下，从而进行前进，后退，刷新，收藏等操作，给用户带来不便。</li><li>另外，对于没有进行 CSRF 防护的遗留系统来说，要采用这种方法来进行防护，要把所有请求都改为 XMLHttpRequest 请求，这样几乎是要重写整个网站，这代价无疑是不能接受的。</li></ol><h1 id="WAF防御CSRF"><a href="#WAF防御CSRF" class="headerlink" title="WAF防御CSRF"></a>WAF防御CSRF</h1><ul><li>以上防御是技术层面的讨论。实际中进行 CSRF 防护的是使用 <strong>WAF</strong>（Web应用防火墙，如免费的ShareWAF）。因为 CSRF 只是众多web攻击中的一种，网络攻击还有很多种。WAF可以低于绝大多数的攻击，可极大的提高网站安全性。</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络安全 </category>
+          
+          <category> web安全 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 网络安全 </tag>
+            
+            <tag> web安全 </tag>
+            
+            <tag> csrf </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Pikachu-XSS跨站脚本攻击练习</title>
       <link href="/2023/10/12/Pikachu-XSS%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%E7%BB%83%E4%B9%A0/"/>
       <url>/2023/10/12/Pikachu-XSS%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%E7%BB%83%E4%B9%A0/</url>
@@ -15,12 +46,16 @@
           
           <category> 网络安全 </category>
           
+          <category> web安全 </category>
+          
       </categories>
       
       
         <tags>
             
             <tag> 网络安全 </tag>
+            
+            <tag> web安全 </tag>
             
             <tag> pikachu </tag>
             
@@ -44,12 +79,16 @@
           
           <category> 网络安全 </category>
           
+          <category> web安全 </category>
+          
       </categories>
       
       
         <tags>
             
             <tag> 网络安全 </tag>
+            
+            <tag> web安全 </tag>
             
             <tag> XSS </tag>
             
@@ -71,12 +110,16 @@
           
           <category> 网络安全 </category>
           
+          <category> web安全 </category>
+          
       </categories>
       
       
         <tags>
             
             <tag> 网络安全 </tag>
+            
+            <tag> web安全 </tag>
             
             <tag> 文件上传漏洞 </tag>
             
@@ -98,12 +141,16 @@
           
           <category> 网络安全 </category>
           
+          <category> web安全 </category>
+          
       </categories>
       
       
         <tags>
             
             <tag> 网络安全 </tag>
+            
+            <tag> web安全 </tag>
             
             <tag> 文件上传漏洞 </tag>
             
@@ -125,12 +172,16 @@
           
           <category> 网络安全 </category>
           
+          <category> web安全 </category>
+          
       </categories>
       
       
         <tags>
             
             <tag> 网络安全 </tag>
+            
+            <tag> web安全 </tag>
             
             <tag> SQL注入 </tag>
             
@@ -154,12 +205,16 @@
           
           <category> 网络安全 </category>
           
+          <category> web安全 </category>
+          
       </categories>
       
       
         <tags>
             
             <tag> 网络安全 </tag>
+            
+            <tag> web安全 </tag>
             
             <tag> SQL注入 </tag>
             
@@ -708,7 +763,7 @@
       <link href="/2023/08/25/%E6%9C%89%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84/"/>
       <url>/2023/08/25/%E6%9C%89%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84/</url>
       
-        <content type="html"><![CDATA[<h1 id="有关于我的"><a href="#有关于我的" class="headerlink" title="有关于我的"></a>有关于我的</h1><hr><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E6%A2%A6%E6%AF%94%E4%BC%98%E6%96%AF.jpg" alt="Alien"></p><blockquote><p>永远相信美好的事情即将发生，因为追求源于热爱！</p></blockquote><h3 id="关于Alien"><a href="#关于Alien" class="headerlink" title="关于Alien"></a>关于Alien</h3><p>你好，我叫Alien，是个在校大学生，开发者，2021年开始学习相关开发知识。</p><ul><li><strong>就读院校：</strong> 东莞理工学院（是本科！！！）</li><li><strong>本科专业：</strong> 网络空间安全</li><li><strong>个人爱好：</strong> 听歌、看电影、奥特曼、游戏</li></ul><h3 id="细说个人爱好"><a href="#细说个人爱好" class="headerlink" title="细说个人爱好"></a>细说个人爱好</h3><p>喜欢的音乐人主要是周杰伦、林俊杰、陈奕迅、五月天、张杰、Zard坂井泉水（我女神）、久石让（他的音乐真的很好听）、Radwimps、米津玄师，平时没事就听歌，可以说是个终身爱好了。<br>喜欢的电影有幽灵公主（强烈推荐）、哈尔的移动城堡、天空之城。（很不巧，都是宫崎骏的）<br>游戏玩的不多，像云顶之弈这种比较多人玩，比较喜欢单机的游戏，比如极限竞速：地平线、塞尔达传说：王国之泪、GTA5。<br>应该没有人不喜欢奥特曼吧！（\狗头）</p><h3 id="怎样能够联系到我呢？"><a href="#怎样能够联系到我呢？" class="headerlink" title="怎样能够联系到我呢？"></a>怎样能够联系到我呢？</h3><p>邮箱：<a href="mailto:&#x31;&#49;&#57;&#51;&#49;&#51;&#x33;&#49;&#48;&#x35;&#64;&#113;&#113;&#46;&#x63;&#111;&#x6d;">&#x31;&#49;&#57;&#51;&#49;&#51;&#x33;&#49;&#48;&#x35;&#64;&#113;&#113;&#46;&#x63;&#111;&#x6d;</a><br>Github：<a href="https://github.com/M78Alien">M78Alien</a><br>B站：<a href="https://space.bilibili.com/360390916?spm_id_from=333.1007.0.0">Alien船长大人</a></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="有关于我的"><a href="#有关于我的" class="headerlink" title="有关于我的"></a>有关于我的</h1><hr><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E6%A2%A6%E6%AF%94%E4%BC%98%E6%96%AF.jpg" alt="Alien"></p><blockquote><p>永远相信美好的事情即将发生，因为追求源于热爱！</p></blockquote><h3 id="关于Alien"><a href="#关于Alien" class="headerlink" title="关于Alien"></a>关于Alien</h3><p>你好，我叫Alien，是个在校大学生，开发者，2021年开始学习相关开发知识。</p><ul><li><strong>就读院校：</strong> 东莞理工学院（是本科！！！）</li><li><strong>本科专业：</strong> 网络空间安全</li><li><strong>个人爱好：</strong> 听歌、看电影、奥特曼、游戏</li></ul><h3 id="细说个人爱好"><a href="#细说个人爱好" class="headerlink" title="细说个人爱好"></a>细说个人爱好</h3><p>喜欢的音乐人主要是周杰伦、林俊杰、陈奕迅、五月天、张杰、Zard坂井泉水（我女神）、久石让（他的音乐真的很好听）、Radwimps、米津玄师，平时没事就听歌，可以说是个终身爱好了。<br>喜欢的电影有幽灵公主（强烈推荐）、哈尔的移动城堡、天空之城。（很不巧，都是宫崎骏的）<br>游戏玩的不多，像云顶之弈这种比较多人玩，比较喜欢单机的游戏，比如极限竞速：地平线、塞尔达传说：王国之泪、GTA5。<br>应该没有人不喜欢奥特曼吧！（\狗头）</p><h3 id="怎样能够联系到我呢？"><a href="#怎样能够联系到我呢？" class="headerlink" title="怎样能够联系到我呢？"></a>怎样能够联系到我呢？</h3><p>邮箱：<a href="mailto:&#x31;&#49;&#57;&#51;&#49;&#51;&#x33;&#x31;&#x30;&#53;&#x40;&#113;&#113;&#x2e;&#x63;&#111;&#x6d;">&#x31;&#49;&#57;&#51;&#49;&#51;&#x33;&#x31;&#x30;&#53;&#x40;&#113;&#113;&#x2e;&#x63;&#111;&#x6d;</a><br>Github：<a href="https://github.com/M78Alien">M78Alien</a><br>B站：<a href="https://space.bilibili.com/360390916?spm_id_from=333.1007.0.0">Alien船长大人</a></p>]]></content>
       
       
       <categories>
