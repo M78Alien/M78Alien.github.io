@@ -1,0 +1,295 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>RCE命令执行漏洞和代码执行漏洞 | Alien's Blog</title><meta name="author" content="Alien"><meta name="copyright" content="Alien"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="RCE漏洞  直接用的pikachu对RCE的介绍  命令执行漏洞命令执行 命令执行（Remote Command Execution, RCE） Web应用的脚本代码在执行命令的时候过滤不严，从而注入一段攻击者能够控制的代码,在服务器上以Web服务的后台权限远程执行恶意指令  成因 代码层过滤不严 系统的漏洞造成命令注入 调用的第三方组件存在代码执行漏洞常见的命令执行函数   PHP：exec">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RCE命令执行漏洞和代码执行漏洞">
+<meta property="og:url" content="http://example.com/2023/10/15/RCE%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%92%8C%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/index.html">
+<meta property="og:site_name" content="Alien&#39;s Blog">
+<meta property="og:description" content="RCE漏洞  直接用的pikachu对RCE的介绍  命令执行漏洞命令执行 命令执行（Remote Command Execution, RCE） Web应用的脚本代码在执行命令的时候过滤不严，从而注入一段攻击者能够控制的代码,在服务器上以Web服务的后台权限远程执行恶意指令  成因 代码层过滤不严 系统的漏洞造成命令注入 调用的第三方组件存在代码执行漏洞常见的命令执行函数   PHP：exec">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg">
+<meta property="article:published_time" content="2023-10-15T12:36:00.000Z">
+<meta property="article:modified_time" content="2023-10-15T14:25:03.499Z">
+<meta property="article:author" content="Alien">
+<meta property="article:tag" content="网络安全">
+<meta property="article:tag" content="web安全">
+<meta property="article:tag" content="rce">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg"><link rel="shortcut icon" href="/img/ultra_icon.png"><link rel="canonical" href="http://example.com/2023/10/15/RCE%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%92%8C%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/pluginsSrc/@fancyapps/ui/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'RCE命令执行漏洞和代码执行漏洞',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-10-15 22:25:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/my.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" onerror="onerror=null;src='/img/程序员.png'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">30</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-edit"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/contact/"><i class="fa-fw fas fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-lightbulb"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230825160648.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Alien's Blog"><span class="site-name">Alien's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-edit"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/contact/"><i class="fa-fw fas fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-lightbulb"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">RCE命令执行漏洞和代码执行漏洞</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-15T12:36:00.000Z" title="发表于 2023-10-15 20:36:00">2023-10-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-10-15T14:25:03.499Z" title="更新于 2023-10-15 22:25:03">2023-10-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/web%E5%AE%89%E5%85%A8/">web安全</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title="RCE命令执行漏洞和代码执行漏洞"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231015203933.png" alt="image.png"></p>
+<h1 id="RCE漏洞"><a href="#RCE漏洞" class="headerlink" title="RCE漏洞"></a>RCE漏洞</h1><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231015204951.png" alt="image.png"></p>
+<ul>
+<li>直接用的pikachu对RCE的介绍</li>
+</ul>
+<h1 id="命令执行漏洞"><a href="#命令执行漏洞" class="headerlink" title="命令执行漏洞"></a>命令执行漏洞</h1><h2 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h2><ul>
+<li>命令执行（Remote Command Execution, RCE）</li>
+<li>Web应用的脚本代码在执行命令的时候过滤不严，从而注入一段攻击者能够控制的代码,在服务器上以Web服务的后台权限远程执行恶意指令</li>
+</ul>
+<h2 id="成因"><a href="#成因" class="headerlink" title="成因"></a>成因</h2><ul>
+<li>代码层过滤不严</li>
+<li>系统的漏洞造成命令注入</li>
+<li>调用的第三方组件存在代码执行漏洞常见的命令执行函数</li>
+</ul>
+<ol>
+<li>PHP：exec、shell_exec、system、passthru、popen、proc_open等</li>
+<li>ASP.NET：System.Diagnostics.Start.Process、System.Diagnostics.Start.ProcessStartInfo等</li>
+<li>Java：java.lang.runtime.Runtime.getRuntime、java.lang.runtime.Runtime.exec等</li>
+</ol>
+<h2 id="常用命令执行函数"><a href="#常用命令执行函数" class="headerlink" title="常用命令执行函数"></a>常用命令执行函数</h2><h3 id="system函数"><a href="#system函数" class="headerlink" title="system函数"></a>system函数</h3><ul>
+<li>该函数会将执行的结果输出并将输出结果的最后一行作为字符串返回，如果执行失败则返回false</li>
+<li>是最常使用到的<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">system</span>(<span class="string">&#x27;pwd&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">system</span>(<span class="string">&#x27;whoami&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="exec函数"><a href="#exec函数" class="headerlink" title="exec函数"></a>exec函数</h3><ul>
+<li>该函数不会输出结果，但是会返回执行结果的最后一行，可以结合output进行结果的输出。<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">exec</span>(<span class="string">&#x27;pwd&#x27;</span>,<span class="variable">$b</span>);</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$b</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="passthru函数"><a href="#passthru函数" class="headerlink" title="passthru函数"></a>passthru函数</h3><ul>
+<li>该函数只调用命令，并将运行的结果原封不动的输出，没有相应的返回值。<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">passthru</span>(<span class="string">&#x27;ls&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="shell-exec函数"><a href="#shell-exec函数" class="headerlink" title="shell_exec函数"></a>shell_exec函数</h3><ul>
+<li>该函数不会输出结果，返回执行结果</li>
+<li>使用反引号<code>(``)</code>时调用的就是此函数。<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="title function_ invoke__">shell_exec</span>(<span class="string">&#x27;ls&#x27;</span>));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="命令执行基础"><a href="#命令执行基础" class="headerlink" title="命令执行基础"></a>命令执行基础</h2><h3 id="Windows基础命令"><a href="#Windows基础命令" class="headerlink" title="Windows基础命令"></a>Windows基础命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ping        #测试连通性</span><br><span class="line">tracert      #追踪路由</span><br><span class="line">telnet       #远程连接</span><br><span class="line">dir          #列出目录</span><br><span class="line">ipconfig      #查看ip</span><br><span class="line">arp -a       #查看路由表</span><br><span class="line">calc         #打开计算器</span><br><span class="line">regedit      #打开注册表</span><br><span class="line">netstat -ano  #查看服务器端口信息</span><br></pre></td></tr></table></figure>
+<h3 id="Linux基础命令"><a href="#Linux基础命令" class="headerlink" title="Linux基础命令"></a>Linux基础命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cd                  #切换目录</span><br><span class="line">ls                   #显示当前目录下的文件</span><br><span class="line">ifconfig              #查看IP地址</span><br><span class="line">cat /etc/passwd       #查看password文件内容</span><br><span class="line">id                  #查看当前用户的id号</span><br><span class="line">cat /etc/group        #查看用户组文件内容</span><br><span class="line">pwd                #显示当前目录</span><br><span class="line">uname -a            #查看当前系统版本</span><br><span class="line">natstat -pantu        #查看当前服务器的端口信息</span><br><span class="line">netstat -nr           #查看网关和路由</span><br></pre></td></tr></table></figure>
+<h3 id="拼接符"><a href="#拼接符" class="headerlink" title="拼接符"></a>拼接符</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">|  #只执行|后面的语句  </span><br><span class="line">|| #如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句  </span><br><span class="line">&amp;  #&amp;前面和后面命令都要执行，无论前面真假  </span><br><span class="line">&amp;&amp; #如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令  </span><br><span class="line">;  #前后都执行，无论前面真假，类似&amp;</span><br></pre></td></tr></table></figure>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><h3 id="DVWA靶场"><a href="#DVWA靶场" class="headerlink" title="DVWA靶场"></a>DVWA靶场</h3><h4 id="low级别"><a href="#low级别" class="headerlink" title="low级别"></a>low级别</h4><ul>
+<li>直接输入127.0.0.1可以得到ping的结果<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231015215744.png" alt="image.png"></li>
+<li>如果直接输入dir，是不会有结果的<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231015220112.png" alt="image.png"></li>
+<li>在指令前加<code>|</code>,可以只执行后面的指令，这样就可以无视前面的ping了</li>
+<li>输入<code>| dir</code><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231015220313.png" alt="image.png"></li>
+<li>输入127.0.0.1 &amp;&amp; dir就可以都执行<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231015220521.png" alt="image.png"></li>
+</ul>
+<h4 id="Medium级别"><a href="#Medium级别" class="headerlink" title="Medium级别"></a>Medium级别</h4><ul>
+<li>可以看见<code>&amp;&amp;</code>和<code>；</code>都被过滤了<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231015220758.png" alt="image.png"></li>
+<li>那就换成<code>|</code>或者<code>&amp;</code></li>
+</ul>
+<h4 id="High级别"><a href="#High级别" class="headerlink" title="High级别"></a>High级别</h4><ul>
+<li>这个级别只能用<code>|</code></li>
+<li>但是它过滤了<code>| </code>而没有过滤<code>|</code></li>
+</ul>
+<h1 id="代码执行漏洞"><a href="#代码执行漏洞" class="headerlink" title="代码执行漏洞"></a>代码执行漏洞</h1><h2 id="代码执行"><a href="#代码执行" class="headerlink" title="代码执行"></a>代码执行</h2><ul>
+<li>代码执行漏洞是由于服务器<strong>对危险函数过滤不严</strong>导致用户输入的一些字符串可以被转换成代码来执行,从而造成代码执行漏洞</li>
+</ul>
+<h2 id="成因-1"><a href="#成因-1" class="headerlink" title="成因"></a>成因</h2><ul>
+<li>用户能够控制函数输入</li>
+<li>存在可执行代码的危险函数常见代码执行函数</li>
+</ul>
+<ol>
+<li>PHP: eval、assert、preg_replace()、+&#x2F;e模式（PHP版本&lt;5.5.0）</li>
+<li>Javascript: eval</li>
+<li>Vbscript：Execute、Eval</li>
+<li>Python: exec</li>
+</ol>
+<h2 id="常用代码执行函数"><a href="#常用代码执行函数" class="headerlink" title="常用代码执行函数"></a>常用代码执行函数</h2><h3 id="执行代码"><a href="#执行代码" class="headerlink" title="${}执行代码"></a>${}执行代码</h3><ul>
+<li>该执行代码会将中间的php代码进行解析<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$&#123;&lt;!-- --&gt;<span class="title function_ invoke__">phpinfo</span>()&#125;;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="eval函数"><a href="#eval函数" class="headerlink" title="eval函数"></a>eval函数</h3><ul>
+<li>该函数会将字符串当作函数进行执行，但是需要传入一个完整的语句，同时必须以<code>；</code>分号结尾，也是<strong>最常见</strong>的函数。<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">eval</span>(<span class="string">&#x27;echo &quot;hello&quot;;&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="assert函数"><a href="#assert函数" class="headerlink" title="assert函数"></a>assert函数</h3><ul>
+<li>该函数是判断是否为字符串，如果是则当成代码进行执行，但是在php7.0.29之后的版本不支持动态调用。<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//低版本</span></span><br><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="title function_ invoke__">assert</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"><span class="comment">//7.0.29之后</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span> = <span class="string">&#x27;assert&#x27;</span>;</span><br><span class="line"><span class="variable">$a</span>(<span class="title function_ invoke__">phpinfo</span>());</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="array-map函数"><a href="#array-map函数" class="headerlink" title="array_map函数"></a>array_map函数</h3><ul>
+<li>该函数是为数组的每个元素应用回调函数。<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$a</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>];</span><br><span class="line"><span class="variable">$b</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;b&#x27;</span>];</span><br><span class="line"><span class="variable">$array</span>[<span class="number">0</span>] = <span class="variable">$b</span>;</span><br><span class="line"><span class="variable">$c</span> = <span class="title function_ invoke__">array_map</span>(<span class="variable">$a</span>,<span class="variable">$array</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"><span class="comment">//构建的payload</span></span><br><span class="line">?a=assert&amp;b=<span class="title function_ invoke__">phpinfo</span>();</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h2><h3 id="pikachu靶场"><a href="#pikachu靶场" class="headerlink" title="pikachu靶场"></a>pikachu靶场</h3><ul>
+<li>正常输入符号，无论输入哪个符号都是显示这样的文字<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231015222246.png" alt="image.png"></li>
+<li>尝试输入<code>phpinfo();</code>，代码被正常执行了<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231015222500.png" alt="image.png"></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Alien</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2023/10/15/RCE%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%92%8C%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/">http://example.com/2023/10/15/RCE%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%92%8C%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Alien's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><a class="post-meta__tags" href="/tags/web%E5%AE%89%E5%85%A8/">web安全</a><a class="post-meta__tags" href="/tags/rce/">rce</a></div><div class="post_share"><div class="social-share" data-image="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" data-sites="twitter,wechat,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/10/15/xss-labs%E7%BB%83%E4%B9%A0level1~13/" title="xss-labs练习level1~13"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">xss-labs练习level1~13</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/10/13/CSRF%E8%B7%A8%E7%AB%99%E5%9F%9F%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%E6%94%BB%E5%87%BB/" title="CSRF跨站域请求伪造攻击"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-13</div><div class="title">CSRF跨站域请求伪造攻击</div></div></a></div><div><a href="/2023/09/21/Mysql%E6%B3%A8%E5%85%A5%E7%9A%84%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B/" title="Mysql注入的注入类型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-21</div><div class="title">Mysql注入的注入类型</div></div></a></div><div><a href="/2023/09/22/Mysql%E6%B3%A8%E5%85%A5%E7%9A%84%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B%EF%BC%882%EF%BC%89/" title="Mysql注入的注入类型（2）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-22</div><div class="title">Mysql注入的注入类型（2）</div></div></a></div><div><a href="/2023/10/13/Pikachu-CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%E7%BB%83%E4%B9%A0/" title="Pikachu-CSRF跨站请求伪造练习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-13</div><div class="title">Pikachu-CSRF跨站请求伪造练习</div></div></a></div><div><a href="/2023/10/12/Pikachu-XSS%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%E7%BB%83%E4%B9%A0/" title="Pikachu-XSS跨站脚本攻击练习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-12</div><div class="title">Pikachu-XSS跨站脚本攻击练习</div></div></a></div><div><a href="/2023/10/13/SSRF%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%E6%94%BB%E5%87%BB/" title="SSRF服务端请求伪造攻击"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-13</div><div class="title">SSRF服务端请求伪造攻击</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" onerror="this.onerror=null;this.src='/img/%E7%A8%8B%E5%BA%8F%E5%91%98.png'" alt="avatar"/></div><div class="author-info__name">Alien</div><div class="author-info__description">M78来的程序员</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">30</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M78Alien"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到Alien的专属空间</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RCE%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.</span> <span class="toc-text">RCE漏洞</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.</span> <span class="toc-text">命令执行漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">2.1.</span> <span class="toc-text">命令执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%90%E5%9B%A0"><span class="toc-number">2.2.</span> <span class="toc-text">成因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0"><span class="toc-number">2.3.</span> <span class="toc-text">常用命令执行函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#system%E5%87%BD%E6%95%B0"><span class="toc-number">2.3.1.</span> <span class="toc-text">system函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exec%E5%87%BD%E6%95%B0"><span class="toc-number">2.3.2.</span> <span class="toc-text">exec函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#passthru%E5%87%BD%E6%95%B0"><span class="toc-number">2.3.3.</span> <span class="toc-text">passthru函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shell-exec%E5%87%BD%E6%95%B0"><span class="toc-number">2.3.4.</span> <span class="toc-text">shell_exec函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%9F%BA%E7%A1%80"><span class="toc-number">2.4.</span> <span class="toc-text">命令执行基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4"><span class="toc-number">2.4.1.</span> <span class="toc-text">Windows基础命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4"><span class="toc-number">2.4.2.</span> <span class="toc-text">Linux基础命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%BC%E6%8E%A5%E7%AC%A6"><span class="toc-number">2.4.3.</span> <span class="toc-text">拼接符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-number">2.5.</span> <span class="toc-text">实例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DVWA%E9%9D%B6%E5%9C%BA"><span class="toc-number">2.5.1.</span> <span class="toc-text">DVWA靶场</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#low%E7%BA%A7%E5%88%AB"><span class="toc-number">2.5.1.1.</span> <span class="toc-text">low级别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Medium%E7%BA%A7%E5%88%AB"><span class="toc-number">2.5.1.2.</span> <span class="toc-text">Medium级别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#High%E7%BA%A7%E5%88%AB"><span class="toc-number">2.5.1.3.</span> <span class="toc-text">High级别</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E"><span class="toc-number">3.</span> <span class="toc-text">代码执行漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C"><span class="toc-number">3.1.</span> <span class="toc-text">代码执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%90%E5%9B%A0-1"><span class="toc-number">3.2.</span> <span class="toc-text">成因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.</span> <span class="toc-text">常用代码执行函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">3.3.1.</span> <span class="toc-text">${}执行代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eval%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.2.</span> <span class="toc-text">eval函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#assert%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.3.</span> <span class="toc-text">assert函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#array-map%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.4.</span> <span class="toc-text">array_map函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-1"><span class="toc-number">3.4.</span> <span class="toc-text">实例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pikachu%E9%9D%B6%E5%9C%BA"><span class="toc-number">3.4.1.</span> <span class="toc-text">pikachu靶场</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/15/RCE%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%92%8C%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/" title="RCE命令执行漏洞和代码执行漏洞">RCE命令执行漏洞和代码执行漏洞</a><time datetime="2023-10-15T12:36:00.000Z" title="发表于 2023-10-15 20:36:00">2023-10-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/15/xss-labs%E7%BB%83%E4%B9%A0level1~13/" title="xss-labs练习level1~13">xss-labs练习level1~13</a><time datetime="2023-10-15T07:09:00.000Z" title="发表于 2023-10-15 15:09:00">2023-10-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/13/SSRF%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%E6%94%BB%E5%87%BB/" title="SSRF服务端请求伪造攻击">SSRF服务端请求伪造攻击</a><time datetime="2023-10-13T12:37:00.000Z" title="发表于 2023-10-13 20:37:00">2023-10-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/13/Pikachu-CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%E7%BB%83%E4%B9%A0/" title="Pikachu-CSRF跨站请求伪造练习">Pikachu-CSRF跨站请求伪造练习</a><time datetime="2023-10-13T11:14:00.000Z" title="发表于 2023-10-13 19:14:00">2023-10-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/13/CSRF%E8%B7%A8%E7%AB%99%E5%9F%9F%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%E6%94%BB%E5%87%BB/" title="CSRF跨站域请求伪造攻击">CSRF跨站域请求伪造攻击</a><time datetime="2023-10-13T02:30:00.000Z" title="发表于 2023-10-13 10:30:00">2023-10-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Alien</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/@fancyapps/ui/dist/fancybox/fancybox.umd.js"></script><div class="js-pjax"><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://alien-api-1193133105-qqcom.vercel.app/',
+      region: 'ap-shanghai',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://alien-api-1193133105-qqcom.vercel.app/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.textContent = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('/pluginsSrc/twikoo/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><script data-pjax defer src="/js/my.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
