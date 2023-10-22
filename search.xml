@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>AES加密算法流程</title>
+      <link href="/2023/10/22/AES%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B/"/>
+      <url>/2023/10/22/AES%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B/</url>
+      
+        <content type="html"><![CDATA[<h1 id="AES加密简介"><a href="#AES加密简介" class="headerlink" title="AES加密简介"></a>AES加密简介</h1><ul><li>现代密码学按照密钥的数量分为对称加密和非对称加密，对称加密只使用一个密钥加解密，而非对称需要公钥和私钥分别加解密。</li><li>AES属于对称加密，因为使用同一把密钥，所有速度快，适合数据量比较大的加解密。</li><li>AES是一种分组密码 分组长度为128位（16字节），根据密钥长度可分为AES-128 AES-192和AES-256，密钥长度不同，AES的加密轮数也不同。</li></ul><table><thead><tr><th align="center">AES</th><th align="center">密钥长度&#x2F;bit</th><th align="center">分组长度&#x2F;bit</th><th align="center">加密轮数</th></tr></thead><tbody><tr><td align="center">AES-128</td><td align="center">128</td><td align="center">128</td><td align="center">10</td></tr><tr><td align="center">AES-192</td><td align="center">192</td><td align="center">128</td><td align="center">12</td></tr><tr><td align="center">AES-256</td><td align="center">256</td><td align="center">128</td><td align="center">14</td></tr></tbody></table><h1 id="AES流程"><a href="#AES流程" class="headerlink" title="AES流程"></a>AES流程</h1><ul><li>AES的具体步骤主要分为<strong>密钥扩展</strong>、<strong>字节代换</strong>、<strong>行移位</strong>、列混淆、<strong>轮密钥加</strong>。</li><li>给定一个明文16位，是个4*4的字节矩阵，将轮密钥与明文进行异或运算</li><li>对密文块进行S-盒替换</li><li>再对结果进行行移位</li><li>再对结果进行列混淆交换</li><li>再进行轮密钥加</li><li>以128位为例<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231022200846.png" alt="image.png"></li></ul><h2 id="密钥扩展"><a href="#密钥扩展" class="headerlink" title="密钥扩展"></a>密钥扩展</h2><ul><li>密钥扩展是将128位的密钥扩展为11个128位的密钥</li><li>每一轮用一个128位进行轮密钥加操作<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231022201129.png" alt="image.png"></li><li>当i为4的倍数时，计算W[i]，W[i-1]进行左移1个字节（<strong>向上移动一位</strong>），然后用给定的S-盒进行替换，最后与W[i-4]和<strong>轮常数</strong>进行异或，得到W[i]</li><li>当i不是4的倍数时，W[i]就是W[i-1]和W[i-4]进行异或</li><li>重复40次，得到其余10轮的轮密钥</li><li><strong>轮常数:</strong></li></ul><table><thead><tr><th align="center">i</th><th align="center">1</th><th align="center">2</th><th align="center">3</th><th align="center">4</th><th align="center">5</th><th align="center">6</th><th align="center">7</th><th align="center">8</th><th align="center">9</th><th align="center">10</th><th align="center">11</th></tr></thead><tbody><tr><td align="center">RC[i]</td><td align="center">0x01</td><td align="center">0x02</td><td align="center">0x04</td><td align="center">0x08</td><td align="center">0x10</td><td align="center">0x20</td><td align="center">0x40</td><td align="center">0x80</td><td align="center">0x1B</td><td align="center">0x36</td><td align="center">0x6c</td></tr></tbody></table><h2 id="字节替换"><a href="#字节替换" class="headerlink" title="字节替换"></a>字节替换</h2><ul><li>被替换字节的高4位为X坐标，低4位为Y坐标</li><li>在S-盒当中找到替换的字节进行替换<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231022202351.png" alt="image.png"></li></ul><h2 id="行移位"><a href="#行移位" class="headerlink" title="行移位"></a>行移位</h2><ul><li>第一行不变，第二行左移一个字节，第三行左移两个字节，第四行左移三个字节<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231022202529.png" alt="image.png"></li></ul><h2 id="列混淆"><a href="#列混淆" class="headerlink" title="列混淆"></a>列混淆</h2><ul><li>对每一列进行单独的操作</li><li>把每一列都看成GF($2^8$)中的一个四项多项式$s(x)$，再与GF($2^8$)上的固定多项式$a(x)&#x3D;{03}x^3+{01}x^2+{01}x+{02}$进行模$x^4+1$的乘法运算。<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231022202709.png" alt="image.png"></li><li>拿我上课老师的PPT做个例子<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231022203841.png" alt="image.png"></li></ul><h2 id="轮密钥加"><a href="#轮密钥加" class="headerlink" title="轮密钥加"></a>轮密钥加</h2><ul><li>轮密钥加就是将列混合得到的结果中的每一列分别与密钥中的每一列做异或，然后取代原字节序列，实现也很简单，就是一个异或操作。<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231022203931.png" alt="image.png"></li></ul><h2 id="AES解密过程"><a href="#AES解密过程" class="headerlink" title="AES解密过程"></a>AES解密过程</h2><ul><li>看图就能理解了</li><li>AddRoundKey-&gt;轮密钥加</li><li>InvByteSub-&gt;字节替换</li><li>InvShiftRows-&gt;行移位</li><li>InvMixColumns-&gt;列混淆<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20231022204129.png" alt="image.png"></li></ul><hr><ul><li>内容参考<a href="https://zhuanlan.zhihu.com/p/480298447#:~:text=%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%B0%B1%E6%98%AF%E6%8A%8A%E4%B9%8B%E5%89%8D%E7%9A%84%E5%87%A0%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B4%E5%90%88%E8%B5%B7%E6%9D%A5%EF%BC%8C%E8%BF%99%E9%87%8C%E8%BF%98%E6%98%AF%E6%8B%BF%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84,AES-128%E4%BD%8D%E3%80%81ECB%E6%A8%A1%E5%BC%8F%20%E4%B8%BE%E4%BE%8B%EF%BC%8C128%E4%BD%8D%E5%AF%B9%E5%BA%94%E7%9A%84%E5%8A%A0%E5%AF%86%E8%BD%AE%E6%95%B0%E6%98%AF10%E8%BD%AE%EF%BC%8C%E5%85%B6%E4%B8%AD%E8%BD%AE%E5%AF%86%E9%92%A5%E5%8A%A0%E7%B4%AF%E8%AE%A111%E6%AC%A1%EF%BC%8C%E9%80%9A%E8%BF%87%E4%B9%8B%E5%89%8D%E7%9A%84%E4%BB%8B%E7%BB%8D%E6%88%91%E4%BB%AC%E7%9F%A5%E9%81%93%E5%8F%AA%E6%9C%89%E8%BD%AE%E5%AF%86%E9%92%A5%E4%B8%AD%E4%BC%9A%E7%94%A8%E5%88%B0%E5%AF%86%E9%92%A5%EF%BC%8C%E5%88%9D%E5%A7%8B%E5%AF%86%E9%92%A5%E7%9A%84%E9%95%BF%E5%BA%A6%E4%B8%BA128%E4%BD%8D16%E5%AD%97%E8%8A%82%E7%BB%8F%E8%BF%8710%E6%AC%A1%E6%89%A9%E5%B1%95%E4%B9%8B%E5%90%8E%E6%AD%A3%E5%A5%BD%E6%BB%A1%E8%B6%B311%E6%AC%A1%E8%BD%AE%E5%AF%86%E9%92%A5%E5%8A%A0%E7%9A%84%E9%9C%80%E8%A6%81%E3%80%82">AES加解密流程及实现</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 密码学 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 密码学 </tag>
+            
+            <tag> 加密算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Java反序列化</title>
       <link href="/2023/10/21/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
       <url>/2023/10/21/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</url>
@@ -532,9 +559,9 @@
             
             <tag> web安全 </tag>
             
-            <tag> SQL注入 </tag>
-            
             <tag> MYSQL注入 </tag>
+            
+            <tag> SQL注入 </tag>
             
         </tags>
       
@@ -565,9 +592,9 @@
             
             <tag> web安全 </tag>
             
-            <tag> SQL注入 </tag>
-            
             <tag> MYSQL注入 </tag>
+            
+            <tag> SQL注入 </tag>
             
         </tags>
       
@@ -654,9 +681,9 @@
             
             <tag> 网络安全 </tag>
             
-            <tag> SQL注入 </tag>
-            
             <tag> MYSQL注入 </tag>
+            
+            <tag> SQL注入 </tag>
             
             <tag> 小迪安全 </tag>
             
@@ -687,9 +714,9 @@
             
             <tag> 网络安全 </tag>
             
-            <tag> SQL注入 </tag>
-            
             <tag> MYSQL注入 </tag>
+            
+            <tag> SQL注入 </tag>
             
             <tag> 小迪安全 </tag>
             
@@ -1112,7 +1139,7 @@
       <link href="/2023/08/25/%E6%9C%89%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84/"/>
       <url>/2023/08/25/%E6%9C%89%E5%85%B3%E4%BA%8E%E6%88%91%E7%9A%84/</url>
       
-        <content type="html"><![CDATA[<h1 id="有关于我的"><a href="#有关于我的" class="headerlink" title="有关于我的"></a>有关于我的</h1><hr><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E6%A2%A6%E6%AF%94%E4%BC%98%E6%96%AF.jpg" alt="Alien"></p><blockquote><p>永远相信美好的事情即将发生，因为追求源于热爱！</p></blockquote><h3 id="关于Alien"><a href="#关于Alien" class="headerlink" title="关于Alien"></a>关于Alien</h3><p>你好，我叫Alien，是个在校大学生，开发者，2021年开始学习相关开发知识。</p><ul><li><strong>就读院校：</strong> 东莞理工学院（是本科！！！）</li><li><strong>本科专业：</strong> 网络空间安全</li><li><strong>个人爱好：</strong> 听歌、看电影、奥特曼、游戏</li></ul><h3 id="细说个人爱好"><a href="#细说个人爱好" class="headerlink" title="细说个人爱好"></a>细说个人爱好</h3><p>喜欢的音乐人主要是周杰伦、林俊杰、陈奕迅、五月天、张杰、Zard坂井泉水（我女神）、久石让（他的音乐真的很好听）、Radwimps、米津玄师，平时没事就听歌，可以说是个终身爱好了。<br>喜欢的电影有幽灵公主（强烈推荐）、哈尔的移动城堡、天空之城。（很不巧，都是宫崎骏的）<br>游戏玩的不多，像云顶之弈这种比较多人玩，比较喜欢单机的游戏，比如极限竞速：地平线、塞尔达传说：王国之泪、GTA5。<br>应该没有人不喜欢奥特曼吧！（\狗头）</p><h3 id="怎样能够联系到我呢？"><a href="#怎样能够联系到我呢？" class="headerlink" title="怎样能够联系到我呢？"></a>怎样能够联系到我呢？</h3><p>邮箱：<a href="mailto:&#49;&#x31;&#x39;&#x33;&#49;&#x33;&#51;&#x31;&#x30;&#x35;&#64;&#113;&#113;&#x2e;&#x63;&#x6f;&#x6d;">&#49;&#x31;&#x39;&#x33;&#49;&#x33;&#51;&#x31;&#x30;&#x35;&#64;&#113;&#113;&#x2e;&#x63;&#x6f;&#x6d;</a><br>Github：<a href="https://github.com/M78Alien">M78Alien</a><br>B站：<a href="https://space.bilibili.com/360390916?spm_id_from=333.1007.0.0">Alien船长大人</a></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="有关于我的"><a href="#有关于我的" class="headerlink" title="有关于我的"></a>有关于我的</h1><hr><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E6%A2%A6%E6%AF%94%E4%BC%98%E6%96%AF.jpg" alt="Alien"></p><blockquote><p>永远相信美好的事情即将发生，因为追求源于热爱！</p></blockquote><h3 id="关于Alien"><a href="#关于Alien" class="headerlink" title="关于Alien"></a>关于Alien</h3><p>你好，我叫Alien，是个在校大学生，开发者，2021年开始学习相关开发知识。</p><ul><li><strong>就读院校：</strong> 东莞理工学院（是本科！！！）</li><li><strong>本科专业：</strong> 网络空间安全</li><li><strong>个人爱好：</strong> 听歌、看电影、奥特曼、游戏</li></ul><h3 id="细说个人爱好"><a href="#细说个人爱好" class="headerlink" title="细说个人爱好"></a>细说个人爱好</h3><p>喜欢的音乐人主要是周杰伦、林俊杰、陈奕迅、五月天、张杰、Zard坂井泉水（我女神）、久石让（他的音乐真的很好听）、Radwimps、米津玄师，平时没事就听歌，可以说是个终身爱好了。<br>喜欢的电影有幽灵公主（强烈推荐）、哈尔的移动城堡、天空之城。（很不巧，都是宫崎骏的）<br>游戏玩的不多，像云顶之弈这种比较多人玩，比较喜欢单机的游戏，比如极限竞速：地平线、塞尔达传说：王国之泪、GTA5。<br>应该没有人不喜欢奥特曼吧！（\狗头）</p><h3 id="怎样能够联系到我呢？"><a href="#怎样能够联系到我呢？" class="headerlink" title="怎样能够联系到我呢？"></a>怎样能够联系到我呢？</h3><p>邮箱：<a href="mailto:&#x31;&#x31;&#57;&#x33;&#x31;&#51;&#x33;&#x31;&#x30;&#x35;&#x40;&#113;&#x71;&#46;&#x63;&#x6f;&#x6d;">&#x31;&#x31;&#57;&#x33;&#x31;&#51;&#x33;&#x31;&#x30;&#x35;&#x40;&#113;&#x71;&#46;&#x63;&#x6f;&#x6d;</a><br>Github：<a href="https://github.com/M78Alien">M78Alien</a><br>B站：<a href="https://space.bilibili.com/360390916?spm_id_from=333.1007.0.0">Alien船长大人</a></p>]]></content>
       
       
       <categories>
