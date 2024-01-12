@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>鸿蒙HarmonyOS 4-ArkUI状态管理 | Alien's Blog</title><meta name="author" content="Alien"><meta name="copyright" content="Alien"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="@State 在声明式UI中，是以状态驱动视图更新：  状态（State）：指驱动视图更新的数据（被装饰器标记的变量） 视图（View）：基于UI描述渲染得到用户界面 被State修饰的变量才能更新    说明：   @State装饰器标记的变量必须初始化，不能为空值。 @State支持Object、class、string、number、boolean、enum类型以及这些类型的数组。 嵌套类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="鸿蒙HarmonyOS 4-ArkUI状态管理">
+<meta property="og:url" content="http://example.com/2024/01/11/%E9%B8%BF%E8%92%99HarmonyOS%204-ArkUI%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="Alien&#39;s Blog">
+<meta property="og:description" content="@State 在声明式UI中，是以状态驱动视图更新：  状态（State）：指驱动视图更新的数据（被装饰器标记的变量） 视图（View）：基于UI描述渲染得到用户界面 被State修饰的变量才能更新    说明：   @State装饰器标记的变量必须初始化，不能为空值。 @State支持Object、class、string、number、boolean、enum类型以及这些类型的数组。 嵌套类型">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg">
+<meta property="article:published_time" content="2024-01-11T12:54:00.000Z">
+<meta property="article:modified_time" content="2024-01-12T10:52:20.889Z">
+<meta property="article:author" content="Alien">
+<meta property="article:tag" content="harmonyos">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="ArkUI">
+<meta property="article:tag" content="ArkTS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg"><link rel="shortcut icon" href="/img/ultra_icon.png"><link rel="canonical" href="http://example.com/2024/01/11/%E9%B8%BF%E8%92%99HarmonyOS%204-ArkUI%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/pluginsSrc/@fancyapps/ui/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '鸿蒙HarmonyOS 4-ArkUI状态管理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-01-12 18:52:20'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/my.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" onerror="onerror=null;src='/img/程序员.png'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">44</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-edit"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/contact/"><i class="fa-fw fas fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-lightbulb"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230825160648.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Alien's Blog"><span class="site-name">Alien's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-edit"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/contact/"><i class="fa-fw fas fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-lightbulb"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">鸿蒙HarmonyOS 4-ArkUI状态管理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-11T12:54:00.000Z" title="发表于 2024-01-11 20:54:00">2024-01-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-12T10:52:20.889Z" title="更新于 2024-01-12 18:52:20">2024-01-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%B8%BF%E8%92%99%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/">鸿蒙应用开发</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title="鸿蒙HarmonyOS 4-ArkUI状态管理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="State"><a href="#State" class="headerlink" title="@State"></a>@State</h1><ul>
+<li>在声明式UI中，是以状态驱动视图更新：<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20240111205942.png" alt="image.png"><blockquote>
+<ul>
+<li>状态（State）：指驱动视图更新的数据（被装饰器标记的变量）</li>
+<li>视图（View）：基于UI描述渲染得到用户界面</li>
+<li>被State修饰的变量才能更新</li>
+</ul>
+</blockquote>
+</li>
+<li>说明：</li>
+</ul>
+<ol>
+<li>@State装饰器标记的变量必须初始化，不能为空值。</li>
+<li>@State支持Object、class、string、number、boolean、enum类型以及这些类型的数组。</li>
+<li>嵌套类型以及数组中的对象属性无法触发视图更新。<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@State</span> <span class="attr">message</span>: <span class="built_in">string</span> = <span class="string">&#x27;Hello World !!&#x27;</span>  </span><br><span class="line">  </span><br><span class="line"><span class="title function_">build</span>(<span class="params"></span>) &#123;   </span><br><span class="line">	<span class="title function_">column</span>(<span class="params"></span>)&#123;  </span><br><span class="line">	  <span class="title class_">Text</span>(<span class="variable language_">this</span>.<span class="property">message</span>)  </span><br><span class="line">		.<span class="title function_">fontSize</span>(<span class="number">30</span>)  </span><br><span class="line">		.<span class="title function_">fontWeight</span>(<span class="title class_">FontWeight</span>.<span class="property">Bold</span>)  </span><br><span class="line">		.<span class="title function_">fontColor</span>(<span class="string">&#x27;#36D&#x27;</span>)  </span><br><span class="line">		.<span class="title function_">onClick</span>(<span class="function">() =&gt;</span> &#123;  </span><br><span class="line">		  <span class="variable language_">this</span>.<span class="property">message</span> = <span class="string">&#x27;Hello ArkTS!&#x27;</span>  </span><br><span class="line">		&#125;)  </span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="Prop-Link"><a href="#Prop-Link" class="headerlink" title="@Prop &amp; @Link"></a>@Prop &amp; @Link</h1><ul>
+<li>当父子组件之间需要数据同步时，可以使用@Prop和@Link装饰器。<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20240112150040.png" alt="image.png"></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>@Prop</th>
+<th>@Link</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>同步类型</td>
+<td>单向同步</td>
+<td>双向同步</td>
+</tr>
+<tr>
+<td>允许装饰的变量类型</td>
+<td>- @Prop只支持string、number、boolean、enum类型<br>- 父组件对象类型，子组件是对象属性<br>- 不可以是数组、any</td>
+<td>- 父子类型一直：string、number、boolean、enum、object、class，以及他们的数组<br>- 数组中元素增、删、替换会引起刷新<br>- 嵌套类型以及数组中的对象属性无法触发视图更新</td>
+</tr>
+<tr>
+<td>初始化方式</td>
+<td>不允许子组件初始化</td>
+<td>父组件传递，禁止子组件初始化</td>
+</tr>
+</tbody></table>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entry</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line">struct <span class="title class_">PropPage</span> &#123;</span><br><span class="line">	<span class="meta">@State</span> <span class="attr">totalTask</span>: <span class="built_in">number</span> = <span class="number">0</span> <span class="comment">//父组件创建的变量</span></span><br><span class="line">	<span class="title class_">Task</span>(&#123;<span class="attr">totalTask</span>: <span class="variable language_">this</span>.<span class="property">totalTask</span>&#125;) <span class="comment">//将变量传递到子组件</span></span><br><span class="line">	<span class="title class_">TaskList</span>(&#123;<span class="attr">totalTask</span>: $totalTask&#125;) <span class="comment">//@Link需要传递的是引用，而不是值，所以需要用$美元符号</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line">struct <span class="title class_">Task</span> &#123;</span><br><span class="line">	<span class="meta">@Prop</span> <span class="attr">totalTask</span>: <span class="built_in">number</span> <span class="comment">//子组件不允许初始化</span></span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">//@Link用法类似，@Link则是双向同步刷新</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line">struct <span class="title class_">TaskList</span> &#123;</span><br><span class="line">	<span class="meta">@Link</span> <span class="attr">totalTask</span>: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Provide-Consume"><a href="#Provide-Consume" class="headerlink" title="@Provide &amp; @Consume"></a>@Provide &amp; @Consume</h1><ul>
+<li>@Provide和@Consume可以跨组件提供类似于@State和@Link的双向同步<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20240112151444.png" alt="image.png"><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entry</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line">struct <span class="title class_">PropPage</span> &#123;</span><br><span class="line">	<span class="meta">@Provide</span> <span class="attr">totalTask</span>: <span class="built_in">number</span> = <span class="number">0</span> <span class="comment">//父组件创建的变量</span></span><br><span class="line">	<span class="title class_">Task</span>() <span class="comment">//不需要传递参数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line">struct <span class="title class_">Task</span> &#123;</span><br><span class="line">	<span class="meta">@Consume</span> <span class="attr">totalTask</span>: <span class="built_in">number</span> <span class="comment">//子组件不允许初始化</span></span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></li>
+<li>但是性能损耗也比较大，无需跨组件时尽量使用@Prop和@Link</li>
+</ul>
+<h1 id="Observed-ObjectLink"><a href="#Observed-ObjectLink" class="headerlink" title="@Observed &amp; @ObjectLink"></a>@Observed &amp; @ObjectLink</h1><ul>
+<li>@ObjectLink和@Observed装饰器用于在涉及嵌套对象或数组元素为对象的场景中进行双向数据同步</li>
+<li>解决嵌套对象里的对象属性变更无法刷新和数组里边的元素对象属性无法刷新的问题</li>
+<li>解决方法：</li>
+</ul>
+<ol>
+<li>给对象添加@Observed装饰器</li>
+<li>同时给嵌套的对象加上@ObjectLink装饰器</li>
+<li>一般情况需要将它作为参数传给一个组件<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Observed</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Task</span>&#123; <span class="comment">//创建的对象</span></span><br><span class="line">	<span class="keyword">static</span> <span class="attr">id</span>: <span class="built_in">number</span> = <span class="number">1</span></span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entry</span></span><br><span class="line"><span class="comment">//主页面部分</span></span><br><span class="line"><span class="meta">@State</span> <span class="attr">task</span>: <span class="title class_">Task</span>[] = []</span><br><span class="line"><span class="title function_">handleTaskChange</span>(<span class="params"></span>)&#123;  </span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">totalTask</span> = <span class="variable language_">this</span>.<span class="property">tasks</span>.<span class="property">length</span>  </span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">finishTask</span> = <span class="variable language_">this</span>.<span class="property">tasks</span>.<span class="title function_">filter</span>(<span class="function"><span class="params">item</span> =&gt;</span> item.<span class="property">finished</span>).<span class="property">length</span>  </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="title class_">TaskItem</span>(&#123;<span class="attr">item</span>:item, <span class="attr">onTaskChange</span>: <span class="variable language_">this</span>.<span class="property">handleTaskChange</span>.<span class="title function_">bind</span>(<span class="variable language_">this</span>)&#125;) <span class="comment">//传递时this会缺失，所以用bind传递this</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line">struct <span class="title class_">TaskItem</span> &#123;</span><br><span class="line">	<span class="meta">@ObjectLink</span> <span class="attr">item</span>: <span class="title class_">Task</span></span><br><span class="line">	<span class="attr">onTaskChange</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span> <span class="comment">//当子组件需要使用父组件的函数，可以传进来</span></span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Alien</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2024/01/11/%E9%B8%BF%E8%92%99HarmonyOS%204-ArkUI%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/">http://example.com/2024/01/11/%E9%B8%BF%E8%92%99HarmonyOS%204-ArkUI%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Alien's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/harmonyos/">harmonyos</a><a class="post-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a><a class="post-meta__tags" href="/tags/ArkUI/">ArkUI</a><a class="post-meta__tags" href="/tags/ArkTS/">ArkTS</a></div><div class="post_share"><div class="social-share" data-image="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" data-sites="twitter,wechat,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/01/12/%E9%B8%BF%E8%92%99HarmonyOS%204-%E9%A1%B5%E9%9D%A2%E8%B7%AF%E7%94%B1/" title="鸿蒙HarmonyOS 4-页面路由"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">鸿蒙HarmonyOS 4-页面路由</div></div></a></div><div class="next-post pull-right"><a href="/2024/01/11/%E9%B8%BF%E8%92%99HarmonyOS%204-ArkUI%E7%BB%84%E4%BB%B6/" title="鸿蒙HarmonyOS 4-ArkUI组件"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">鸿蒙HarmonyOS 4-ArkUI组件</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/01/11/%E9%B8%BF%E8%92%99HarmonyOS%204-ArkUI%E7%BB%84%E4%BB%B6/" title="鸿蒙HarmonyOS 4-ArkUI组件"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-11</div><div class="title">鸿蒙HarmonyOS 4-ArkUI组件</div></div></a></div><div><a href="/2024/01/12/%E9%B8%BF%E8%92%99HarmonyOS%204-%E5%8A%A8%E7%94%BB/" title="鸿蒙HarmonyOS 4-动画"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-12</div><div class="title">鸿蒙HarmonyOS 4-动画</div></div></a></div><div><a href="/2024/01/12/%E9%B8%BF%E8%92%99HarmonyOS%204-%E9%A1%B5%E9%9D%A2%E8%B7%AF%E7%94%B1/" title="鸿蒙HarmonyOS 4-页面路由"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-12</div><div class="title">鸿蒙HarmonyOS 4-页面路由</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" onerror="this.onerror=null;this.src='/img/%E7%A8%8B%E5%BA%8F%E5%91%98.png'" alt="avatar"/></div><div class="author-info__name">Alien</div><div class="author-info__description">M78来的程序员</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">44</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M78Alien"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到Alien的专属空间</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#State"><span class="toc-number">1.</span> <span class="toc-text">@State</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Prop-Link"><span class="toc-number">2.</span> <span class="toc-text">@Prop &amp; @Link</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Provide-Consume"><span class="toc-number">3.</span> <span class="toc-text">@Provide &amp; @Consume</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Observed-ObjectLink"><span class="toc-number">4.</span> <span class="toc-text">@Observed &amp; @ObjectLink</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/12/%E9%B8%BF%E8%92%99HarmonyOS%204-%E5%8A%A8%E7%94%BB/" title="鸿蒙HarmonyOS 4-动画">鸿蒙HarmonyOS 4-动画</a><time datetime="2024-01-12T11:50:00.000Z" title="发表于 2024-01-12 19:50:00">2024-01-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/12/%E9%B8%BF%E8%92%99HarmonyOS%204-%E9%A1%B5%E9%9D%A2%E8%B7%AF%E7%94%B1/" title="鸿蒙HarmonyOS 4-页面路由">鸿蒙HarmonyOS 4-页面路由</a><time datetime="2024-01-12T10:54:00.000Z" title="发表于 2024-01-12 18:54:00">2024-01-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/11/%E9%B8%BF%E8%92%99HarmonyOS%204-ArkUI%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/" title="鸿蒙HarmonyOS 4-ArkUI状态管理">鸿蒙HarmonyOS 4-ArkUI状态管理</a><time datetime="2024-01-11T12:54:00.000Z" title="发表于 2024-01-11 20:54:00">2024-01-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/11/%E9%B8%BF%E8%92%99HarmonyOS%204-ArkUI%E7%BB%84%E4%BB%B6/" title="鸿蒙HarmonyOS 4-ArkUI组件">鸿蒙HarmonyOS 4-ArkUI组件</a><time datetime="2024-01-11T06:45:00.000Z" title="发表于 2024-01-11 14:45:00">2024-01-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/30/JWT%E5%AE%89%E5%85%A8/" title="JWT安全">JWT安全</a><time datetime="2023-10-30T05:16:00.000Z" title="发表于 2023-10-30 13:16:00">2023-10-30</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Alien</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/@fancyapps/ui/dist/fancybox/fancybox.umd.js"></script><div class="js-pjax"><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://alien-api-1193133105-qqcom.vercel.app/',
+      region: 'ap-shanghai',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://alien-api-1193133105-qqcom.vercel.app/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.textContent = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('/pluginsSrc/twikoo/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><script data-pjax defer src="/js/my.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
