@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>鸿蒙HarmonyOS 4-Stage模型 | Alien's Blog</title><meta name="author" content="Alien"><meta name="copyright" content="Alien"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Stage模型概述 详细内容可以看一下鸿蒙开发者文档 模块是应用的基本功能单元，包含源代码、资源以及配置文件等内容 模块分为两大类，像entry这样的模块称为Ability Module能力模块，而通用的资源等可以放在一个模块当中，这样的模块成为Library Module，Ability Module就可以去引用Library的模块了。 整个源码会被编译打包成APP，为了降低不同功能模块之间的耦">
+<meta property="og:type" content="article">
+<meta property="og:title" content="鸿蒙HarmonyOS 4-Stage模型">
+<meta property="og:url" content="http://example.com/2024/01/13/%E9%B8%BF%E8%92%99HarmonyOS%204-Stage%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Alien&#39;s Blog">
+<meta property="og:description" content="Stage模型概述 详细内容可以看一下鸿蒙开发者文档 模块是应用的基本功能单元，包含源代码、资源以及配置文件等内容 模块分为两大类，像entry这样的模块称为Ability Module能力模块，而通用的资源等可以放在一个模块当中，这样的模块成为Library Module，Ability Module就可以去引用Library的模块了。 整个源码会被编译打包成APP，为了降低不同功能模块之间的耦">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg">
+<meta property="article:published_time" content="2024-01-13T05:13:00.000Z">
+<meta property="article:modified_time" content="2024-01-13T12:42:14.052Z">
+<meta property="article:author" content="Alien">
+<meta property="article:tag" content="harmonyos">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="ArkUI">
+<meta property="article:tag" content="ArkTS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg"><link rel="shortcut icon" href="/img/ultra_icon.png"><link rel="canonical" href="http://example.com/2024/01/13/%E9%B8%BF%E8%92%99HarmonyOS%204-Stage%E6%A8%A1%E5%9E%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/pluginsSrc/@fancyapps/ui/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '鸿蒙HarmonyOS 4-Stage模型',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-01-13 20:42:14'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/my.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" onerror="onerror=null;src='/img/程序员.png'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-edit"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/contact/"><i class="fa-fw fas fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-lightbulb"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230825160648.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Alien's Blog"><span class="site-name">Alien's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-edit"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/contact/"><i class="fa-fw fas fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-lightbulb"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">鸿蒙HarmonyOS 4-Stage模型</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-13T05:13:00.000Z" title="发表于 2024-01-13 13:13:00">2024-01-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-13T12:42:14.052Z" title="更新于 2024-01-13 20:42:14">2024-01-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%B8%BF%E8%92%99%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/">鸿蒙应用开发</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title="鸿蒙HarmonyOS 4-Stage模型"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Stage模型概述"><a href="#Stage模型概述" class="headerlink" title="Stage模型概述"></a>Stage模型概述</h1><ul>
+<li>详细内容可以看一下<a target="_blank" rel="noopener" href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V3/application-model-composition-0000001544384013-V3">鸿蒙开发者文档</a><br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20240113133302.png" alt="image.png"></li>
+<li>模块是应用的基本功能单元，包含源代码、资源以及配置文件等内容</li>
+<li>模块分为两大类，像entry这样的模块称为Ability Module能力模块，而通用的资源等可以放在一个模块当中，这样的模块成为Library Module，Ability Module就可以去引用Library的模块了。</li>
+<li>整个源码会被编译打包成APP，为了降低不同功能模块之间的耦合，每一个模块都是可以独立编译和运行的，所有的Ability Module会被编译成HAP文件，而Library Module会被编译成HSP文件。</li>
+<li>一个应用有且只有一个Entry类型的HAP文件，而Feature类型可以有多个。</li>
+<li>所有HAP文件最后会打包成Bundle文件，最后一起打包成安装包文件。Bundle name是整个应用的唯一标识。</li>
+<li>HAP在运行时会创建一个名为Ability Stage的实例，理解为应用组件的“舞台”。</li>
+<li>因为Ability和窗口的分割，可以实现对不同设备窗口的单独裁切适配。</li>
+</ul>
+<h1 id="应用配置文件"><a href="#应用配置文件" class="headerlink" title="应用配置文件"></a>应用配置文件</h1><ul>
+<li>鸿蒙应用的配置文件有两类：</li>
+<li>第一类值针对这个应用的全局配置文件，在<code>AppScope/app.json5</code><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//app.json5全局配置文件</span></span><br><span class="line"><span class="punctuation">&#123;</span>  </span><br><span class="line">  <span class="attr">&quot;app&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>  </span><br><span class="line">    <span class="attr">&quot;bundleName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;com.example.myapplication&quot;</span><span class="punctuation">,</span>  <span class="comment">//是应用的唯一标识，不与其他应用重复，使用域名倒置的方式命名</span></span><br><span class="line">    <span class="attr">&quot;vendor&quot;</span><span class="punctuation">:</span> <span class="string">&quot;example&quot;</span><span class="punctuation">,</span>  </span><br><span class="line">    <span class="attr">&quot;versionCode&quot;</span><span class="punctuation">:</span> <span class="number">1000000</span><span class="punctuation">,</span>  <span class="comment">//数字型的版本号</span></span><br><span class="line">    <span class="attr">&quot;versionName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0.0&quot;</span><span class="punctuation">,</span>  <span class="comment">//字符型的版本号</span></span><br><span class="line">    <span class="attr">&quot;icon&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$media:app_icon&quot;</span><span class="punctuation">,</span>  <span class="comment">//应用图标</span></span><br><span class="line">    <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$string:app_name&quot;</span>  <span class="comment">//应用描述</span></span><br><span class="line">  <span class="punctuation">&#125;</span>  </span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></li>
+<li>第二类是在每个模块里，在每个模块的<code>src/main/module.json5</code><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//module.json5模块配置文件</span></span><br><span class="line"><span class="punctuation">&#123;</span>  </span><br><span class="line">  <span class="attr">&quot;module&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>  </span><br><span class="line">    <span class="attr">&quot;requestPermissions&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>  <span class="comment">//系统权限申请</span></span><br><span class="line">      <span class="punctuation">&#123;</span>  </span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ohos.permission.INTERNET&quot;</span>  </span><br><span class="line">      <span class="punctuation">&#125;</span>  </span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span>  </span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;entry&quot;</span><span class="punctuation">,</span>  <span class="comment">//模块名称</span></span><br><span class="line">    <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;entry&quot;</span><span class="punctuation">,</span>  <span class="comment">//模块类型，entry入口型、feature功能型、shared共享型</span></span><br><span class="line">    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$string:module_desc&quot;</span><span class="punctuation">,</span>  <span class="comment">//当前模块的描述，读取的是base/element/string.json</span></span><br><span class="line">    <span class="attr">&quot;mainElement&quot;</span><span class="punctuation">:</span> <span class="string">&quot;EntryAbility&quot;</span><span class="punctuation">,</span>  <span class="comment">//入口ability</span></span><br><span class="line">    <span class="attr">&quot;deviceTypes&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>  <span class="comment">//设备类型</span></span><br><span class="line">      <span class="string">&quot;phone&quot;</span><span class="punctuation">,</span>  </span><br><span class="line">      <span class="string">&quot;tablet&quot;</span>  </span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span>  </span><br><span class="line">    <span class="attr">&quot;deliveryWithInstall&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span>  <span class="comment">//跟随APP安装，Entry类型必须安装，feature可选</span></span><br><span class="line">    <span class="attr">&quot;installationFree&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span>  </span><br><span class="line">    <span class="attr">&quot;pages&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$profile:main_pages&quot;</span><span class="punctuation">,</span>  <span class="comment">//模块中的所有页面，读取的是base/profile/main_pages.json</span></span><br><span class="line">    <span class="attr">&quot;abilities&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>  <span class="comment">//可以有多个ability，以数组的形式写出</span></span><br><span class="line">      <span class="punctuation">&#123;</span>  </span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;EntryAbility&quot;</span><span class="punctuation">,</span>  <span class="comment">//ability的名称</span></span><br><span class="line">        <span class="attr">&quot;srcEntry&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./ets/entryability/EntryAbility.ts&quot;</span><span class="punctuation">,</span>  <span class="comment">//ability的源码位置</span></span><br><span class="line">        <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$string:EntryAbility_desc&quot;</span><span class="punctuation">,</span>  <span class="comment">//ability的描述</span></span><br><span class="line">        <span class="attr">&quot;icon&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$media:icon&quot;</span><span class="punctuation">,</span>  <span class="comment">//ability的图标</span></span><br><span class="line">        <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$string:EntryAbility_label&quot;</span><span class="punctuation">,</span>  <span class="comment">//当前ability的文字描述</span></span><br><span class="line">        <span class="comment">//由于这是入口ability，所以图标和文字描述也就是桌面显示的</span></span><br><span class="line">        <span class="attr">&quot;startWindowIcon&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$media:icon&quot;</span><span class="punctuation">,</span>  <span class="comment">//应用启动时的图标</span></span><br><span class="line">        <span class="attr">&quot;startWindowBackground&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$color:start_window_background&quot;</span><span class="punctuation">,</span>  <span class="comment">//应用启动时的图标背景色</span></span><br><span class="line">        <span class="attr">&quot;exported&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span>  </span><br><span class="line">        <span class="attr">&quot;skills&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>  <span class="comment">//功能的声明</span></span><br><span class="line">          <span class="punctuation">&#123;</span>  </span><br><span class="line">            <span class="attr">&quot;entities&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>  </span><br><span class="line">              <span class="string">&quot;entity.system.home&quot;</span>  </span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span>  </span><br><span class="line">            <span class="attr">&quot;actions&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>  </span><br><span class="line">              <span class="string">&quot;action.system.home&quot;</span>  </span><br><span class="line">            <span class="punctuation">]</span>  </span><br><span class="line">          <span class="punctuation">&#125;</span>  </span><br><span class="line">        <span class="punctuation">]</span>  </span><br><span class="line">      <span class="punctuation">&#125;</span>  </span><br><span class="line">    <span class="punctuation">]</span>  </span><br><span class="line">  <span class="punctuation">&#125;</span>  </span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="UIAbility生命周期"><a href="#UIAbility生命周期" class="headerlink" title="UIAbility生命周期"></a>UIAbility生命周期</h1><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20240113144314.png" alt="image.png"></p>
+<ul>
+<li>以微信为例，进入微信会自动创建（Create）一个UIAbility，因为是入口所有会自动设置为前台（Foreground）。</li>
+<li>当打开小程序或者视频号等独立功能时，会再次创建（Create）一个UIAbility，同时原本的UIAbility会被设置为后台（Background）。查看手机后台可以看到两个微信。</li>
+<li>当不使用的时候可以直接去除后台（Destroy）。<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/ets/entryability/EntryAbility.ts</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">UIAbility</span> <span class="keyword">from</span> <span class="string">&#x27;@ohos.app.ability.UIAbility&#x27;</span>;  </span><br><span class="line"><span class="keyword">import</span> hilog <span class="keyword">from</span> <span class="string">&#x27;@ohos.hilog&#x27;</span>;  </span><br><span class="line"><span class="keyword">import</span> <span class="variable language_">window</span> <span class="keyword">from</span> <span class="string">&#x27;@ohos.window&#x27;</span>;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">EntryAbility</span> <span class="keyword">extends</span> <span class="title class_ inherited__">UIAbility</span> &#123;  <span class="comment">//继承了UIAbility</span></span><br><span class="line">  <span class="title function_">onCreate</span>(<span class="params">want, launchParam</span>) &#123;  <span class="comment">//当被创建时</span></span><br><span class="line">    hilog.<span class="title function_">info</span>(<span class="number">0x0000</span>, <span class="string">&#x27;testTag&#x27;</span>, <span class="string">&#x27;%&#123;public&#125;s&#x27;</span>, <span class="string">&#x27;Ability onCreate&#x27;</span>);  <span class="comment">//hilog是日志</span></span><br><span class="line">    <span class="comment">//info是日志级别，还有debug、error等等</span></span><br><span class="line">    <span class="comment">//0x0000是用来标识的参数，&#x27;testTag&#x27;是文字标记，&#x27;%&#123;public&#125;s&#x27;占位符，public为公开，最后是日志内容</span></span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">  <span class="title function_">onDestroy</span>(<span class="params"></span>) &#123;  <span class="comment">//当被销毁时</span></span><br><span class="line">    hilog.<span class="title function_">info</span>(<span class="number">0x0000</span>, <span class="string">&#x27;testTag&#x27;</span>, <span class="string">&#x27;%&#123;public&#125;s&#x27;</span>, <span class="string">&#x27;Ability onDestroy&#x27;</span>);  </span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">  <span class="title function_">onWindowStageCreate</span>(<span class="params">windowStage: <span class="variable language_">window</span>.WindowStage</span>) &#123;  <span class="comment">//当WindowStage被创建时</span></span><br><span class="line">    <span class="comment">// Main window is created, set main page for this ability  </span></span><br><span class="line">    hilog.<span class="title function_">info</span>(<span class="number">0x0000</span>, <span class="string">&#x27;testTag&#x27;</span>, <span class="string">&#x27;%&#123;public&#125;s&#x27;</span>, <span class="string">&#x27;Ability onWindowStageCreate&#x27;</span>);  </span><br><span class="line">  </span><br><span class="line">    windowStage.<span class="title function_">loadContent</span>(<span class="string">&#x27;pages/Index&#x27;</span>, <span class="function">(<span class="params">err, data</span>) =&gt;</span> &#123;  <span class="comment">//打开首页</span></span><br><span class="line">      <span class="keyword">if</span> (err.<span class="property">code</span>) &#123;  </span><br><span class="line">        hilog.<span class="title function_">error</span>(<span class="number">0x0000</span>, <span class="string">&#x27;testTag&#x27;</span>, <span class="string">&#x27;Failed to load the content. Cause: %&#123;public&#125;s&#x27;</span>, <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(err) ?? <span class="string">&#x27;&#x27;</span>);  </span><br><span class="line">        <span class="keyword">return</span>;  </span><br><span class="line">      &#125;  </span><br><span class="line">      hilog.<span class="title function_">info</span>(<span class="number">0x0000</span>, <span class="string">&#x27;testTag&#x27;</span>, <span class="string">&#x27;Succeeded in loading the content. Data: %&#123;public&#125;s&#x27;</span>, <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(data) ?? <span class="string">&#x27;&#x27;</span>);  </span><br><span class="line">    &#125;);  </span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">  <span class="title function_">onWindowStageDestroy</span>(<span class="params"></span>) &#123;  <span class="comment">//当WindowStage被销毁时</span></span><br><span class="line">    <span class="comment">// Main window is destroyed, release UI related resources  </span></span><br><span class="line">    hilog.<span class="title function_">info</span>(<span class="number">0x0000</span>, <span class="string">&#x27;testTag&#x27;</span>, <span class="string">&#x27;%&#123;public&#125;s&#x27;</span>, <span class="string">&#x27;Ability onWindowStageDestroy&#x27;</span>);  </span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">  <span class="title function_">onForeground</span>(<span class="params"></span>) &#123;  <span class="comment">//在前台时</span></span><br><span class="line">    <span class="comment">// Ability has brought to foreground  </span></span><br><span class="line">    hilog.<span class="title function_">info</span>(<span class="number">0x0000</span>, <span class="string">&#x27;testTag&#x27;</span>, <span class="string">&#x27;%&#123;public&#125;s&#x27;</span>, <span class="string">&#x27;Ability onForeground&#x27;</span>);  </span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">  <span class="title function_">onBackground</span>(<span class="params"></span>) &#123;  <span class="comment">//在后台时</span></span><br><span class="line">    <span class="comment">// Ability has back to background  </span></span><br><span class="line">    hilog.<span class="title function_">info</span>(<span class="number">0x0000</span>, <span class="string">&#x27;testTag&#x27;</span>, <span class="string">&#x27;%&#123;public&#125;s&#x27;</span>, <span class="string">&#x27;Ability onBackground&#x27;</span>);  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20240113150458.png" alt="image.png"></li>
+</ul>
+<h1 id="页面及组件生命周期"><a href="#页面及组件生命周期" class="headerlink" title="页面及组件生命周期"></a>页面及组件生命周期</h1><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20240113152337.png" alt="image.png"></p>
+<ul>
+<li>aboutToAppear函数是在组件被创建之后build创建之前触发，可以在这里做一些初始化和数据的准备工作。</li>
+<li>onPageShow函数是当页面被展示的时候会执行，onPageHide函数是当页面被隐藏的时候会执行，onBackPress函数是点击返回的时候触发。三个一起为页面生命周期函数，可以做一些功能性的逻辑。</li>
+<li>aboutToDisappear函数是组件被销毁时触发。可以在这里做一些数据保存等。</li>
+<li>用push方法跳转页面，并不会销毁组件，而是隐藏，但是replace方法会销毁组件，性能消耗大。</li>
+<li>子组件不会执行页面生命周期函数。</li>
+<li>For循环刷新渲染会将每个元素都删除重新渲染，需要给每个元素添加标识才可以避免反复渲染。</li>
+</ul>
+<h1 id="UIAbility的启动模式"><a href="#UIAbility的启动模式" class="headerlink" title="UIAbility的启动模式"></a>UIAbility的启动模式</h1><h2 id="Singleton启动模式"><a href="#Singleton启动模式" class="headerlink" title="Singleton启动模式"></a>Singleton启动模式</h2><ul>
+<li>每一个UIAbility只存在唯一实例。是<strong>默认启动模式</strong>。</li>
+<li>任务列表中只会存在一个相同的UIAbility<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20240113161405.png" alt="image.png"></li>
+<li>再次打开UIAbility只是将之前被隐藏的重新显示</li>
+</ul>
+<h2 id="standard启动模式"><a href="#standard启动模式" class="headerlink" title="standard启动模式"></a>standard启动模式</h2><ul>
+<li>每次启动UIAbility<strong>都会创建一个新的实例</strong>。</li>
+<li>在任务列表中可能存在一个或多个相同的UIAbility<br><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20240113161750.png" alt="image.png"><blockquote>
+<p><strong>multiton启动模式</strong><br>和standard类似，但是每次启动UIAbility都会创建一个新的实例，而旧的会<strong>被销毁</strong></p>
+</blockquote>
+</li>
+</ul>
+<h2 id="specified启动模式"><a href="#specified启动模式" class="headerlink" title="specified启动模式"></a>specified启动模式</h2><ul>
+<li>每个UIAbility实例可以设置Key标示</li>
+<li>启动UIAbility时，需要指定Key，存在Key相同实例直接被拉起，不存在则创建新实例</li>
+<li>在实际应用中，可以在需要多个内容同时使用的情况下使用，例如文档编辑需要打开两个文档，并保留在后台<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1. 当前UIAbility调用startAbility方法拉起目标UIAbility</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1.1 获取上下文</span></span><br><span class="line">context = <span class="title function_">getContext</span>(<span class="variable language_">this</span>) <span class="keyword">as</span> common.<span class="property">UIAbilityContext</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1.2 指定要跳转的UIAbility的信息</span></span><br><span class="line"><span class="keyword">let</span> want = &#123;</span><br><span class="line">	<span class="attr">deviceID</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">//deviceId为空表示本设备</span></span><br><span class="line">	<span class="attr">bundleName</span>: <span class="string">&#x27;com.example.myapplication&#x27;</span>, <span class="comment">//指定哪个应用的bundleName</span></span><br><span class="line">	<span class="attr">abiliyuName</span>: <span class="string">&#x27;DocumentAbility&#x27;</span>,</span><br><span class="line">	<span class="attr">moduleName</span>: <span class="string">&#x27;entry&#x27;</span>, <span class="comment">//moduleName非必选</span></span><br><span class="line">	<span class="attr">parameters</span>: &#123;</span><br><span class="line">		<span class="comment">// getInstanceKey：自定义方法，生成目标UIAbility实例的Key</span></span><br><span class="line">		<span class="attr">instanceKey</span>: <span class="variable language_">this</span>.<span class="title function_">getInstanceKey</span>()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//1.3 尝试拉起目标UIAbility实例</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">context</span>.<span class="title function_">startAbility</span>(want)</span><br><span class="line"></span><br><span class="line"><span class="comment">//2. 在AbilityStage的生命周期回调中为目标UIAbility实例生成Key</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">MyAbilityStage</span> <span class="keyword">extends</span> <span class="title class_ inherited__">AbilityState</span>&#123;</span><br><span class="line">	<span class="title function_">onAcceptWant</span>(<span class="attr">want</span>: <span class="title class_">Want</span>): <span class="built_in">string</span> &#123;</span><br><span class="line">		<span class="comment">//判断当前要拉取的是否是DocumentAbility</span></span><br><span class="line">		<span class="keyword">if</span>(want.<span class="property">abilityName</span> === <span class="string">&#x27;DocumentAbility&#x27;</span>)&#123;</span><br><span class="line">			<span class="comment">//根据参数中的instanceKey参数拼接生成一个Key值并返回</span></span><br><span class="line">			<span class="keyword">return</span> <span class="string">`DocAbility_<span class="subst">$&#123;want.parameters.instanceKey&#125;</span>`</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//3. 在module.json5配置文件中，通过srcEntry参数指定AbilityStage路径</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="string">&quot;module&quot;</span>:&#123;</span><br><span class="line">		<span class="string">&quot;name&quot;</span>: <span class="string">&quot;entry&quot;</span>,</span><br><span class="line">		<span class="string">&quot;type&quot;</span>: <span class="string">&quot;entry&quot;</span>,</span><br><span class="line">		<span class="string">&quot;srcEntry&quot;</span>: <span class="string">&quot;./ets/myabilitystage/MyAbilityStage.ts&quot;</span>,</span><br><span class="line">		...</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>详细可以参考<a target="_blank" rel="noopener" href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V3/uiability-launch-type-0000001428061476-V3">鸿蒙开发文档</a>，因为太复杂了。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Alien</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2024/01/13/%E9%B8%BF%E8%92%99HarmonyOS%204-Stage%E6%A8%A1%E5%9E%8B/">http://example.com/2024/01/13/%E9%B8%BF%E8%92%99HarmonyOS%204-Stage%E6%A8%A1%E5%9E%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Alien's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/harmonyos/">harmonyos</a><a class="post-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a><a class="post-meta__tags" href="/tags/ArkUI/">ArkUI</a><a class="post-meta__tags" href="/tags/ArkTS/">ArkTS</a></div><div class="post_share"><div class="social-share" data-image="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" data-sites="twitter,wechat,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/01/12/%E9%B8%BF%E8%92%99HarmonyOS%204-%E5%8A%A8%E7%94%BB/" title="鸿蒙HarmonyOS 4-动画"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">鸿蒙HarmonyOS 4-动画</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/01/11/%E9%B8%BF%E8%92%99HarmonyOS%204-ArkUI%E7%BB%84%E4%BB%B6/" title="鸿蒙HarmonyOS 4-ArkUI组件"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-11</div><div class="title">鸿蒙HarmonyOS 4-ArkUI组件</div></div></a></div><div><a href="/2024/01/11/%E9%B8%BF%E8%92%99HarmonyOS%204-ArkUI%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/" title="鸿蒙HarmonyOS 4-ArkUI状态管理"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-11</div><div class="title">鸿蒙HarmonyOS 4-ArkUI状态管理</div></div></a></div><div><a href="/2024/01/12/%E9%B8%BF%E8%92%99HarmonyOS%204-%E5%8A%A8%E7%94%BB/" title="鸿蒙HarmonyOS 4-动画"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-12</div><div class="title">鸿蒙HarmonyOS 4-动画</div></div></a></div><div><a href="/2024/01/12/%E9%B8%BF%E8%92%99HarmonyOS%204-%E9%A1%B5%E9%9D%A2%E8%B7%AF%E7%94%B1/" title="鸿蒙HarmonyOS 4-页面路由"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-12</div><div class="title">鸿蒙HarmonyOS 4-页面路由</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" onerror="this.onerror=null;this.src='/img/%E7%A8%8B%E5%BA%8F%E5%91%98.png'" alt="avatar"/></div><div class="author-info__name">Alien</div><div class="author-info__description">M78来的程序员</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M78Alien"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到Alien的专属空间</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Stage%E6%A8%A1%E5%9E%8B%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">Stage模型概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">应用配置文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UIAbility%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">3.</span> <span class="toc-text">UIAbility生命周期</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E5%8F%8A%E7%BB%84%E4%BB%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">4.</span> <span class="toc-text">页面及组件生命周期</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UIAbility%E7%9A%84%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">5.</span> <span class="toc-text">UIAbility的启动模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Singleton%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">5.1.</span> <span class="toc-text">Singleton启动模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#standard%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">5.2.</span> <span class="toc-text">standard启动模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#specified%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">5.3.</span> <span class="toc-text">specified启动模式</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/13/%E9%B8%BF%E8%92%99HarmonyOS%204-Stage%E6%A8%A1%E5%9E%8B/" title="鸿蒙HarmonyOS 4-Stage模型">鸿蒙HarmonyOS 4-Stage模型</a><time datetime="2024-01-13T05:13:00.000Z" title="发表于 2024-01-13 13:13:00">2024-01-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/12/%E9%B8%BF%E8%92%99HarmonyOS%204-%E5%8A%A8%E7%94%BB/" title="鸿蒙HarmonyOS 4-动画">鸿蒙HarmonyOS 4-动画</a><time datetime="2024-01-12T11:50:00.000Z" title="发表于 2024-01-12 19:50:00">2024-01-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/12/%E9%B8%BF%E8%92%99HarmonyOS%204-%E9%A1%B5%E9%9D%A2%E8%B7%AF%E7%94%B1/" title="鸿蒙HarmonyOS 4-页面路由">鸿蒙HarmonyOS 4-页面路由</a><time datetime="2024-01-12T10:54:00.000Z" title="发表于 2024-01-12 18:54:00">2024-01-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/11/%E9%B8%BF%E8%92%99HarmonyOS%204-ArkUI%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86/" title="鸿蒙HarmonyOS 4-ArkUI状态管理">鸿蒙HarmonyOS 4-ArkUI状态管理</a><time datetime="2024-01-11T12:54:00.000Z" title="发表于 2024-01-11 20:54:00">2024-01-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/11/%E9%B8%BF%E8%92%99HarmonyOS%204-ArkUI%E7%BB%84%E4%BB%B6/" title="鸿蒙HarmonyOS 4-ArkUI组件">鸿蒙HarmonyOS 4-ArkUI组件</a><time datetime="2024-01-11T06:45:00.000Z" title="发表于 2024-01-11 14:45:00">2024-01-11</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Alien</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/@fancyapps/ui/dist/fancybox/fancybox.umd.js"></script><div class="js-pjax"><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://alien-api-1193133105-qqcom.vercel.app/',
+      region: 'ap-shanghai',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://alien-api-1193133105-qqcom.vercel.app/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.textContent = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('/pluginsSrc/twikoo/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><script data-pjax defer src="/js/my.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
