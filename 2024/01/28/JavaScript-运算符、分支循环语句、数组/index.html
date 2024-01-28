@@ -1,0 +1,365 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JavaScript-运算符、分支循环语句、数组 | Alien's Blog</title><meta name="author" content="Alien"><meta name="copyright" content="Alien"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="运算符赋值运算符进行运算后，直接赋值的操作  赋值运算符：+&#x3D;、-&#x3D;、*&#x3D;、&#x2F;&#x3D;、%&#x3D; 与C语言一样  一元运算符当只需要加减1的时候，++为自增，--为自减 123456let num &#x3D; 10&#x2F;*以自增为例，自减同理*&#x2F;console.log(++num)  &#x2F;&#x2F;前置自增，先增后赋值，输出11console.log(num++)  &#x2F;&#x2F;后置自增，先赋值再增，输出11let i &#x3D; 1docum">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript-运算符、分支循环语句、数组">
+<meta property="og:url" content="http://example.com/2024/01/28/JavaScript-%E8%BF%90%E7%AE%97%E7%AC%A6%E3%80%81%E5%88%86%E6%94%AF%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5%E3%80%81%E6%95%B0%E7%BB%84/index.html">
+<meta property="og:site_name" content="Alien&#39;s Blog">
+<meta property="og:description" content="运算符赋值运算符进行运算后，直接赋值的操作  赋值运算符：+&#x3D;、-&#x3D;、*&#x3D;、&#x2F;&#x3D;、%&#x3D; 与C语言一样  一元运算符当只需要加减1的时候，++为自增，--为自减 123456let num &#x3D; 10&#x2F;*以自增为例，自减同理*&#x2F;console.log(++num)  &#x2F;&#x2F;前置自增，先增后赋值，输出11console.log(num++)  &#x2F;&#x2F;后置自增，先赋值再增，输出11let i &#x3D; 1docum">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg">
+<meta property="article:published_time" content="2024-01-28T12:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-28T13:19:18.353Z">
+<meta property="article:author" content="Alien">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg"><link rel="shortcut icon" href="/img/ultra_icon.png"><link rel="canonical" href="http://example.com/2024/01/28/JavaScript-%E8%BF%90%E7%AE%97%E7%AC%A6%E3%80%81%E5%88%86%E6%94%AF%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5%E3%80%81%E6%95%B0%E7%BB%84/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/pluginsSrc/@fancyapps/ui/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JavaScript-运算符、分支循环语句、数组',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-01-28 21:19:18'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/my.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" onerror="onerror=null;src='/img/程序员.png'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">56</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">42</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-edit"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/picture/"><i class="fa-fw fa-solid fa-camera"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/contact/"><i class="fa-fw fas fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-lightbulb"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230825160648.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Alien's Blog"><span class="site-name">Alien's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-edit"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/picture/"><i class="fa-fw fa-solid fa-camera"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/contact/"><i class="fa-fw fas fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-lightbulb"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">JavaScript-运算符、分支循环语句、数组</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-28T12:00:00.000Z" title="发表于 2024-01-28 20:00:00">2024-01-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-28T13:19:18.353Z" title="更新于 2024-01-28 21:19:18">2024-01-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/">前端开发</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/JavaScript/">JavaScript</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title="JavaScript-运算符、分支循环语句、数组"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h1><h2 id="赋值运算符"><a href="#赋值运算符" class="headerlink" title="赋值运算符"></a>赋值运算符</h2><p>进行运算后，<strong>直接赋值</strong>的操作</p>
+<ul>
+<li>赋值运算符：<code>+=</code>、<code>-=</code>、<code>*=</code>、<code>/=</code>、<code>%=</code></li>
+<li>与C语言一样</li>
+</ul>
+<h2 id="一元运算符"><a href="#一元运算符" class="headerlink" title="一元运算符"></a>一元运算符</h2><p>当只需要<strong>加减1</strong>的时候，<code>++</code>为自增，<code>--</code>为自减</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> num = <span class="number">10</span></span><br><span class="line"><span class="comment">/*以自增为例，自减同理*/</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(++num)  <span class="comment">//前置自增，先增后赋值，输出11</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(num++)  <span class="comment">//后置自增，先赋值再增，输出11</span></span><br><span class="line"><span class="keyword">let</span> i = <span class="number">1</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">write</span>(i++ + ++i + i)  <span class="comment">//例如这个，输出为7</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h2><p>比较结果为boolean类型，即<code>true</code>（1）、<code>false</code>（0）</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&gt;</td>
+<td>左边是否大于右边</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>左边是否小于右边</td>
+</tr>
+<tr>
+<td>&gt;&#x3D;</td>
+<td>左边是否大于或等于右边</td>
+</tr>
+<tr>
+<td>&lt;&#x3D;</td>
+<td>左边是否小于或等于右边</td>
+</tr>
+<tr>
+<td>&#x3D;&#x3D;&#x3D;</td>
+<td>左右两边是否<strong>类型</strong>和<strong>值</strong>都相等（重点）</td>
+</tr>
+<tr>
+<td>&#x3D;&#x3D;</td>
+<td>左右两边值是否相等</td>
+</tr>
+<tr>
+<td>!&#x3D;</td>
+<td>左右值不相等</td>
+</tr>
+<tr>
+<td>!&#x3D;&#x3D;</td>
+<td>左右两边是否不全等</td>
+</tr>
+<tr>
+<td>注意：</td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li><code>=</code>：为赋值</li>
+<li><code>==</code>：为判断</li>
+<li><code>===</code>： 为全等</li>
+</ul>
+<h2 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h2><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>名称</th>
+<th>日常读法</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;&amp;</td>
+<td>逻辑与</td>
+<td>并且</td>
+<td>符号两边有一个假的结果为假</td>
+</tr>
+<tr>
+<td>||</td>
+<td>逻辑或</td>
+<td>或者</td>
+<td>符号两边有一个真的结果为真</td>
+</tr>
+<tr>
+<td>!</td>
+<td>逻辑非</td>
+<td>取反</td>
+<td>true变false false变true</td>
+</tr>
+</tbody></table>
+<h2 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h2><p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20240128204000.png" alt="image.png"></p>
+<h1 id="分支语句"><a href="#分支语句" class="headerlink" title="分支语句"></a>分支语句</h1><h2 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="comment">/*条件1*/</span>)&#123;</span><br><span class="line">	<span class="comment">//满足条件1执行的代码</span></span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="comment">/*条件2*/</span>)&#123;</span><br><span class="line">	<span class="comment">//满足条件2执行的代码</span></span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="comment">//所以都不满足执行的代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三元运算符"><a href="#三元运算符" class="headerlink" title="三元运算符"></a>三元运算符</h2><p><strong>使用场景</strong>： 一些简单的双分支，可以使用 三元运算符（三元表达式），写起来比 if else双分支 更简单</p>
+<p><strong>符号</strong>：? 与 : 配合使用</p>
+<p>语法：</p>
+<ul>
+<li><code>条件 ? 表达式1 : 表达式2</code></li>
+<li>如果条件为真，则执行表达式1</li>
+<li>如果条件为假，则执行表达式2</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">5</span> &lt; <span class="number">3</span> ? <span class="string">&#x27;真的&#x27;</span> : <span class="string">&#x27;假的&#x27;</span>)  <span class="comment">//输出假的</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> num = <span class="number">1</span></span><br><span class="line">num = num &gt;= <span class="number">10</span> ? num : <span class="number">5</span> + num  <span class="comment">//将结果赋值给num</span></span><br><span class="line"><span class="title function_">alert</span>(num)  <span class="comment">//输出6</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="switch语句"><a href="#switch语句" class="headerlink" title="switch语句"></a>switch语句</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (<span class="number">2</span>) &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;您选择的是1&#x27;</span>)</span><br><span class="line">  <span class="keyword">break</span>  <span class="comment">// 退出switch</span></span><br><span class="line">  <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;您选择的是2&#x27;</span>)</span><br><span class="line">  <span class="keyword">break</span>  <span class="comment">// 退出switch</span></span><br><span class="line">  <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;您选择的是3&#x27;</span>)</span><br><span class="line">  <span class="keyword">break</span>  <span class="comment">// 退出switch</span></span><br><span class="line">  <span class="attr">default</span>:</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;没有符合条件的&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h1><h2 id="断点调试（补充）"><a href="#断点调试（补充）" class="headerlink" title="断点调试（补充）"></a>断点调试（补充）</h2><p><strong>作用</strong>： 学习时可以帮助更好的理解代码运行，工作时可以更快找到bug</p>
+<p>浏览器打开调试界面</p>
+<ol>
+<li>按F12打开开发者工具</li>
+<li>点到源代码一栏 （ sources ）</li>
+<li>选择代码文件</li>
+</ol>
+<p><strong>断点</strong>：在某句代码上加的标记就叫断点，当程序执行到这句有标记的代码时会暂停下来</p>
+<p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20240128205228.png" alt="image.png"></p>
+<h2 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h2><p>while : 在…. 期间， 所以 while循环 就是在满足条件期间，重复执行某些代码。</p>
+<p><strong>语法：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> (i &lt;= <span class="number">3</span>) &#123;</span><br><span class="line">  <span class="variable language_">document</span>.<span class="title function_">write</span>(<span class="string">&#x27;月薪过万不是梦，毕业时候见英雄~&lt;br&gt;&#x27;</span>)</span><br><span class="line">  i++   <span class="comment">// 这里千万不要忘了变量自增否则造成死循环</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>循环三要素：</p>
+<ol>
+<li>初始值 （经常用变量）</li>
+<li>终止条件</li>
+<li>变量的变化量</li>
+</ol>
+<h2 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h2><p>for循环基本用法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">1</span>; i &lt;= <span class="number">6</span>; i++) &#123;</span><br><span class="line">	<span class="variable language_">document</span>.<span class="title function_">write</span>(<span class="string">`&lt;h<span class="subst">$&#123;i&#125;</span>&gt;循环控制，即重复执行&lt;h<span class="subst">$&#123;i&#125;</span>&gt;`</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结论：</p>
+<ul>
+<li><code>JavaScript</code> 提供了多种语句来实现循环控制，但无论使用哪种语句都离不开循环的3个特征，即起始值、变化量、终止条件，做为初学者应着重体会这3个特征。</li>
+<li>起始值、变化量、终止条件，由开发者根据逻辑需要进行设计，规避死循环的发生。</li>
+<li>当如果明确了循环的次数的时候推荐使用<code>for</code>循环,当不明确循环的次数的时候推荐使用<code>while</code>循环</li>
+</ul>
+<p>嵌套for循环：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">    <span class="variable language_">document</span>.<span class="title function_">write</span>(<span class="string">`第<span class="subst">$&#123;i&#125;</span>天 &lt;br&gt;`</span>)</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">1</span>; j &lt; <span class="number">6</span>; j++) &#123;</span><br><span class="line">        <span class="variable language_">document</span>.<span class="title function_">write</span>(<span class="string">`记住第<span class="subst">$&#123;j&#125;</span>个单词&lt;br&gt;`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="中止循环"><a href="#中止循环" class="headerlink" title="中止循环"></a>中止循环</h2><p><code>break</code> 中止整个循环，一般用于结果已经得到, 后续的循环不需要的时候可以使用（提高效率）</p>
+<p><code>continue</code> 中止本次循环，一般用于排除或者跳过某一个选项的时候</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//以while为例，for同理</span></span><br><span class="line"><span class="keyword">let</span> i = <span class="number">1</span></span><br><span class="line">	<span class="keyword">while</span> (i &lt;= <span class="number">5</span>) &#123;</span><br><span class="line">		<span class="variable language_">console</span>.<span class="title function_">log</span>(i)</span><br><span class="line">		<span class="keyword">if</span> (i === <span class="number">3</span>) &#123;</span><br><span class="line">		<span class="keyword">break</span>  <span class="comment">// 退出循环</span></span><br><span class="line">	&#125;</span><br><span class="line">	i++</span><br><span class="line">&#125;<span class="comment">//输出123</span></span><br><span class="line"></span><br><span class="line">i = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> (i &lt;= <span class="number">5</span>) &#123;</span><br><span class="line">	<span class="keyword">if</span> (i === <span class="number">3</span>) &#123;</span><br><span class="line">		i++</span><br><span class="line">		<span class="keyword">continue</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(i)</span><br><span class="line">	i++</span><br><span class="line">&#125;<span class="comment">//输出1245</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="无限循环"><a href="#无限循环" class="headerlink" title="无限循环"></a>无限循环</h2><p><code>while(true)</code> 和<code>for( ; ; )</code>来构造“无限”循环，需要使用break退出循环。（常用）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">	<span class="keyword">let</span> love = <span class="title function_">prompt</span>(<span class="string">&#x27;你爱我吗?&#x27;</span>)</span><br><span class="line">	<span class="keyword">if</span> (love === <span class="string">&#x27;爱&#x27;</span>) &#123;</span><br><span class="line">		<span class="keyword">break</span>  <span class="comment">//遇到爱则停止循环</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (; ;) &#123;</span><br><span class="line">  <span class="keyword">let</span> love = <span class="title function_">prompt</span>(<span class="string">&#x27;你爱我吗?&#x27;</span>)</span><br><span class="line">  <span class="keyword">if</span> (love === <span class="string">&#x27;爱&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">break</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><p>定义数组：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 语法，使用 [] 来定义一个空数组</span></span><br><span class="line"><span class="comment">// 定义一个空数组，然后赋值给变量 classes</span></span><br><span class="line"><span class="keyword">let</span> classes = [];</span><br><span class="line"><span class="comment">// 2. 定义非空数组</span></span><br><span class="line"><span class="keyword">let</span> classes = [<span class="string">&#x27;小明&#x27;</span>, <span class="string">&#x27;小刚&#x27;</span>, <span class="string">&#x27;小红&#x27;</span>, <span class="string">&#x27;小丽&#x27;</span>, <span class="string">&#x27;小米&#x27;</span>]</span><br><span class="line"><span class="comment">// 3. 数组是对象类型，对应着一个 length 属性，它的含义是获取数组的长度</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(classes.<span class="property">length</span>) <span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
+
+<p>数组做为对象数据类型，不但有 <code>length</code> 属性可以使用，还提供了许多方法：</p>
+<ol>
+<li><code>push()</code> 动态向数组的尾部添加一个单元</li>
+<li><code>unshift()</code> 动态向数组头部添加一个单元</li>
+<li><code>pop()</code> 删除最后一个单元</li>
+<li><code>shift()</code> 删除第一个单元</li>
+<li><code>splice()</code> 动态删除任意单元</li>
+</ol>
+<p>使用以上4个方法时，都是直接在原数组上进行操作，即成功调任何一个方法，原数组都跟着发生相应的改变。并且在添加或删除单元时 <code>length</code> 并不会发生错乱。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个数组</span></span><br><span class="line"><span class="keyword">let</span> arr = [<span class="string">&#x27;html&#x27;</span>, <span class="string">&#x27;css&#x27;</span>, <span class="string">&#x27;javascript&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. push 动态向数组的尾部添加一个单元</span></span><br><span class="line">arr.<span class="title function_">push</span>(<span class="string">&#x27;Nodejs&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr)  <span class="comment">//[&#x27;html&#x27;, &#x27;css&#x27;, &#x27;javascript&#x27;, &#x27;Nodejs&#x27;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. unshit 动态向数组头部添加一个单元</span></span><br><span class="line">arr.<span class="title function_">unshift</span>(<span class="string">&#x27;VS Code&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr)  <span class="comment">//[&#x27;VS Code&#x27;, &#x27;html&#x27;, &#x27;css&#x27;, &#x27;javascript&#x27;, &#x27;Nodejs&#x27;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. splice 动态删除任意单元</span></span><br><span class="line">arr.<span class="title function_">splice</span>(<span class="number">2</span>, <span class="number">1</span>)  <span class="comment">// 从索引值为2的位置开始删除1个单元</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr)  <span class="comment">//[&#x27;VS Code&#x27;, &#x27;html&#x27;, &#x27;javascript&#x27;, &#x27;Nodejs&#x27;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. pop 删除最后一个单元</span></span><br><span class="line">arr.<span class="title function_">pop</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr)  <span class="comment">//[&#x27;VS Code&#x27;, &#x27;html&#x27;, &#x27;javascript&#x27;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. shift 删除第一个单元</span></span><br><span class="line">arr.<span class="title function_">shift</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr)  <span class="comment">//[&#x27;html&#x27;, &#x27;javascript&#x27;]</span></span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://m78alien.github.io/">Alien</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2024/01/28/JavaScript-%E8%BF%90%E7%AE%97%E7%AC%A6%E3%80%81%E5%88%86%E6%94%AF%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5%E3%80%81%E6%95%B0%E7%BB%84/">http://example.com/2024/01/28/JavaScript-%E8%BF%90%E7%AE%97%E7%AC%A6%E3%80%81%E5%88%86%E6%94%AF%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5%E3%80%81%E6%95%B0%E7%BB%84/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Alien's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a><a class="post-meta__tags" href="/tags/JavaScript/">JavaScript</a></div><div class="post_share"><div class="social-share" data-image="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" data-sites="twitter,wechat,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/01/28/JavaScript-%E5%87%BD%E6%95%B0%E3%80%81%E5%AF%B9%E8%B1%A1/" title="JavaScript-函数、对象"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JavaScript-函数、对象</div></div></a></div><div class="next-post pull-right"><a href="/2024/01/28/JavaScript-%E4%BB%8B%E7%BB%8D%E3%80%81%E5%8F%98%E9%87%8F%E3%80%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JavaScript-介绍、变量、数据类型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">JavaScript-介绍、变量、数据类型</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/01/28/JavaScript-%E5%87%BD%E6%95%B0%E3%80%81%E5%AF%B9%E8%B1%A1/" title="JavaScript-函数、对象"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-28</div><div class="title">JavaScript-函数、对象</div></div></a></div><div><a href="/2024/01/28/JavaScript-%E4%BB%8B%E7%BB%8D%E3%80%81%E5%8F%98%E9%87%8F%E3%80%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JavaScript-介绍、变量、数据类型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-28</div><div class="title">JavaScript-介绍、变量、数据类型</div></div></a></div><div><a href="/2024/01/19/CSS%E7%94%A8%E6%B3%95/" title="CSS用法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-19</div><div class="title">CSS用法</div></div></a></div><div><a href="/2024/01/23/CSS%E7%94%A8%E6%B3%95%EF%BC%88%E4%BA%8C%EF%BC%89/" title="CSS用法（二）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-23</div><div class="title">CSS用法（二）</div></div></a></div><div><a href="/2024/01/18/HTML%E7%94%A8%E6%B3%95/" title="HTML用法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-18</div><div class="title">HTML用法</div></div></a></div><div><a href="/2024/01/25/Web%E7%A7%BB%E5%8A%A8%E9%80%82%E9%85%8D/" title="Web移动适配"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-25</div><div class="title">Web移动适配</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" onerror="this.onerror=null;this.src='/img/%E7%A8%8B%E5%BA%8F%E5%91%98.png'" alt="avatar"/></div><div class="author-info__name">Alien</div><div class="author-info__description">Don’t hesitate!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">56</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">42</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M78Alien"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到Alien的博客空间</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.</span> <span class="toc-text">运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.1.</span> <span class="toc-text">赋值运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%85%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.2.</span> <span class="toc-text">一元运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.3.</span> <span class="toc-text">比较运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.4.</span> <span class="toc-text">逻辑运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">1.5.</span> <span class="toc-text">运算符优先级</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5"><span class="toc-number">2.</span> <span class="toc-text">分支语句</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#if%E8%AF%AD%E5%8F%A5"><span class="toc-number">2.1.</span> <span class="toc-text">if语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E5%85%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.2.</span> <span class="toc-text">三元运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#switch%E8%AF%AD%E5%8F%A5"><span class="toc-number">2.3.</span> <span class="toc-text">switch语句</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5"><span class="toc-number">3.</span> <span class="toc-text">循环语句</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95%EF%BC%88%E8%A1%A5%E5%85%85%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">断点调试（补充）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#while%E5%BE%AA%E7%8E%AF"><span class="toc-number">3.2.</span> <span class="toc-text">while循环</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#for%E5%BE%AA%E7%8E%AF"><span class="toc-number">3.3.</span> <span class="toc-text">for循环</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%AD%A2%E5%BE%AA%E7%8E%AF"><span class="toc-number">3.4.</span> <span class="toc-text">中止循环</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF"><span class="toc-number">3.5.</span> <span class="toc-text">无限循环</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E7%BB%84"><span class="toc-number">4.</span> <span class="toc-text">数组</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/28/JavaScript-%E5%87%BD%E6%95%B0%E3%80%81%E5%AF%B9%E8%B1%A1/" title="JavaScript-函数、对象">JavaScript-函数、对象</a><time datetime="2024-01-28T13:22:00.000Z" title="发表于 2024-01-28 21:22:00">2024-01-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/28/JavaScript-%E8%BF%90%E7%AE%97%E7%AC%A6%E3%80%81%E5%88%86%E6%94%AF%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5%E3%80%81%E6%95%B0%E7%BB%84/" title="JavaScript-运算符、分支循环语句、数组">JavaScript-运算符、分支循环语句、数组</a><time datetime="2024-01-28T12:00:00.000Z" title="发表于 2024-01-28 20:00:00">2024-01-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/28/JavaScript-%E4%BB%8B%E7%BB%8D%E3%80%81%E5%8F%98%E9%87%8F%E3%80%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JavaScript-介绍、变量、数据类型">JavaScript-介绍、变量、数据类型</a><time datetime="2024-01-28T09:00:00.000Z" title="发表于 2024-01-28 17:00:00">2024-01-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/25/Web%E7%A7%BB%E5%8A%A8%E9%80%82%E9%85%8D/" title="Web移动适配">Web移动适配</a><time datetime="2024-01-25T11:50:00.000Z" title="发表于 2024-01-25 19:50:00">2024-01-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/23/CSS%E7%94%A8%E6%B3%95%EF%BC%88%E4%BA%8C%EF%BC%89/" title="CSS用法（二）">CSS用法（二）</a><time datetime="2024-01-23T07:00:00.000Z" title="发表于 2024-01-23 15:00:00">2024-01-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Alien</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/@fancyapps/ui/dist/fancybox/fancybox.umd.js"></script><div class="js-pjax"><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://alien-api-1193133105-qqcom.vercel.app/',
+      region: 'ap-shanghai',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://alien-api-1193133105-qqcom.vercel.app/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.textContent = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('/pluginsSrc/twikoo/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><script data-pjax defer src="/js/my.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
