@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>AJAX-原理 | Alien's Blog</title><meta name="author" content="Alien"><meta name="copyright" content="Alien"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="XMLHttpRequest定义：XMLHttpRequest（XHR）对象用于与服务器交互。通过XMLHttpRequest可以在不刷新页面的情况下请求特定URL，获取数据。这允许网页在不影响用户操作的情况下，更新页面的局部内容。XMLHttpRequest在AJAX编程中被大量使用 关系：axios内部采用XMLHttpRequest与服务器交互  基本使用 创建 XMLHttpRequest">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AJAX-原理">
+<meta property="og:url" content="http://example.com/2024/03/13/AJAX-%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="Alien&#39;s Blog">
+<meta property="og:description" content="XMLHttpRequest定义：XMLHttpRequest（XHR）对象用于与服务器交互。通过XMLHttpRequest可以在不刷新页面的情况下请求特定URL，获取数据。这允许网页在不影响用户操作的情况下，更新页面的局部内容。XMLHttpRequest在AJAX编程中被大量使用 关系：axios内部采用XMLHttpRequest与服务器交互  基本使用 创建 XMLHttpRequest">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg">
+<meta property="article:published_time" content="2024-03-13T13:35:00.000Z">
+<meta property="article:modified_time" content="2024-03-13T15:04:12.967Z">
+<meta property="article:author" content="Alien">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="ajax">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg"><link rel="shortcut icon" href="/img/ultra_icon.png"><link rel="canonical" href="http://example.com/2024/03/13/AJAX-%E5%8E%9F%E7%90%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/pluginsSrc/@fancyapps/ui/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'AJAX-原理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-13 23:04:12'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/my.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" onerror="onerror=null;src='/img/程序员.png'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">68</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">44</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-edit"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/picture/"><i class="fa-fw fa-solid fa-camera"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/contact/"><i class="fa-fw fas fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-lightbulb"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230825160648.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Alien's Blog"><span class="site-name">Alien's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-edit"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/picture/"><i class="fa-fw fa-solid fa-camera"></i><span> 图片</span></a></div><div class="menus_item"><a class="site-page" href="/contact/"><i class="fa-fw fas fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-lightbulb"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">AJAX-原理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-13T13:35:00.000Z" title="发表于 2024-03-13 21:35:00">2024-03-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-13T15:04:12.967Z" title="更新于 2024-03-13 23:04:12">2024-03-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/">前端开发</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/AJAX/">AJAX</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">837</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span id="" data-flag-title="AJAX-原理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="XMLHttpRequest"><a href="#XMLHttpRequest" class="headerlink" title="XMLHttpRequest"></a>XMLHttpRequest</h1><p><strong>定义</strong>：XMLHttpRequest（XHR）对象用于与服务器交互。通过XMLHttpRequest可以在不刷新页面的情况下请求特定URL，获取数据。这允许网页在不影响用户操作的情况下，更新页面的局部内容。XMLHttpRequest在AJAX编程中被大量使用</p>
+<p><strong>关系</strong>：axios内部采用XMLHttpRequest与服务器交互</p>
+<p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/image-20230221182835545.png" alt="image-20230221182835545.png"></p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><ol>
+<li>创建 XMLHttpRequest 对象 </li>
+<li>配置<strong>请求方法</strong>和请求 <strong>url 地址</strong> </li>
+<li>监听 loadend 事件，<strong>接收响应结果</strong> </li>
+<li><strong>发起请求</strong></li>
+</ol>
+<p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/image-20230221183057392.png" alt="image-20230221183057392.png"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>()</span><br><span class="line">xhr.<span class="title function_">open</span>(<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;http://hmajax.itheima.net/api/province&#x27;</span>)</span><br><span class="line">xhr.<span class="title function_">addEventListener</span>(<span class="string">&#x27;loadend&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(xhr.<span class="property">response</span>)</span><br><span class="line">	<span class="keyword">const</span> data = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(xhr.<span class="property">response</span>)</span><br><span class="line">	<span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;.city&#x27;</span>).<span class="property">innerHTML</span> = data.<span class="property">list</span>.<span class="title function_">join</span>(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line">xhr.<span class="title function_">send</span>()</span><br></pre></td></tr></table></figure>
+
+<h2 id="查询参数"><a href="#查询参数" class="headerlink" title="查询参数"></a>查询参数</h2><p><strong>定义</strong>：浏览器提供给服务器的额外信息，让服务器返回浏览器想要的数据 </p>
+<p><strong>语法</strong>：<code>http://xxxx.com/xxx/xxx?参数名1=值1&amp;参数名2=值2</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>()</span><br><span class="line">xhr.<span class="title function_">open</span>(<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;http://hmajax.itheima.net/api/city?pname=广东省&#x27;</span>)</span><br><span class="line">xhr.<span class="title function_">addEventListener</span>(<span class="string">&#x27;loadend&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(xhr.<span class="property">response</span>)</span><br><span class="line">	<span class="keyword">const</span> data = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(xhr.<span class="property">response</span>)</span><br><span class="line">	<span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;.city&#x27;</span>).<span class="property">innerHTML</span> = data.<span class="property">list</span>.<span class="title function_">join</span>(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line">xhr.<span class="title function_">send</span>()</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据提交"><a href="#数据提交" class="headerlink" title="数据提交"></a>数据提交</h2><p><strong>需求</strong>：通过 XHR 提交用户名和密码，完成注册功能 </p>
+<p><strong>核心</strong>：<br>    请求头设置 <code>Content-Type</code>：<code>application/json</code><br>    请求体携带 JSON 字符串</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>()</span><br><span class="line">xhr.<span class="title function_">open</span>(<span class="string">&#x27;POST&#x27;</span>, <span class="string">&#x27;http://hmajax.itheima.net/api/register&#x27;</span>)</span><br><span class="line">xhr.<span class="title function_">addEventListener</span>(<span class="string">&#x27;loadend&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(xhr.<span class="property">response</span>)</span><br><span class="line">&#125;)</span><br><span class="line">xhr.<span class="title function_">setRequestHeader</span>(<span class="string">&#x27;Content-Type&#x27;</span>, <span class="string">&#x27;application/json&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> user = &#123;</span><br><span class="line">	<span class="attr">username</span>: <span class="string">&#x27;Alien12345&#x27;</span>,</span><br><span class="line">	<span class="attr">password</span>: <span class="string">&#x27;123456789&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> userStr = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(user)</span><br><span class="line">xhr.<span class="title function_">send</span>(userStr)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/20240313221858.png" alt="image.png"></p>
+<h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><p><strong>定义</strong>：<code>Promise</code> 对象用于表示一个异步操作的最终完成（或失败）及其结构值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 创建 Promise 对象</span></span><br><span class="line"><span class="keyword">const</span> p = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line"> <span class="comment">// 2. 执行异步任务-并传递结果</span></span><br><span class="line"> <span class="comment">// 成功调用: resolve(值) 触发 then() 执行</span></span><br><span class="line"> <span class="comment">// 失败调用: reject(值) 触发 catch() 执行</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 3. 接收结果</span></span><br><span class="line">p.<span class="title function_">then</span>(<span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line"> <span class="comment">// 成功</span></span><br><span class="line">&#125;).<span class="title function_">catch</span>(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line"> <span class="comment">// 失败</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>好处</strong>：</p>
+<ol>
+<li>逻辑更清晰</li>
+<li>了解axios函数内部运作机制</li>
+<li>能解决回调函数地狱问题</li>
+</ol>
+<h2 id="Promise-三种状态"><a href="#Promise-三种状态" class="headerlink" title="Promise-三种状态"></a>Promise-三种状态</h2><p><strong>作用</strong>：了解<code>Promise</code>对象如何关联的处理函数，以及代码执行顺序 </p>
+<p><strong>概念</strong>：一个<code>Promise</code>对象，必然处于以下几种状态之一 </p>
+<ul>
+<li>待定（pending） ：初始状态，既没有被兑现，也没有被拒绝</li>
+<li>已兑现（fulfilled） ：意味着，操作成功完成</li>
+<li>已拒绝（rejected） ：意味着，操作失败</li>
+</ul>
+<p><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/image-20230222120815484.png" alt="image-20230222120815484.png"></p>
+<ul>
+<li>当<code>Promise</code>对象一旦被兑现&#x2F;拒绝，就是被敲定，状态无法再被改变</li>
+</ul>
+<h1 id="封装简易axios"><a href="#封装简易axios" class="headerlink" title="封装简易axios"></a>封装简易axios</h1><p>了解封装axios的原理，可以更好地理解XMLHttpRequest原理和axios的用法</p>
+<p><strong>步骤</strong>： </p>
+<ol>
+<li>定义 <code>myAxios</code> 函数，接收配置对象，返回 <code>Promise</code> 对象 </li>
+<li>发起 XHR 请求，默认请求方法为 <code>GET</code> </li>
+<li>调用成功&#x2F;失败的处理程序 </li>
+<li>使用 <code>myAxios</code> 函数，发起网络请求</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 定义简易axios函数，接收配置对象，返回promise对象</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">myAxios</span>(<span class="params">config</span>) &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="comment">// 2. 发起XHR请求</span></span><br><span class="line">		<span class="keyword">const</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>()</span><br><span class="line">		xhr.<span class="title function_">open</span>(config.<span class="property">method</span> || <span class="string">&#x27;GET&#x27;</span>, config.<span class="property">url</span>) <span class="comment">// 获取请求方法，默认GET</span></span><br><span class="line">		xhr.<span class="title function_">addEventListener</span>(<span class="string">&#x27;loadend&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">			<span class="comment">// 3. 调用成功/失败的处理程序</span></span><br><span class="line">			<span class="keyword">if</span> (xhr.<span class="property">status</span> &gt;= <span class="number">200</span> &amp;&amp; xhr.<span class="property">status</span> &lt; <span class="number">300</span>) &#123;</span><br><span class="line">				<span class="title function_">resolve</span>(<span class="title class_">JSON</span>.<span class="title function_">parse</span>(xhr.<span class="property">response</span>))</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(xhr.<span class="property">response</span>))</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;)</span><br><span class="line">		xhr.<span class="title function_">send</span>()</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 执行简易axios</span></span><br><span class="line"><span class="title function_">myAxios</span>(&#123;</span><br><span class="line">	<span class="attr">url</span>: <span class="string">&#x27;目标资源地址&#x27;</span></span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;).<span class="title function_">catch</span>(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://m78alien.github.io/">Alien</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2024/03/13/AJAX-%E5%8E%9F%E7%90%86/">http://example.com/2024/03/13/AJAX-%E5%8E%9F%E7%90%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Alien's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a><a class="post-meta__tags" href="/tags/ajax/">ajax</a></div><div class="post_share"><div class="social-share" data-image="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" data-sites="twitter,wechat,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/03/13/AJAX-%E5%85%A5%E9%97%A8/" title="AJAX-入门"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">AJAX-入门</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/03/13/AJAX-%E5%85%A5%E9%97%A8/" title="AJAX-入门"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-13</div><div class="title">AJAX-入门</div></div></a></div><div><a href="/2024/01/19/CSS%E7%94%A8%E6%B3%95/" title="CSS用法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-19</div><div class="title">CSS用法</div></div></a></div><div><a href="/2024/01/18/HTML%E7%94%A8%E6%B3%95/" title="HTML用法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-18</div><div class="title">HTML用法</div></div></a></div><div><a href="/2024/01/23/CSS%E7%94%A8%E6%B3%95%EF%BC%88%E4%BA%8C%EF%BC%89/" title="CSS用法（二）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-23</div><div class="title">CSS用法（二）</div></div></a></div><div><a href="/2024/02/02/JavaScript-BOM%E6%93%8D%E4%BD%9C/" title="JavaScript-BOM操作"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-02-02</div><div class="title">JavaScript-BOM操作</div></div></a></div><div><a href="/2024/01/31/JavaScript-DOM%E4%BA%8B%E4%BB%B6/" title="JavaScript-DOM事件"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-31</div><div class="title">JavaScript-DOM事件</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://alien-blog.oss-cn-beijing.aliyuncs.com/%E5%A4%B4%E5%83%8F.jpg" onerror="this.onerror=null;this.src='/img/%E7%A8%8B%E5%BA%8F%E5%91%98.png'" alt="avatar"/></div><div class="author-info__name">Alien</div><div class="author-info__description">Don’t hesitate!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">68</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">44</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M78Alien"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到Alien的博客空间</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#XMLHttpRequest"><span class="toc-number">1.</span> <span class="toc-text">XMLHttpRequest</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">1.1.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E5%8F%82%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">查询参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%8F%90%E4%BA%A4"><span class="toc-number">1.3.</span> <span class="toc-text">数据提交</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Promise"><span class="toc-number">2.</span> <span class="toc-text">Promise</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise-%E4%B8%89%E7%A7%8D%E7%8A%B6%E6%80%81"><span class="toc-number">2.1.</span> <span class="toc-text">Promise-三种状态</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%81%E8%A3%85%E7%AE%80%E6%98%93axios"><span class="toc-number">3.</span> <span class="toc-text">封装简易axios</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/13/AJAX-%E5%8E%9F%E7%90%86/" title="AJAX-原理">AJAX-原理</a><time datetime="2024-03-13T13:35:00.000Z" title="发表于 2024-03-13 21:35:00">2024-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/13/AJAX-%E5%85%A5%E9%97%A8/" title="AJAX-入门">AJAX-入门</a><time datetime="2024-03-13T11:22:00.000Z" title="发表于 2024-03-13 19:22:00">2024-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/12/JavaScript-%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D%E3%80%81%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E3%80%81this%E3%80%81%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" title="JavaScript-深浅拷贝、异常处理、this、防抖节流">JavaScript-深浅拷贝、异常处理、this、防抖节流</a><time datetime="2024-03-12T01:44:00.000Z" title="发表于 2024-03-12 09:44:00">2024-03-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/11/JavaScript-%E6%B7%B1%E5%85%A5%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" title="JavaScript-深入面向对象">JavaScript-深入面向对象</a><time datetime="2024-03-11T06:24:00.000Z" title="发表于 2024-03-11 14:24:00">2024-03-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/07/JavaScript-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E3%80%81%E6%95%B0%E6%8D%AE%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/" title="JavaScript-构造函数、数据常用函数">JavaScript-构造函数、数据常用函数</a><time datetime="2024-03-07T12:20:00.000Z" title="发表于 2024-03-07 20:20:00">2024-03-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Alien</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/pluginsSrc/@fancyapps/ui/dist/fancybox/fancybox.umd.js"></script><div class="js-pjax"><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://alien-api-1193133105-qqcom.vercel.app/',
+      region: 'ap-shanghai',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://alien-api-1193133105-qqcom.vercel.app/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.textContent = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('/pluginsSrc/twikoo/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><script data-pjax defer src="/js/my.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
