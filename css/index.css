@@ -1385,7 +1385,7 @@ canvas:not(#ribbon-canvas),
   --card-hover-box-shadow: 0 3px 8px 6px rgba(7,17,27,0.09);
   --pseudo-hover: #66f;
   --headline-presudo: #a0a0a0;
-  --scrollbar-color: #06f s;
+  --scrollbar-color: #06f;
   --default-bg-color: #06f;
   --zoom-bg: #fff;
   --mark-bg: rgba(0,0,0,0.3);
@@ -1652,7 +1652,7 @@ figure.highlight pre .javascript .function {
 #article-container code {
   padding: 2px 4px;
   background: rgba(27,31,35,0.05);
-  color: #f47466;
+  color: #404040;
 }
 #article-container pre {
   padding: 10px 20px;
@@ -2882,7 +2882,7 @@ h1.page-title + .tag-cloud-list {
   color: #06f;
 }
 #aside-content #card-toc .toc-content .toc-link.active {
-  background: #00c4b6;
+  background: #09f;
   color: #fff;
 }
 #aside-content .sticky_layout:only-child > :first-child {
